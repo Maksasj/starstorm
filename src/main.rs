@@ -23,6 +23,7 @@ pub use crate::components::{
     mouse_position::*,
     friction::*,
     bullet::*,
+    weapon::*,
 };
 
 fn main() {
@@ -46,9 +47,10 @@ fn main() {
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
         .add_system(player_rotation_system)
-        .add_system(player_shoot_system)
+        .add_system(player_shooting_system)
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
+        .add_system(weapon_system)
         .add_system(friction_system)
         .insert_resource(MousePosition { 
             pos: Vec2::new(0.0, 0.0),

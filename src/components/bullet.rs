@@ -31,8 +31,8 @@ pub fn spawn_bullet(mut commands: &mut Commands, asset_server: &Res<SpriteSheet>
     })
     .insert(Name::new("Bullet"))
     .insert(EntityRotation{ rotation_angle: angle, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
-    .insert(Bullet{life_time: 0.5, timer: 0.0})
-    .insert(Velocity{ velocity: Vec2::new(1.0, 0.0) });
+    .insert(Bullet{life_time: 10.0, timer: 0.0})
+    .insert(Velocity{ velocity: Vec2::new(0.4, 0.0) });
 }
 
 pub fn bullet_life_time_system(mut commands: Commands, mut targets: Query<(Entity, &mut Bullet)>, time: Res<Time>) {

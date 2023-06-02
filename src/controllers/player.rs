@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+use crate::Weapon;
 use crate::components::{
     player_controller::*,
     mouse_position::*,
@@ -37,7 +38,7 @@ pub fn player_controller_system(input: Res<Input<KeyCode>>, mut targets: Query<&
     }
 }
 
-pub fn player_shoot_system(
+pub fn player_shooting_system(
         mut commands: Commands, 
         input: Res<Input<MouseButton>>, 
         asset_server: Res<SpriteSheet>, 
@@ -93,5 +94,6 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
     .insert(PlayerController{})
     .insert(EntityRotation{ rotation_angle: 0.0, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
     .insert(Friction{ rate: 0.97 })
+    .insert(Weapon{ shooting_speed: 0.8, shooting_auto: true, shooting_timer: 0.0 })
     .insert(Velocity{ velocity: Vec2::new(0.0, 0.0) });
 }
