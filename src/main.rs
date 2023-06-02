@@ -22,6 +22,7 @@ pub use crate::components::{
     player_controller::*,
     mouse_position::*,
     friction::*,
+    bullet::*,
 };
 
 fn main() {
@@ -47,6 +48,7 @@ fn main() {
         .add_system(player_rotation_system)
         .add_system(player_shoot_system)
         .add_system(velocity_movement_system)
+        .add_system(bullet_life_time_system)
         .add_system(friction_system)
         .insert_resource(MousePosition { 
             pos: Vec2::new(0.0, 0.0),
