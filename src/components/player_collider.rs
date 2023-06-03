@@ -7,14 +7,15 @@ use crate::components::{
     collision::*,
     player_controller::*,
     bullet::*,
+    health::*,
 };
 
 pub fn player_and_bullet_collision_event_system(
-        players: Query<(Entity, &Collider, &Transform), With<PlayerController>>, 
+        mut players: Query<(Entity, &mut Health, &Collider, &Transform), With<PlayerController>>, 
         bullets: Query<(Entity, &Collider, &Transform), With<Bullet>>
     ) {
     
-    for (_player_entity, player_collider, player_transform) in players.iter() {
+    for (_player_entity, mut player_health, player_collider, player_transform) in players.iter_mut() {
         for (_bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((player_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
@@ -43,7 +44,8 @@ pub fn player_and_bullet_collision_event_system(
                 second_collision_box);
             
             if !collision.is_none() {
-                // println!("Player coollided {:?}, {:?}", player_collider.collision_layer, bullet_collider.target_layer);
+                player_health.take_damage(40.0);
+                println!("Player coollided {:?}, {:?}", player_collider.collision_layer, bullet_collider.target_layer);
             }
         }
     }

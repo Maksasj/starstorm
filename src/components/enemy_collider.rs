@@ -7,14 +7,15 @@ use crate::components::{
     collision::*,
     bullet::*,
     enemy::*,
+    health::*,
 };
 
 pub fn enemy_and_bullet_collision_event_system(
-        enemies: Query<(Entity, &Collider, &Transform, &dyn Enemy)>, 
+        mut enemies: Query<(Entity, &mut Health, &Collider, &Transform, &dyn Enemy)>, 
         bullets: Query<(Entity, &Collider, &Transform), With<Bullet>>
     ) {
     
-    for (_enemy_entity, enemy_collider, enemy_transform, _enemy) in enemies.iter() {
+    for (_enemy_entity, mut enemy_health, enemy_collider, enemy_transform, _enemy) in enemies.iter_mut() {
         for (_bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((enemy_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
@@ -43,6 +44,7 @@ pub fn enemy_and_bullet_collision_event_system(
             
             if !collision.is_none() {
                 println!("Enemy coollided {:?}, {:?}", enemy_collider.collision_layer, bullet_collider.target_layer);
+                enemy_health.take_damage(15.0);
             }
         }
     }

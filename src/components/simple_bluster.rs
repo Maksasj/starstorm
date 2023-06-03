@@ -14,13 +14,15 @@ use crate::resources::{
 pub struct SimpleBluster {
     pub timer: f32,
     pub speed: f32,
+    pub damage: f32,
 }
 
 impl SimpleBluster {
     pub fn new() -> Self {
         SimpleBluster {
             timer: 0.0,
-            speed: 0.3
+            speed: 0.3,
+            damage: 10.0,
         }
     }
 }

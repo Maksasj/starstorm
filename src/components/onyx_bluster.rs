@@ -14,13 +14,15 @@ use crate::resources::{
 pub struct OnyxBluster {
     pub timer: f32,
     pub speed: f32,
+    pub damage: f32,
 }
 
 impl OnyxBluster {
     pub fn new() -> Self {
         OnyxBluster {
             timer: 0.0,
-            speed: 0.8
+            speed: 0.8,
+            damage: 33.0,
         }
     }
 }

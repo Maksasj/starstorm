@@ -25,6 +25,10 @@ impl Health {
         }
     }
 
+    pub fn take_damage(&mut self, value: f32) {
+        self.value += value;
+    }
+
     pub fn _is_dead(&self) -> bool {
         self.value < self.max_value
     }
