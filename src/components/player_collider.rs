@@ -8,12 +8,14 @@ use crate::components::{
     player_controller::*,
     bullet::*,
     health::*,
+    camera_shake::*,
 };
 
 pub fn player_and_bullet_collision_event_system(
         mut commands: Commands,
         mut players: Query<(Entity, &mut Health, &Collider, &Transform), With<PlayerController>>, 
-        bullets: Query<(Entity, &Bullet, &Collider, &Transform)>
+        bullets: Query<(Entity, &Bullet, &Collider, &Transform)>,
+        mut event_writer: EventWriter<CameraShakeEvent>
     ) {
     
     for (_player_entity, mut player_health, player_collider, player_transform) in players.iter_mut() {
@@ -47,6 +49,7 @@ pub fn player_and_bullet_collision_event_system(
             if !collision.is_none() {
                 player_health.take_damage(bullet.damage);
                 commands.entity(bullet_entity).despawn_recursive();
+                event_writer.send(CameraShakeEvent::new(bullet.damage / 7.0 , 0.1));
             }
         }
     }

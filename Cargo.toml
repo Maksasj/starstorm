@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 bevy = "0.10.0"
 bevy-trait-query = "0.2.1"
+rand = "0.8.5"

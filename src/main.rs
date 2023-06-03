@@ -35,6 +35,8 @@ pub use crate::components::{
     simple_enemy::*,
     spike_enemy::*,
     bug_enemy::*,
+
+    camera_shake::*,
 };
 
 fn main() {
@@ -65,6 +67,7 @@ fn main() {
                 spawn_simple_enemy_system,
                 spawn_spike_enemy_system,
                 spawn_bug_enemy_system,
+                setup_camera_shake_system,
             ).chain())
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
@@ -72,20 +75,23 @@ fn main() {
         .add_system(entity_rotation_system)
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
-
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Weapon, OnyxBluster>()
         .register_component_as::<dyn Weapon, MortarBluster>()
         .register_component_as::<dyn Weapon, PlayerBluster>()
-
+        
         .register_component_as::<dyn Enemy, SimpleEnemy>()
         .register_component_as::<dyn Enemy, SpikeEnemy>()
         .register_component_as::<dyn Enemy, BugEnemy>()
         .add_system(enemy_moving_system)
+        
+        .add_event::<CameraShakeEvent>()
+
         .add_systems((
                 enemy_and_bullet_collision_event_system,
                 player_and_bullet_collision_event_system,
                 enemy_death_system,
+                camera_shake_system
             ).chain())
         .add_system(weapon_system)
         .add_system(friction_system)
