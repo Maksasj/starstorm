@@ -24,9 +24,12 @@ pub use crate::components::{
     friction::*,
     bullet::*,
     weapon::*,
+    simple_bluster::*,
 };
 
 fn main() {
+    use bevy_trait_query::RegisterExt;
+
     App::new()
         .add_plugins(DefaultPlugins
             .set(
@@ -47,9 +50,9 @@ fn main() {
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
         .add_system(player_rotation_system)
-        .add_system(player_shooting_system)
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
+        .register_component_as::<dyn Weapon, SimpleBluster>()
         .add_system(weapon_system)
         .add_system(friction_system)
         .insert_resource(MousePosition { 

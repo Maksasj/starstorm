@@ -1,4 +1,3 @@
-use bevy::ecs::entity;
 use bevy::prelude::*;
 
 use crate::components::{
@@ -15,7 +14,7 @@ pub struct Bullet {
     timer: f32
 }
 
-pub fn spawn_bullet(mut commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2) {
+pub fn spawn_bullet(commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2) {
     let mut sprite = TextureAtlasSprite::new(4);
     sprite.color = Color::rgb(1.0, 1.0, 1.0);
     sprite.custom_size = Some(Vec2::splat(32.0));
