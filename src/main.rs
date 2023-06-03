@@ -7,6 +7,7 @@ use bevy::{
 mod components;
 mod resources;
 
+use crate::components::enemy_collider::enemy_and_bullet_collision_event_system;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
@@ -23,7 +24,6 @@ pub use crate::components::{
     
     collision::*,
     player_collider::*,
-    bullet_collider::*,
 
     weapon::*,
     simple_bluster::*,
@@ -31,10 +31,10 @@ pub use crate::components::{
     mortar_bluster::*,
     player_bluster::*,
 
-    enemie::*,
-    simple_enemie::*,
-    spike_enemie::*,
-    bug_enemie::*,
+    enemy::*,
+    simple_enemy::*,
+    spike_enemy::*,
+    bug_enemy::*,
 };
 
 fn main() {
@@ -62,9 +62,9 @@ fn main() {
                 apply_system_buffers, 
                 spawn_background_system,
                 spawn_player_system, 
-                spawn_simple_enemie_system,
-                spawn_spike_enemie_system,
-                spawn_bug_enemie_system,
+                spawn_simple_enemy_system,
+                spawn_spike_enemy_system,
+                spawn_bug_enemy_system,
             ).chain())
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
@@ -73,26 +73,18 @@ fn main() {
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
 
-        .register_component_as::<dyn Collider, PlayerCollider>()
-        .register_component_as::<dyn Collider, BulletCollider>()
-        
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Weapon, OnyxBluster>()
         .register_component_as::<dyn Weapon, MortarBluster>()
         .register_component_as::<dyn Weapon, PlayerBluster>()
 
-        .register_component_as::<dyn Enemie, SimpleEnemie>()
-        .register_component_as::<dyn Enemie, SpikeEnemie>()
-        .register_component_as::<dyn Enemie, BugEnemie>()
-        .add_system(enemie_moving_system)
-        
-        .add_event::<PlayerCollisionEvent>()
-        .add_event::<BulletCollisionEvent>()
-
+        .register_component_as::<dyn Enemy, SimpleEnemy>()
+        .register_component_as::<dyn Enemy, SpikeEnemy>()
+        .register_component_as::<dyn Enemy, BugEnemy>()
+        .add_system(enemy_moving_system)
         .add_systems((
-                collider_system, 
-                player_collision_event_system,
-                bullet_collision_event_system,
+                enemy_and_bullet_collision_event_system,
+                player_and_bullet_collision_event_system,
             ).chain())
         .add_system(weapon_system)
         .add_system(friction_system)

@@ -7,7 +7,7 @@ pub mod bullet;
 pub mod collision;
 
 pub mod player_collider;
-pub mod bullet_collider;
+pub mod enemy_collider;
 
 pub mod weapon;
 pub mod simple_bluster;
@@ -15,7 +15,7 @@ pub mod onyx_bluster;
 pub mod mortar_bluster;
 pub mod player_bluster;
 
-pub mod enemie;
-pub mod simple_enemie;
-pub mod spike_enemie;
-pub mod bug_enemie;
+pub mod enemy;
+pub mod simple_enemy;
+pub mod spike_enemy;
+pub mod bug_enemy;

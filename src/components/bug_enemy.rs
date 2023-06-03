@@ -1,9 +1,10 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    enemie::*,
+    enemy::*,
     friction::*,
     mortar_bluster::*,
+    collision::*,
 };
 
 use crate::resources::{
@@ -11,14 +12,14 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct BugEnemie {
+pub struct BugEnemy {
     pub moving_speed: f32,
     pub amplitude: f32,
 }
 
-impl BugEnemie {
+impl BugEnemy {
     pub fn new() -> Self {
-        BugEnemie { 
+        BugEnemy { 
             moving_speed: 25.0,
             amplitude: 0.0
         }
@@ -26,30 +27,36 @@ impl BugEnemie {
 }
 
 #[derive(Bundle)]
-pub struct BugEnemieBundle {
+pub struct BugEnemyBundle {
     name: Name,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
-    enemie: BugEnemie,
+    enemy: BugEnemy,
     weapon: MortarBluster,
+    collider: Collider,
 }
 
-impl BugEnemieBundle {
+impl BugEnemyBundle {
     pub fn new() -> Self {
-        BugEnemieBundle { 
-            name: Name::new("BugEnemie"),
+        BugEnemyBundle { 
+            name: Name::new("BugEnemy"),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
-            enemie: BugEnemie::new(),
+            enemy: BugEnemy::new(),
             weapon: MortarBluster::new(),
+            collider: Collider::new(
+                ENEMY_COLLISION_LAYER, 
+                NONE_COLLISION_LAYER, 
+                Vec2::new(25.0, 25.0)
+            ),
         }
     }
 }
 
-impl Enemie for BugEnemie {
-    fn move_enemie(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
+impl Enemy for BugEnemy {
+    fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
         self.amplitude += time.delta_seconds();
         
         velocity.velocity.x = 0.2 * (self.amplitude * 1.5).cos() + time.delta_seconds() * self.moving_speed;
@@ -57,7 +64,7 @@ impl Enemie for BugEnemie {
     }
 }
 
-pub fn spawn_bug_enemie_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
+pub fn spawn_bug_enemy_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
     let mut sprite = TextureAtlasSprite::new(3);
     sprite.color = Color::rgb(1.0, 1.0, 1.0);
     sprite.custom_size = Some(Vec2::splat(32.0));
@@ -71,5 +78,5 @@ pub fn spawn_bug_enemie_system(mut commands: Commands, asset_server: Res<SpriteS
         },
         ..Default::default()
     })
-    .insert(BugEnemieBundle::new());
+    .insert(BugEnemyBundle::new());
 }

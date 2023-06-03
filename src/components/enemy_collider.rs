@@ -5,29 +5,28 @@ use bevy::{
 
 use crate::components::{
     collision::*,
-    player_controller::*,
     bullet::*,
+    enemy::*,
 };
 
-pub fn player_and_bullet_collision_event_system(
-        players: Query<(Entity, &Collider, &Transform), With<PlayerController>>, 
+pub fn enemy_and_bullet_collision_event_system(
+        enemies: Query<(Entity, &Collider, &Transform, &dyn Enemy)>, 
         bullets: Query<(Entity, &Collider, &Transform), With<Bullet>>
     ) {
     
-    for (player_entity, player_collider, player_transform) in players.iter() {
+    for (enemy_entity, enemy_collider, enemy_transform, _enemy) in enemies.iter() {
         for (bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
-            if 0 == ((player_collider.collision_layer) & (bullet_collider.target_layer)) {
+            if 0 == ((enemy_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
             }
-            
 
-            let first_collision_box = player_collider.collision_box;
+            let first_collision_box = enemy_collider.collision_box;
             let second_collision_box = bullet_collider.collision_box;
 
             let first_pos = Vec3::new(
-                player_transform.translation.x - (first_collision_box.x / 2.0), 
-                player_transform.translation.y - (first_collision_box.y / 2.0), 
-                player_transform.translation.z
+                enemy_transform.translation.x - (first_collision_box.x / 2.0), 
+                enemy_transform.translation.y - (first_collision_box.y / 2.0), 
+                enemy_transform.translation.z
             ); 
 
             let second_pos = Vec3::new(
@@ -43,7 +42,7 @@ pub fn player_and_bullet_collision_event_system(
                 second_collision_box);
             
             if !collision.is_none() {
-                // println!("Player coollided {:?}, {:?}", player_collider.collision_layer, bullet_collider.target_layer);
+                println!("Enemy coollided {:?}, {:?}", enemy_collider.collision_layer, bullet_collider.target_layer);
             }
         }
     }
