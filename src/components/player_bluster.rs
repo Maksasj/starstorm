@@ -15,19 +15,21 @@ use crate::resources::{
 pub struct PlayerBluster {
     pub timer: f32,
     pub speed: f32,
+    pub damage: f32,
 }
 
 impl PlayerBluster {
     pub fn new() -> Self {
         PlayerBluster {
             timer: 0.0,
-            speed: 0.8
+            speed: 0.8,
+            damage: 15.0,
         }
     }
 }
 
 impl Weapon for PlayerBluster {
-    fn shoot(&mut self, mut commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
+    fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
         self.timer += time.delta_seconds();
 
         if self.timer > self.speed {
@@ -43,7 +45,8 @@ impl Weapon for PlayerBluster {
                     NONE_COLLISION_LAYER, 
                     ENEMY_COLLISION_LAYER, 
                     Vec2::new(10.0, 10.0)
-                )
+                ),
+                self.damage
             ));
             
             self.timer = 0.0;

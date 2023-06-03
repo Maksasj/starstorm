@@ -7,19 +7,22 @@ use crate::components::{
     collision::*,
     player_controller::*,
     bullet::*,
+    health::*,
+    camera_shake::*,
 };
 
 pub fn player_and_bullet_collision_event_system(
-        players: Query<(Entity, &Collider, &Transform), With<PlayerController>>, 
-        bullets: Query<(Entity, &Collider, &Transform), With<Bullet>>
+        mut commands: Commands,
+        mut players: Query<(Entity, &mut Health, &Collider, &Transform), With<PlayerController>>, 
+        bullets: Query<(Entity, &Bullet, &Collider, &Transform)>,
+        mut event_writer: EventWriter<CameraShakeEvent>
     ) {
     
-    for (player_entity, player_collider, player_transform) in players.iter() {
-        for (bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
+    for (_player_entity, mut player_health, player_collider, player_transform) in players.iter_mut() {
+        for (bullet_entity, bullet, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((player_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
             }
-            
 
             let first_collision_box = player_collider.collision_box;
             let second_collision_box = bullet_collider.collision_box;
@@ -43,7 +46,9 @@ pub fn player_and_bullet_collision_event_system(
                 second_collision_box);
             
             if !collision.is_none() {
-                // println!("Player coollided {:?}, {:?}", player_collider.collision_layer, bullet_collider.target_layer);
+                player_health.take_damage(bullet.damage);
+                commands.entity(bullet_entity).despawn_recursive();
+                event_writer.send(CameraShakeEvent::new(bullet.damage / 7.0 , 0.1));
             }
         }
     }

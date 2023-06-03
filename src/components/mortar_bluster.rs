@@ -14,13 +14,15 @@ use crate::resources::{
 pub struct MortarBluster {
     pub timer: f32,
     pub speed: f32,
+    pub damage: f32,
 }
 
 impl MortarBluster {
     pub fn new() -> Self {
         MortarBluster {
             timer: 0.0,
-            speed: 3.5
+            speed: 3.5,
+            damage: 70.0,
         }
     }
 }
@@ -33,7 +35,15 @@ impl Weapon for MortarBluster {
             let handle = asset_server.handle.clone();
             
             for i in -2..2 {
-                spawn_bullet(&mut commands, &handle, 5, start_pos, angle + 0.2617 * i as f32, Velocity::with(0.1, 0.0));
+                spawn_bullet(
+                    &mut commands, 
+                    &handle, 
+                    5, 
+                    start_pos, 
+                    angle + 0.2617 * i as f32, 
+                    Velocity::with(0.1, 0.0), 
+                    self.damage
+                );
             }
             
             self.timer = 0.0;

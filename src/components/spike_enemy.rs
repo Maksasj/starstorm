@@ -1,15 +1,18 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    enemy::*,
     onyx_bluster::*,
     friction::*,
     collision::*,
+    health::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
+
+use super::damage_shake::DamageShake;
 
 #[derive(Component)]
 pub struct SpikeEnemy {
@@ -29,18 +32,21 @@ impl SpikeEnemy {
 #[derive(Bundle)]
 pub struct SpikeEnemyBundle {
     name: Name,
+    health: Health,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
     enemy: SpikeEnemy,
     weapon: OnyxBluster,
     collider: Collider,
+    damage_skake: DamageShake,
 }
 
 impl SpikeEnemyBundle {
     pub fn new() -> Self {
         SpikeEnemyBundle { 
             name: Name::new("SpikeEnemy"),
+            health: Health::new(50.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
@@ -51,6 +57,7 @@ impl SpikeEnemyBundle {
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
+            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
         }
     }
 }

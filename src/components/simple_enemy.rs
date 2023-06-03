@@ -1,10 +1,11 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    enemy::*,
     simple_bluster::*,
     friction::*,
     collision::*,
+    health::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
@@ -27,18 +28,21 @@ impl SimpleEnemy {
 #[derive(Bundle)]
 pub struct SimpleEnemyBundle {
     name: Name,
+    health: Health,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
     enemy: SimpleEnemy,
     weapon: SimpleBluster,
     collider: Collider,
+    damage_skake: DamageShake,
 }
 
 impl SimpleEnemyBundle {
     pub fn new() -> Self {
         SimpleEnemyBundle { 
             name: Name::new("SimpleEnemy"),
+            health: Health::new(80.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
@@ -49,6 +53,7 @@ impl SimpleEnemyBundle {
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
+            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
         }
     }
 }
