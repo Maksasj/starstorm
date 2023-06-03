@@ -10,3 +10,4 @@ pub mod enemie;
 
 pub mod simple_enemie;
 pub mod spike_enemie;
+pub mod bug_enemie;

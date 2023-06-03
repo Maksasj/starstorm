@@ -21,10 +21,12 @@ pub use crate::components::{
     bullet::*,
     weapon::*,
     simple_bluster::*,
+    player::*,
+
+    enemie::*,
     simple_enemie::*,
     spike_enemie::*,
-    enemie::*,
-    player::*,
+    bug_enemie::*,
 };
 
 fn main() {
@@ -52,6 +54,7 @@ fn main() {
                 spawn_player_system, 
                 spawn_simple_enemie_system,
                 spawn_spike_enemie_system,
+                spawn_bug_enemie_system,
             ).chain())
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
@@ -62,6 +65,7 @@ fn main() {
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Enemie, SimpleEnemie>()
         .register_component_as::<dyn Enemie, SpikeEnemie>()
+        .register_component_as::<dyn Enemie, BugEnemie>()
         .add_system(enemie_moving_system)
         .add_system(weapon_system)
         .add_system(friction_system)
