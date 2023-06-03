@@ -13,6 +13,7 @@ pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
     background::*,
+    small_numbers_font::*,
 };
 
 pub use crate::components::{
@@ -38,6 +39,7 @@ pub use crate::components::{
     bug_enemy::*,
 
     camera_shake::*,
+    player_health_text::*,
 };
 
 fn main() {
@@ -62,8 +64,10 @@ fn main() {
         .add_startup_systems((
                 load_spritesheet_system, 
                 load_background_system,
+                load_small_number_font_system,
                 apply_system_buffers, 
                 spawn_background_system,
+                spawn_player_health_text_system,
                 spawn_player_system, 
                 spawn_simple_enemy_system,
                 spawn_spike_enemy_system,
@@ -95,6 +99,7 @@ fn main() {
                 enemy_death_system,
                 camera_shake_system
             ).chain())
+        .add_system(player_helth_text_update_system)
         .add_system(weapon_system)
         .add_system(friction_system)
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
