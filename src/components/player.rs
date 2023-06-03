@@ -4,6 +4,7 @@ use crate::components::{
     friction::*,
     player_bluster::*,
     player_controller::*,
+    player_collider::*,
     collision::*,
 };
 
@@ -20,7 +21,7 @@ pub struct PlayerBundle {
     friction: Friction,
     velocity: Velocity, 
     weapon: PlayerBluster,
-    collider: ColliderBundle,
+    collider: PlayerCollider,
 }
 
 impl PlayerBundle {
@@ -32,7 +33,7 @@ impl PlayerBundle {
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
             weapon: PlayerBluster::new(),
-            collider: ColliderBundle::new(
+            collider: PlayerCollider::new(
                 PLAYER_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)

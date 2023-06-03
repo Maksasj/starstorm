@@ -20,7 +20,10 @@ pub use crate::components::{
     friction::*,
     bullet::*,
     player::*,
+    
     collision::*,
+    player_collider::*,
+    bullet_collider::*,
 
     weapon::*,
     simple_bluster::*,
@@ -69,6 +72,9 @@ fn main() {
         .add_system(entity_rotation_system)
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
+
+        .register_component_as::<dyn Collider, PlayerCollider>()
+        .register_component_as::<dyn Collider, BulletCollider>()
         
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Weapon, OnyxBluster>()
@@ -80,9 +86,14 @@ fn main() {
         .register_component_as::<dyn Enemie, BugEnemie>()
         .add_system(enemie_moving_system)
         .add_event::<CollisionEvent>()
+        .add_event::<PlayerCollisionEvent>()
+        .add_event::<BulletCollisionEvent>()
         .add_systems((
                 collider_system, 
-                collision_event_system
+                collision_event_system,
+                
+                player_collision_event_system,
+                bullet_collision_event_system,
             ).chain())
         .add_system(weapon_system)
         .add_system(friction_system)

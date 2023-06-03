@@ -6,6 +6,9 @@ pub mod friction;
 pub mod bullet;
 pub mod collision;
 
+pub mod player_collider;
+pub mod bullet_collider;
+
 pub mod weapon;
 pub mod simple_bluster;
 pub mod onyx_bluster;
