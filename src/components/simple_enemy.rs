@@ -1,9 +1,10 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    enemie::*,
+    enemy::*,
     simple_bluster::*,
     friction::*,
+    collision::*,
 };
 
 use crate::resources::{
@@ -11,48 +12,54 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct SimpleEnemie {
+pub struct SimpleEnemy {
     pub moving_speed: f32
 }
 
-impl SimpleEnemie {
+impl SimpleEnemy {
     pub fn new() -> Self {
-        SimpleEnemie { 
+        SimpleEnemy { 
             moving_speed: 50.0 
         }
     }
 }
 
 #[derive(Bundle)]
-pub struct SimpleEnemieBundle {
+pub struct SimpleEnemyBundle {
     name: Name,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
-    enemie: SimpleEnemie,
+    enemy: SimpleEnemy,
     weapon: SimpleBluster,
+    collider: Collider,
 }
 
-impl SimpleEnemieBundle {
+impl SimpleEnemyBundle {
     pub fn new() -> Self {
-        SimpleEnemieBundle { 
-            name: Name::new("SimpleEnemie"),
+        SimpleEnemyBundle { 
+            name: Name::new("SimpleEnemy"),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
-            enemie: SimpleEnemie::new(),
+            enemy: SimpleEnemy::new(),
             weapon: SimpleBluster::new(),
+            collider: Collider::new(
+                ENEMY_COLLISION_LAYER, 
+                NONE_COLLISION_LAYER, 
+                Vec2::new(25.0, 25.0)
+            ),
         }
     }
 }
 
-impl Enemie for SimpleEnemie {
-    fn move_enemie(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
+impl Enemy for SimpleEnemy {
+    fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
         velocity.velocity.x = time.delta_seconds() * self.moving_speed;
     }
 }
 
-pub fn spawn_simple_enemie_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
+pub fn spawn_simple_enemy_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
     let mut sprite = TextureAtlasSprite::new(1);
     sprite.color = Color::rgb(1.0, 1.0, 1.0);
     sprite.custom_size = Some(Vec2::splat(32.0));
@@ -66,5 +73,5 @@ pub fn spawn_simple_enemie_system(mut commands: Commands, asset_server: Res<Spri
         },
         ..Default::default()
     })
-    .insert(SimpleEnemieBundle::new());
+    .insert(SimpleEnemyBundle::new());
 }
