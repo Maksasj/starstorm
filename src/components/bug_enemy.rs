@@ -5,6 +5,7 @@ use crate::components::{
     friction::*,
     mortar_bluster::*,
     collision::*,
+    health::*,
 };
 
 use crate::resources::{
@@ -29,6 +30,7 @@ impl BugEnemy {
 #[derive(Bundle)]
 pub struct BugEnemyBundle {
     name: Name,
+    health: Health,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
@@ -41,6 +43,7 @@ impl BugEnemyBundle {
     pub fn new() -> Self {
         BugEnemyBundle { 
             name: Name::new("BugEnemy"),
+            health: Health::new(75.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),

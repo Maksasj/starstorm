@@ -5,6 +5,7 @@ use crate::components::{
     simple_bluster::*,
     friction::*,
     collision::*,
+    health::*,
 };
 
 use crate::resources::{
@@ -27,6 +28,7 @@ impl SimpleEnemy {
 #[derive(Bundle)]
 pub struct SimpleEnemyBundle {
     name: Name,
+    health: Health,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
@@ -39,6 +41,7 @@ impl SimpleEnemyBundle {
     pub fn new() -> Self {
         SimpleEnemyBundle { 
             name: Name::new("SimpleEnemy"),
+            health: Health::new(50.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),

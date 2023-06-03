@@ -5,6 +5,7 @@ use crate::components::{
     onyx_bluster::*,
     friction::*,
     collision::*,
+    health::*,
 };
 
 use crate::resources::{
@@ -29,6 +30,7 @@ impl SpikeEnemy {
 #[derive(Bundle)]
 pub struct SpikeEnemyBundle {
     name: Name,
+    health: Health,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
@@ -41,6 +43,7 @@ impl SpikeEnemyBundle {
     pub fn new() -> Self {
         SpikeEnemyBundle { 
             name: Name::new("SpikeEnemy"),
+            health: Health::new(20.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),

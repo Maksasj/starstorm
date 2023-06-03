@@ -5,6 +5,7 @@ use crate::components::{
     player_bluster::*,
     player_controller::*,
     collision::*,
+    health::*,
 };
 
 use crate::resources::{
@@ -15,6 +16,7 @@ use crate::resources::{
 #[derive(Bundle)]
 pub struct PlayerBundle {
     name: Name,
+    health: Health,
     rotation: EntityRotation,
     controller: PlayerController, 
     friction: Friction,
@@ -27,6 +29,7 @@ impl PlayerBundle {
     pub fn new() -> Self {
         PlayerBundle { 
             name: Name::new("Player"),
+            health: Health::new(100.0),
             rotation: EntityRotation::new(_UP),
             controller: PlayerController{}, 
             friction: Friction::new(0.97),

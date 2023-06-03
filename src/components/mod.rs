@@ -6,6 +6,9 @@ pub mod friction;
 pub mod bullet;
 pub mod collision;
 
+
+pub mod health;
+
 pub mod player_collider;
 pub mod enemy_collider;
 
