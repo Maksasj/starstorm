@@ -1,6 +1,5 @@
 use bevy::{
     prelude::*, 
-    sprite::collide_aabb::collide
 };
 
 pub const NONE_COLLISION_LAYER: usize =     0b0;

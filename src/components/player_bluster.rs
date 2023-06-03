@@ -27,7 +27,7 @@ impl PlayerBluster {
 }
 
 impl Weapon for PlayerBluster {
-    fn shoot(&mut self, mut commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
+    fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
         self.timer += time.delta_seconds();
 
         if self.timer > self.speed {

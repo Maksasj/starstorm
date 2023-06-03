@@ -14,8 +14,8 @@ pub fn enemy_and_bullet_collision_event_system(
         bullets: Query<(Entity, &Collider, &Transform), With<Bullet>>
     ) {
     
-    for (enemy_entity, enemy_collider, enemy_transform, _enemy) in enemies.iter() {
-        for (bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
+    for (_enemy_entity, enemy_collider, enemy_transform, _enemy) in enemies.iter() {
+        for (_bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((enemy_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
             }
