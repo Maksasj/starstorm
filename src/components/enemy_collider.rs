@@ -46,7 +46,7 @@ pub fn enemy_and_bullet_collision_event_system(
             if !collision.is_none() {
                 enemy_health.take_damage(bullet.damage);
                 commands.entity(bullet_entity).despawn_recursive();
-                damage_shake.start(0.2, bullet.damage / 15.0)
+                damage_shake.start(0.2, bullet.damage / 20.0)
             }
         }
     }
