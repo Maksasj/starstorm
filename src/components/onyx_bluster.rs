@@ -10,28 +10,31 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct SimpleBluster {
+pub struct OnyxBluster {
     pub timer: f32,
     pub speed: f32,
 }
 
-impl SimpleBluster {
+impl OnyxBluster {
     pub fn new() -> Self {
-        SimpleBluster {
+        OnyxBluster {
             timer: 0.0,
-            speed: 0.3
+            speed: 0.8
         }
     }
 }
 
-impl Weapon for SimpleBluster {
+impl Weapon for OnyxBluster {
     fn shoot(&mut self, mut commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
         self.timer += time.delta_seconds();
 
+        
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
-            
-            spawn_bullet(&mut commands, &handle, 4, start_pos, angle);
+
+            spawn_bullet(&mut commands, &handle, 6, start_pos, angle + 0.5235);
+            spawn_bullet(&mut commands, &handle, 6, start_pos, angle);
+            spawn_bullet(&mut commands, &handle, 6, start_pos, angle - 0.5235);
             
             self.timer = 0.0;
         }

@@ -4,10 +4,12 @@ pub mod entity_rotation;
 pub mod velocity;
 pub mod friction;
 pub mod bullet;
+
 pub mod weapon;
 pub mod simple_bluster;
-pub mod enemie;
+pub mod onyx_bluster;
 
+pub mod enemie;
 pub mod simple_enemie;
 pub mod spike_enemie;
 pub mod bug_enemie;
