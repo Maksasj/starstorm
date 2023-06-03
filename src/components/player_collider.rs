@@ -11,12 +11,13 @@ use crate::components::{
 };
 
 pub fn player_and_bullet_collision_event_system(
+        mut commands: Commands,
         mut players: Query<(Entity, &mut Health, &Collider, &Transform), With<PlayerController>>, 
         bullets: Query<(Entity, &Bullet, &Collider, &Transform)>
     ) {
     
     for (_player_entity, mut player_health, player_collider, player_transform) in players.iter_mut() {
-        for (_bullet_entity, bullet, bullet_collider, bullet_transform) in bullets.iter() {
+        for (bullet_entity, bullet, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((player_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
             }
@@ -45,6 +46,7 @@ pub fn player_and_bullet_collision_event_system(
             
             if !collision.is_none() {
                 player_health.take_damage(bullet.damage);
+                commands.entity(bullet_entity).despawn_recursive();
             }
         }
     }
