@@ -20,7 +20,7 @@ impl PlayerBluster {
     pub fn new() -> Self {
         PlayerBluster {
             timer: 0.0,
-            speed: 0.3
+            speed: 0.8
         }
     }
 }
@@ -32,7 +32,7 @@ impl Weapon for PlayerBluster {
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
             
-            // spawn_bullet(&mut commands, &handle, 4, start_pos, angle, Velocity::with(0.4, 0.0));
+            spawn_bullet(&mut commands, &handle, 7, start_pos, angle, Velocity::with(0.4, 0.0));
             
             self.timer = 0.0;
         }

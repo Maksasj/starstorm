@@ -11,13 +11,15 @@ pub const BULLET_COLLISION_LAYER: usize = 0b10;
 pub struct Collider {
     collision_layer: usize,
     target_layer: usize,
+    collision_box: Vec2,
 }
 
 impl Collider {
-    pub fn new(collision_layer: usize, target_layer: usize) -> Self {
+    pub fn new(collision_layer: usize, target_layer: usize, collision_box: Vec2) -> Self {
         Collider {
             collision_layer: collision_layer,
             target_layer: target_layer,
+            collision_box: collision_box,
         }
     }
 }
@@ -28,9 +30,9 @@ pub struct ColliderBundle {
 }
 
 impl ColliderBundle {
-    pub fn new(collision_layer: usize, target_layer: usize) -> Self {
+    pub fn new(collision_layer: usize, target_layer: usize, collision_box: Vec2) -> Self {
         ColliderBundle { 
-            collider: Collider::new(collision_layer, target_layer),
+            collider: Collider::new(collision_layer, target_layer, collision_box),
         }
     }
 }
@@ -45,11 +47,23 @@ pub fn collider_system(targets: Query<(Entity, &mut Collider, &Transform)>, mut 
                 continue;
             }
 
+            let first_pos = Vec3::new(
+                first_transform.translation.x - (first_collider.collision_box.x / 2.0), 
+                first_transform.translation.y - (first_collider.collision_box.y / 2.0), 
+                first_transform.translation.z
+            ); 
+
+            let second_pos = Vec3::new(
+                second_transform.translation.x - (second_collider.collision_box.x / 2.0), 
+                second_transform.translation.y - (second_collider.collision_box.y / 2.0), 
+                second_transform.translation.z
+            ); 
+
             let collision = collide(
-                first_transform.translation, 
-                Vec2::splat(50.0), 
-                second_transform.translation, 
-                Vec2::splat(50.0));
+                second_pos, 
+                first_collider.collision_box, 
+                first_pos, 
+                second_collider.collision_box);
             
             if !collision.is_none() {
                 event_writer.send(CollisionEvent{ 0: first_entity, 1: second_entity});
@@ -60,7 +74,7 @@ pub fn collider_system(targets: Query<(Entity, &mut Collider, &Transform)>, mut 
 
 pub fn collision_event_system(mut event_reader: EventReader<CollisionEvent>) {
     for event in event_reader.iter() {
-
+        println!("{:?}, {:?}", event.0.index(), event.1.index());
     }
 
     event_reader.clear()

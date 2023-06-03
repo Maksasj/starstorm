@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
-use crate::{components::{
+use crate::components::{
     friction::*,
     collision::*,
-}, Collider};
+};
 
 #[derive(Component)]
 pub struct Bullet {
@@ -50,7 +50,11 @@ impl BulletBundle {
             rotation: EntityRotation::new(angle),
             bullet: Bullet::new(10.0),
             velocity: velocity,
-            collider: ColliderBundle::new(BULLET_COLLISION_LAYER, PLAYER_COLLISION_LAYER),
+            collider: ColliderBundle::new(
+                BULLET_COLLISION_LAYER, 
+                PLAYER_COLLISION_LAYER, 
+                Vec2::new(10.0, 10.0)
+            ),
         }
     }
 }
