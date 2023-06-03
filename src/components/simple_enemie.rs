@@ -61,7 +61,7 @@ pub fn spawn_simple_enemie_system(mut commands: Commands, asset_server: Res<Spri
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(0.0, 0.0, 900.0), 
+            translation: Vec3::new(0.0, 500.0, 900.0), 
             ..Default::default()
         },
         ..Default::default()

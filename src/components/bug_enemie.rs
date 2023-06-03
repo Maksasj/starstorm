@@ -3,13 +3,12 @@ use bevy::prelude::*;
 use crate::components::{
     enemie::*,
     friction::*,
+    mortar_bluster::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
-
-use super::onyx_bluster::OnyxBluster;
 
 #[derive(Component)]
 pub struct BugEnemie {
@@ -33,7 +32,7 @@ pub struct BugEnemieBundle {
     friction: Friction,
     velocity: Velocity, 
     enemie: BugEnemie,
-    weapon: OnyxBluster,
+    weapon: MortarBluster,
 }
 
 impl BugEnemieBundle {
@@ -44,7 +43,7 @@ impl BugEnemieBundle {
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
             enemie: BugEnemie::new(),
-            weapon: OnyxBluster::new(),
+            weapon: MortarBluster::new(),
         }
     }
 }
@@ -67,7 +66,7 @@ pub fn spawn_bug_enemie_system(mut commands: Commands, asset_server: Res<SpriteS
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(100.0, 0.0, 900.0), 
+            translation: Vec3::new(100.0, 500.0, 900.0), 
             ..Default::default()
         },
         ..Default::default()

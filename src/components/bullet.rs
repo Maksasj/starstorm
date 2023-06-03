@@ -29,7 +29,7 @@ pub struct BulletBundle {
 }
 
 impl BulletBundle {
-    pub fn new(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32) -> Self {
+    pub fn new(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity) -> Self {
         let mut sprite: TextureAtlasSprite = TextureAtlasSprite::new(sprite_index);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
@@ -47,7 +47,7 @@ impl BulletBundle {
             name: Name::new("Bullet"),
             rotation: EntityRotation::new(angle),
             bullet: Bullet::new(10.0),
-            velocity: Velocity::with(0.4, 0.0),
+            velocity: velocity,
         }
     }
 }
@@ -58,9 +58,10 @@ pub fn spawn_bullet(
         sprite_index: usize,
         start_pos: Vec2,
         angle: f32, 
+        velocity: Velocity,
     ) {
 
-    commands.spawn(BulletBundle::new(asset_handle, sprite_index, start_pos, angle));
+    commands.spawn(BulletBundle::new(asset_handle, sprite_index, start_pos, angle, velocity));
 }
 
 pub fn bullet_life_time_system(mut commands: Commands, mut targets: Query<(Entity, &mut Bullet)>, time: Res<Time>) {

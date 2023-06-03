@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::components::{
     enemie::*,
-    simple_bluster::*,
+    onyx_bluster::*,
     friction::*,
 };
 
@@ -32,7 +32,7 @@ pub struct SpikeEnemieBundle {
     friction: Friction,
     velocity: Velocity, 
     enemie: SpikeEnemie,
-    weapon: SimpleBluster,
+    weapon: OnyxBluster,
 }
 
 impl SpikeEnemieBundle {
@@ -43,7 +43,7 @@ impl SpikeEnemieBundle {
             friction: Friction::new(0.97),
             velocity: Velocity::new(),
             enemie: SpikeEnemie::new(),
-            weapon: SimpleBluster::new(),
+            weapon: OnyxBluster::new(),
         }
     }
 }
@@ -66,7 +66,7 @@ pub fn spawn_spike_enemie_system(mut commands: Commands, asset_server: Res<Sprit
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(100.0, 0.0, 900.0), 
+            translation: Vec3::new(-100.0, 500.0, 900.0), 
             ..Default::default()
         },
         ..Default::default()
