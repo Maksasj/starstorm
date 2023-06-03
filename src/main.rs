@@ -7,6 +7,7 @@ use bevy::{
 mod components;
 mod resources;
 
+use crate::components::spike_enemie::SpikeEnemie;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
@@ -21,6 +22,7 @@ pub use crate::components::{
     weapon::*,
     simple_bluster::*,
     simple_enemie::*,
+    spike_enemie::*,
     enemie::*,
     player::*,
 };
@@ -44,7 +46,13 @@ fn main() {
                 }),
                 ..default()
             }))
-        .add_startup_systems((load_spritesheet_system, apply_system_buffers, spawn_player_system, spawn_simple_enemie_system).chain())
+        .add_startup_systems((
+                load_spritesheet_system, 
+                apply_system_buffers, 
+                spawn_player_system, 
+                spawn_simple_enemie_system,
+                spawn_spike_enemie_system,
+            ).chain())
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
         .add_system(player_rotation_system)
@@ -53,6 +61,7 @@ fn main() {
         .add_system(bullet_life_time_system)
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Enemie, SimpleEnemie>()
+        .register_component_as::<dyn Enemie, SpikeEnemie>()
         .add_system(enemie_moving_system)
         .add_system(weapon_system)
         .add_system(friction_system)
