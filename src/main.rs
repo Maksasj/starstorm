@@ -20,11 +20,13 @@ pub use crate::components::{
     friction::*,
     bullet::*,
     player::*,
+    collision::*,
 
     weapon::*,
     simple_bluster::*,
     onyx_bluster::*,
     mortar_bluster::*,
+    player_bluster::*,
 
     enemie::*,
     simple_enemie::*,
@@ -67,13 +69,21 @@ fn main() {
         .add_system(entity_rotation_system)
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
+        
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Weapon, OnyxBluster>()
         .register_component_as::<dyn Weapon, MortarBluster>()
+        .register_component_as::<dyn Weapon, PlayerBluster>()
+
         .register_component_as::<dyn Enemie, SimpleEnemie>()
         .register_component_as::<dyn Enemie, SpikeEnemie>()
         .register_component_as::<dyn Enemie, BugEnemie>()
         .add_system(enemie_moving_system)
+        .add_event::<CollisionEvent>()
+        .add_systems((
+                collider_system, 
+                collision_event_system
+            ).chain())
         .add_system(weapon_system)
         .add_system(friction_system)
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
