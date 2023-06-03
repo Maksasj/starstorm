@@ -12,13 +12,13 @@ pub trait Collider {
     fn get_collision_layer(&self) -> usize;
     fn get_target_layer(&self) -> usize;
     fn get_collision_box(&self) -> Vec2;
+    
+    fn notify(&self, commands: &mut Commands);
 }
 
-pub struct CollisionEvent(Entity, Entity);
-
-pub fn collider_system(targets: Query<(Entity, &dyn Collider, &Transform)>, mut event_writer: EventWriter<CollisionEvent>) {
-    for (first_entity, f_collider, first_transform) in targets.iter() {
-        for (second_entity, s_collider, second_transform) in targets.iter() {
+pub fn collider_system(mut commands: Commands, targets: Query<(&dyn Collider, &Transform)>) {
+    for (f_collider, first_transform) in targets.iter() {
+        for (s_collider, second_transform) in targets.iter() {
             
             let first_collider: &dyn Collider = f_collider.iter().last().unwrap();
             let second_collider: &dyn Collider = s_collider.iter().last().unwrap();
@@ -49,16 +49,8 @@ pub fn collider_system(targets: Query<(Entity, &dyn Collider, &Transform)>, mut 
                 second_collision_box);
             
             if !collision.is_none() {
-                event_writer.send(CollisionEvent{ 0: first_entity, 1: second_entity});
+                second_collider.notify(&mut commands);
             }
-        }
+        } 
     } 
-}
-
-pub fn collision_event_system(mut event_reader: EventReader<CollisionEvent>) {
-    for event in event_reader.iter() {
-        println!("{:?}, {:?}", event.0.index(), event.1.index());
-    }
-
-    event_reader.clear()
 }

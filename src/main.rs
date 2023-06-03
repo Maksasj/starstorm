@@ -85,13 +85,12 @@ fn main() {
         .register_component_as::<dyn Enemie, SpikeEnemie>()
         .register_component_as::<dyn Enemie, BugEnemie>()
         .add_system(enemie_moving_system)
-        .add_event::<CollisionEvent>()
+        
         .add_event::<PlayerCollisionEvent>()
         .add_event::<BulletCollisionEvent>()
+
         .add_systems((
                 collider_system, 
-                collision_event_system,
-                
                 player_collision_event_system,
                 bullet_collision_event_system,
             ).chain())

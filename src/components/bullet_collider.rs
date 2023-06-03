@@ -23,6 +23,8 @@ impl BulletCollider {
     }
 }
 
+pub struct BulletCollisionEvent;
+
 impl Collider for BulletCollider {
     fn get_collision_layer(&self) -> usize {
         return self.collision_layer;
@@ -35,13 +37,17 @@ impl Collider for BulletCollider {
     fn get_collision_box(&self) -> Vec2 {
         return self.collision_box;
     }
+    
+    fn notify(&self, commands: &mut Commands) {
+        commands.add(|w: &mut World| {
+            w.send_event(BulletCollisionEvent{});
+        });
+    }
 }
 
-pub struct BulletCollisionEvent(Entity, Entity);
-
 pub fn bullet_collision_event_system(mut event_reader: EventReader<BulletCollisionEvent>) {
-    for event in event_reader.iter() {
-        println!("Bullet coollided with {:?}, {:?}", event.0.index(), event.1.index());
+    for _event in event_reader.iter() {
+        println!("Bullet coollided");
     }
 
     event_reader.clear()

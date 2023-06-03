@@ -23,6 +23,8 @@ impl PlayerCollider {
     }
 }
 
+pub struct PlayerCollisionEvent;
+
 impl Collider for PlayerCollider {
     fn get_collision_layer(&self) -> usize {
         return self.collision_layer;
@@ -35,13 +37,17 @@ impl Collider for PlayerCollider {
     fn get_collision_box(&self) -> Vec2 {
         return self.collision_box;
     }
+
+    fn notify(&self, commands: &mut Commands) {
+        commands.add(|w: &mut World| {
+            w.send_event(PlayerCollisionEvent{});
+        });
+    }
 }
 
-pub struct PlayerCollisionEvent(Entity, Entity);
-
 pub fn player_collision_event_system(mut event_reader: EventReader<PlayerCollisionEvent>) {
-    for event in event_reader.iter() {
-        println!("Player coollided with {:?}, {:?}", event.0.index(), event.1.index());
+    for _event in event_reader.iter() {
+        println!("Player coollided");
     }
 
     event_reader.clear()
