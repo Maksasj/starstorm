@@ -12,11 +12,11 @@ use crate::components::{
 
 pub fn enemy_and_bullet_collision_event_system(
         mut enemies: Query<(Entity, &mut Health, &Collider, &Transform, &dyn Enemy)>, 
-        bullets: Query<(Entity, &Collider, &Transform), With<Bullet>>
+        bullets: Query<(Entity, &Bullet, &Collider, &Transform, )>
     ) {
     
     for (_enemy_entity, mut enemy_health, enemy_collider, enemy_transform, _enemy) in enemies.iter_mut() {
-        for (_bullet_entity, bullet_collider, bullet_transform) in bullets.iter() {
+        for (_bullet_entity, bullet, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((enemy_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
             }
@@ -43,8 +43,7 @@ pub fn enemy_and_bullet_collision_event_system(
                 second_collision_box);
             
             if !collision.is_none() {
-                println!("Enemy coollided {:?}, {:?}", enemy_collider.collision_layer, bullet_collider.target_layer);
-                enemy_health.take_damage(15.0);
+                enemy_health.take_damage(bullet.damage);
             }
         }
     }
