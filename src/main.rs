@@ -5,26 +5,32 @@ use bevy::{
 };
 
 mod components;
-mod controllers;
 mod resources;
 
+use crate::components::onyx_bluster::OnyxBluster;
+use crate::components::spike_enemie::SpikeEnemie;
 pub use crate::resources::{
     sprite_sheet::*,
-};
-
-pub use crate::controllers::{
-    player::*,
+    mouse_position::*,
 };
 
 pub use crate::components::{
     entity_rotation::*,
     velocity::*,
     player_controller::*,
-    mouse_position::*,
     friction::*,
     bullet::*,
+    player::*,
+
     weapon::*,
     simple_bluster::*,
+    onyx_bluster::*,
+    mortar_bluster::*,
+
+    enemie::*,
+    simple_enemie::*,
+    spike_enemie::*,
+    bug_enemie::*,
 };
 
 fn main() {
@@ -46,19 +52,30 @@ fn main() {
                 }),
                 ..default()
             }))
-        .add_startup_systems((load_spritesheet_system, apply_system_buffers, spawn_player_system).chain())
+        .add_startup_systems((
+                load_spritesheet_system, 
+                apply_system_buffers, 
+                spawn_player_system, 
+                spawn_simple_enemie_system,
+                spawn_spike_enemie_system,
+                spawn_bug_enemie_system,
+            ).chain())
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
         .add_system(player_rotation_system)
+        .add_system(entity_rotation_system)
         .add_system(velocity_movement_system)
         .add_system(bullet_life_time_system)
         .register_component_as::<dyn Weapon, SimpleBluster>()
+        .register_component_as::<dyn Weapon, OnyxBluster>()
+        .register_component_as::<dyn Weapon, MortarBluster>()
+        .register_component_as::<dyn Enemie, SimpleEnemie>()
+        .register_component_as::<dyn Enemie, SpikeEnemie>()
+        .register_component_as::<dyn Enemie, BugEnemie>()
+        .add_system(enemie_moving_system)
         .add_system(weapon_system)
         .add_system(friction_system)
-        .insert_resource(MousePosition { 
-            pos: Vec2::new(0.0, 0.0),
-            window_size: Vec2::new(800.0, 600.0),
-        })
+        .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_system(mouse_position_update_system) 
         .run();
 }
