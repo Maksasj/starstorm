@@ -8,14 +8,16 @@ use crate::components::{
 #[derive(Component)]
 pub struct Bullet {
     pub life_time: f32,
-    timer: f32
+    timer: f32,
+    pub damage: f32,
 }
 
 impl Bullet {
-    pub fn new(life_time: f32) -> Self {
+    pub fn new(life_time: f32, damage: f32) -> Self {
         Bullet {
             life_time: life_time,
-            timer: 0.0
+            timer: 0.0,
+            damage: damage,
         }
     }
 }
@@ -31,7 +33,7 @@ pub struct BulletBundle {
 }
 
 impl BulletBundle {
-    pub fn new(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity) -> Self {
+    pub fn new(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity, damage: f32) -> Self {
         let mut sprite: TextureAtlasSprite = TextureAtlasSprite::new(sprite_index);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
@@ -48,7 +50,7 @@ impl BulletBundle {
             },
             name: Name::new("Bullet"),
             rotation: EntityRotation::new(angle),
-            bullet: Bullet::new(10.0),
+            bullet: Bullet::new(10.0, damage),
             velocity: velocity,
             collider: Collider::new(
                 BULLET_COLLISION_LAYER, 
@@ -58,7 +60,7 @@ impl BulletBundle {
         }
     }
 
-    pub fn custom(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity, collider: Collider) -> Self {
+    pub fn custom(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity, collider: Collider, damage: f32) -> Self {
         let mut sprite: TextureAtlasSprite = TextureAtlasSprite::new(sprite_index);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
@@ -75,7 +77,7 @@ impl BulletBundle {
             },
             name: Name::new("Bullet"),
             rotation: EntityRotation::new(angle),
-            bullet: Bullet::new(10.0),
+            bullet: Bullet::new(10.0, damage),
             velocity: velocity,
             collider: collider,
         }
@@ -89,9 +91,10 @@ pub fn spawn_bullet(
         start_pos: Vec2,
         angle: f32, 
         velocity: Velocity,
+        damage: f32
     ) {
 
-    commands.spawn(BulletBundle::new(asset_handle, sprite_index, start_pos, angle, velocity));
+    commands.spawn(BulletBundle::new(asset_handle, sprite_index, start_pos, angle, velocity, damage));
 }
 
 pub fn spawn_bullet_from_bundle(commands: &mut Commands, bullet: BulletBundle) {

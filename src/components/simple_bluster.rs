@@ -34,7 +34,7 @@ impl Weapon for SimpleBluster {
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
             
-            spawn_bullet(&mut commands, &handle, 4, start_pos, angle, Velocity::with(0.4, 0.0));
+            spawn_bullet(&mut commands, &handle, 4, start_pos, angle, Velocity::with(0.4, 0.0), self.damage);
             
             self.timer = 0.0;
         }

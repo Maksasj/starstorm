@@ -45,7 +45,8 @@ impl Weapon for PlayerBluster {
                     NONE_COLLISION_LAYER, 
                     ENEMY_COLLISION_LAYER, 
                     Vec2::new(10.0, 10.0)
-                )
+                ),
+                self.damage
             ));
             
             self.timer = 0.0;
