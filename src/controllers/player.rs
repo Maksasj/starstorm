@@ -1,11 +1,10 @@
 use bevy::prelude::*;
 
-use crate::Weapon;
 use crate::components::{
     player_controller::*,
     mouse_position::*,
     friction::*,
-    bullet::*,
+    simple_bluster::*,
 };
 
 use crate::resources::{
@@ -34,24 +33,6 @@ pub fn player_controller_system(input: Res<Input<KeyCode>>, mut targets: Query<&
     if input.pressed(KeyCode::D) {
         for mut velocity in targets.iter_mut() {
             velocity.velocity.y -= 0.01;
-        }
-    }
-}
-
-pub fn player_shooting_system(
-        mut commands: Commands, 
-        input: Res<Input<MouseButton>>, 
-        asset_server: Res<SpriteSheet>, 
-        targets: Query<(&EntityRotation, &Transform), With<PlayerController>>
-    ) {
-    
-    for (rotation, transform) in targets.iter() {
-        if input.pressed(MouseButton::Left) {
-            spawn_bullet(
-                &mut commands, 
-                &asset_server, 
-                rotation.rotation_angle, 
-                Vec2::new(transform.translation.x, transform.translation.y));
         }
     }
 }
@@ -94,6 +75,6 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
     .insert(PlayerController{})
     .insert(EntityRotation{ rotation_angle: 0.0, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
     .insert(Friction{ rate: 0.97 })
-    .insert(Weapon{ shooting_speed: 0.8, shooting_auto: true, shooting_timer: 0.0 })
+    .insert(SimpleBluster::new())
     .insert(Velocity{ velocity: Vec2::new(0.0, 0.0) });
 }
