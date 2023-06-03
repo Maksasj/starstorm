@@ -7,15 +7,16 @@ use crate::components::{
     collision::*,
     bullet::*,
     health::*,
+    damage_shake::*,
 };
 
 pub fn enemy_and_bullet_collision_event_system(
         mut commands: Commands,
-        mut enemies: Query<(Entity, &mut Health, &Collider, &Transform, &dyn Enemy)>, 
+        mut enemies: Query<(Entity, &mut DamageShake, &mut Health, &Collider, &Transform, &dyn Enemy)>, 
         bullets: Query<(Entity, &Bullet, &Collider, &Transform, )>
     ) {
     
-    for (_enemy_entity, mut enemy_health, enemy_collider, enemy_transform, _enemy) in enemies.iter_mut() {
+    for (_enemy_entity, mut damage_shake, mut enemy_health, enemy_collider, enemy_transform, _enemy) in enemies.iter_mut() {
         for (bullet_entity, bullet, bullet_collider, bullet_transform) in bullets.iter() {
             if 0 == ((enemy_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
@@ -41,11 +42,11 @@ pub fn enemy_and_bullet_collision_event_system(
                 first_collision_box, 
                 first_pos, 
                 second_collision_box);
-            
+
             if !collision.is_none() {
                 enemy_health.take_damage(bullet.damage);
                 commands.entity(bullet_entity).despawn_recursive();
-                println!("{:?}/{:?}", enemy_health.value, enemy_health.max_value);
+                damage_shake.start(0.2, bullet.damage / 15.0)
             }
         }
     }

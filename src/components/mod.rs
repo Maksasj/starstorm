@@ -8,6 +8,7 @@ pub mod collision;
 
 
 pub mod health;
+pub mod damage_shake;
 
 pub mod player_collider;
 pub mod enemy_collider;

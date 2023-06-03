@@ -7,6 +7,7 @@ use bevy::{
 mod components;
 mod resources;
 
+use crate::components::damage_shake::damage_shake_system;
 use crate::components::enemy_collider::enemy_and_bullet_collision_event_system;
 pub use crate::resources::{
     sprite_sheet::*,
@@ -71,6 +72,7 @@ fn main() {
             ).chain())
         .add_startup_system(spawn_camera)
         .add_system(player_controller_system)
+        .add_system(damage_shake_system)
         .add_system(player_rotation_system)
         .add_system(entity_rotation_system)
         .add_system(velocity_movement_system)

@@ -5,11 +5,14 @@ use crate::components::{
     friction::*,
     collision::*,
     health::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
+
+use super::damage_shake::DamageShake;
 
 #[derive(Component)]
 pub struct SpikeEnemy {
@@ -36,6 +39,7 @@ pub struct SpikeEnemyBundle {
     enemy: SpikeEnemy,
     weapon: OnyxBluster,
     collider: Collider,
+    damage_skake: DamageShake,
 }
 
 impl SpikeEnemyBundle {
@@ -53,6 +57,7 @@ impl SpikeEnemyBundle {
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
+            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
         }
     }
 }

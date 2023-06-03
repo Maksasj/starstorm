@@ -23,7 +23,6 @@ pub fn player_and_bullet_collision_event_system(
             if 0 == ((player_collider.collision_layer) & (bullet_collider.target_layer)) {
                 continue;
             }
-            
 
             let first_collision_box = player_collider.collision_box;
             let second_collision_box = bullet_collider.collision_box;

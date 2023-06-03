@@ -5,11 +5,14 @@ use crate::components::{
     mortar_bluster::*,
     collision::*,
     health::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
+
+use super::damage_shake::DamageShake;
 
 #[derive(Component)]
 pub struct BugEnemy {
@@ -36,6 +39,7 @@ pub struct BugEnemyBundle {
     enemy: BugEnemy,
     weapon: MortarBluster,
     collider: Collider,
+    damage_skake: DamageShake,
 }
 
 impl BugEnemyBundle {
@@ -53,6 +57,7 @@ impl BugEnemyBundle {
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
+            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
         }
     }
 }

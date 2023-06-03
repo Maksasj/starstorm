@@ -5,6 +5,7 @@ use crate::components::{
     friction::*,
     collision::*,
     health::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
@@ -34,6 +35,7 @@ pub struct SimpleEnemyBundle {
     enemy: SimpleEnemy,
     weapon: SimpleBluster,
     collider: Collider,
+    damage_skake: DamageShake,
 }
 
 impl SimpleEnemyBundle {
@@ -51,6 +53,7 @@ impl SimpleEnemyBundle {
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
+            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
         }
     }
 }
