@@ -14,6 +14,34 @@ pub struct Bullet {
     timer: f32
 }
 
+impl Bullet {
+    pub fn new(life_time: f32) -> Self {
+        Bullet {
+            life_time: life_time,
+            timer: 0.0
+        }
+    }
+}
+
+#[derive(Bundle)]
+pub struct BulletBundle {
+    name: Name,
+    rotation: EntityRotation,
+    bullet: Bullet,
+    velocity: Velocity, 
+}
+
+impl BulletBundle {
+    pub fn new(angle: f32) -> Self {
+        BulletBundle { 
+            name: Name::new("Bullet"),
+            rotation: EntityRotation::new(angle),
+            bullet: Bullet::new(10.0),
+            velocity: Velocity::with(0.4, 0.0),
+        }
+    }
+}
+
 pub fn spawn_bullet(commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2) {
     let mut sprite = TextureAtlasSprite::new(4);
     sprite.color = Color::rgb(1.0, 1.0, 1.0);
@@ -28,10 +56,7 @@ pub fn spawn_bullet(commands: &mut Commands, asset_server: &Res<SpriteSheet>, an
         },
         ..Default::default()
     })
-    .insert(Name::new("Bullet"))
-    .insert(EntityRotation{ rotation_angle: angle, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
-    .insert(Bullet{life_time: 10.0, timer: 0.0})
-    .insert(Velocity{ velocity: Vec2::new(0.4, 0.0) });
+    .insert(BulletBundle::new(angle));
 }
 
 pub fn bullet_life_time_system(mut commands: Commands, mut targets: Query<(Entity, &mut Bullet)>, time: Res<Time>) {

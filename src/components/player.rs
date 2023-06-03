@@ -1,38 +1,35 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    player_controller::*,
-    mouse_position::*,
     friction::*,
     simple_bluster::*,
+    player_controller::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
+    mouse_position::*,
 };
 
-pub fn player_controller_system(input: Res<Input<KeyCode>>, mut targets: Query<&mut Velocity, With<PlayerController>>) {
-    if input.pressed(KeyCode::W) {
-        for mut velocity in targets.iter_mut() {
-            velocity.velocity.x += 0.01;
-        }
-    }
+#[derive(Bundle)]
+pub struct PlayerBundle {
+    name: Name,
+    rotation: EntityRotation,
+    controller: PlayerController, 
+    friction: Friction,
+    velocity: Velocity, 
+    weapon: SimpleBluster,
+}
 
-    if input.pressed(KeyCode::S) {
-        for mut velocity in targets.iter_mut() {
-            velocity.velocity.x -= 0.01;
-        }
-    }
-
-    if input.pressed(KeyCode::A) {
-        for mut velocity in targets.iter_mut() {
-            velocity.velocity.y += 0.01;
-        }
-    }
-
-    if input.pressed(KeyCode::D) {
-        for mut velocity in targets.iter_mut() {
-            velocity.velocity.y -= 0.01;
+impl PlayerBundle {
+    pub fn new() -> Self {
+        PlayerBundle { 
+            name: Name::new("Player"),
+            rotation: EntityRotation::new(_UP),
+            controller: PlayerController{}, 
+            friction: Friction::new(0.97),
+            velocity: Velocity::new(),
+            weapon: SimpleBluster::new(),
         }
     }
 }
@@ -67,10 +64,5 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
         },
         ..Default::default()
     })
-    .insert(Name::new("Player"))
-    .insert(PlayerController{})
-    .insert(EntityRotation{ rotation_angle: _UP, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
-    .insert(Friction{ rate: 0.97 })
-    .insert(SimpleBluster::new())
-    .insert(Velocity{ velocity: Vec2::new(0.0, 0.0) });
+    .insert(PlayerBundle::new());
 }

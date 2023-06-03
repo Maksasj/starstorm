@@ -1,5 +1,5 @@
 pub mod player_controller;
-pub mod mouse_position;
+pub mod player;
 pub mod entity_rotation;
 pub mod velocity;
 pub mod friction;

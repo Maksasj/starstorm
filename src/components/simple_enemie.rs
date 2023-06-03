@@ -23,6 +23,29 @@ impl SimpleEnemie {
     }
 }
 
+#[derive(Bundle)]
+pub struct SimpleEnemieBundle {
+    name: Name,
+    rotation: EntityRotation,
+    friction: Friction,
+    velocity: Velocity, 
+    enemie: SimpleEnemie,
+    weapon: SimpleBluster,
+}
+
+impl SimpleEnemieBundle {
+    pub fn new() -> Self {
+        SimpleEnemieBundle { 
+            name: Name::new("SimpleEnemie"),
+            rotation: EntityRotation::new(_DOWN),
+            friction: Friction::new(0.97),
+            velocity: Velocity::new(),
+            enemie: SimpleEnemie::new(),
+            weapon: SimpleBluster::new(),
+        }
+    }
+}
+
 impl Enemie for SimpleEnemie {
     fn move_enemie(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
         velocity.velocity.x = time.delta_seconds() * self.moving_speed;
@@ -43,10 +66,5 @@ pub fn spawn_simple_enemie_system(mut commands: Commands, asset_server: Res<Spri
         },
         ..Default::default()
     })
-    .insert(Name::new("Player"))
-    .insert(SimpleEnemie::new())
-    .insert(EntityRotation{ rotation_angle: _DOWN, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
-    .insert(Friction{ rate: 0.97 })
-    .insert(SimpleBluster::new())
-    .insert(Velocity{ velocity: Vec2::new(0.0, 0.0) });
+    .insert(SimpleEnemieBundle::new());
 }

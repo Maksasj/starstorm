@@ -6,6 +6,15 @@ pub struct EntityRotation {
     pub rotation: Quat,
 }
 
+impl EntityRotation {
+    pub fn new(angle: f32) -> Self {
+        EntityRotation { 
+            rotation_angle: angle,
+            rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0),
+        }
+    }
+}
+
 pub const _UP: f32 = 1.5708;
 pub const _DOWN: f32 = -1.5708;
 pub const _LEFT: f32 = 3.1415;

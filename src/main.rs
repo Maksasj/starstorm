@@ -5,28 +5,24 @@ use bevy::{
 };
 
 mod components;
-mod controllers;
 mod resources;
 
 pub use crate::resources::{
     sprite_sheet::*,
-};
-
-pub use crate::controllers::{
-    player::*,
+    mouse_position::*,
 };
 
 pub use crate::components::{
     entity_rotation::*,
     velocity::*,
     player_controller::*,
-    mouse_position::*,
     friction::*,
     bullet::*,
     weapon::*,
     simple_bluster::*,
     simple_enemie::*,
     enemie::*,
+    player::*,
 };
 
 fn main() {
@@ -60,10 +56,7 @@ fn main() {
         .add_system(enemie_moving_system)
         .add_system(weapon_system)
         .add_system(friction_system)
-        .insert_resource(MousePosition { 
-            pos: Vec2::new(0.0, 0.0),
-            window_size: Vec2::new(800.0, 600.0),
-        })
+        .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_system(mouse_position_update_system) 
         .run();
 }
