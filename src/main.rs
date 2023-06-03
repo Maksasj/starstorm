@@ -68,6 +68,7 @@ fn main() {
                 apply_system_buffers, 
                 spawn_background_system,
                 spawn_player_health_text_system,
+                spawn_player_health_bar_system,
                 spawn_player_system, 
                 spawn_simple_enemy_system,
                 spawn_spike_enemy_system,
@@ -100,6 +101,7 @@ fn main() {
                 camera_shake_system
             ).chain())
         .add_system(player_helth_text_update_system)
+        .add_system(player_helth_bar_update_system)
         .add_system(weapon_system)
         .add_system(friction_system)
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))

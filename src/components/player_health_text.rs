@@ -3,13 +3,13 @@ use bevy::prelude::*;
 pub use crate::components::{
     entity_rotation::*,
     player_controller::*,
+    health::*,
 };
 
 pub use crate::resources::{
-    small_numbers_font::*
+    sprite_sheet::*,
+    small_numbers_font::*,
 };
-
-use super::health::Health;
 
 #[derive(Component)]
 pub struct PlayerHealthText {
@@ -22,6 +22,28 @@ impl PlayerHealthText {
             id: id,
         }
     }
+}
+
+#[derive(Component)]
+pub struct PlayerHealthBar;
+
+pub fn spawn_player_health_bar_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
+    let mut sprite = TextureAtlasSprite::new(8);
+    sprite.color = Color::rgb(1.0, 1.0, 1.0);
+    sprite.custom_size = Some(Vec2::new(125.0, 12.0));
+
+    commands.spawn(SpriteSheetBundle {
+        sprite: sprite,
+        texture_atlas: asset_server.handle.clone(),
+        transform: Transform { 
+            translation: Vec3::new(-209.5, 281.0, 900.0), 
+            ..Default::default()
+        },
+        ..Default::default()
+    })
+    .insert(Name::new("PlayerHealthBar"))
+    .insert(Visibility::Visible)
+    .insert(PlayerHealthBar{});
 }
 
 pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res<SmallNumberFontSpriteSheet>) {
@@ -93,6 +115,26 @@ pub fn player_helth_text_update_system(
             } else if health_text.id > 3 {
                 text_sprite.index = health_max_dig[health_text.id - 4];
             }
+        }
+    }
+}
+
+pub fn player_helth_bar_update_system(
+        players: Query<&Health, With<PlayerController>>, 
+        mut health_bars: Query<(&PlayerHealthBar, &mut TextureAtlasSprite, &mut Transform, &mut Visibility)>
+    ) {
+
+    for player_health in players.iter() {
+        let health = player_health.value;
+        let health_max = player_health.max_value;
+
+        if health < 0.0 { continue; }
+
+        let rate = health / health_max;
+
+        for (_health_bar, mut bar_sprite, mut transform,_visibility) in health_bars.iter_mut() {
+            bar_sprite.custom_size = Some(Vec2::new(125.0 * rate, 12.0));
+            transform.translation.x = -209.5 + (125.0 / 2.0) * rate;
         }
     }
 }
