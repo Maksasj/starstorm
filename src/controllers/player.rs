@@ -38,7 +38,7 @@ pub fn player_controller_system(input: Res<Input<KeyCode>>, mut targets: Query<&
 }
 
 pub fn player_rotation_system(input: ResMut<MousePosition>, mut targets: Query<(&mut Transform, &mut EntityRotation), With<PlayerController>>) {
-    for (mut transform, mut rotation) in targets.iter_mut() {
+    for (transform, mut rotation) in targets.iter_mut() {
         let mut uv_pos_mouse_pos = input.pos;
 
         uv_pos_mouse_pos.x -= transform.translation.x;
@@ -49,11 +49,7 @@ pub fn player_rotation_system(input: ResMut<MousePosition>, mut targets: Query<(
 
         let angle = uv_pos_mouse_pos.y.atan2(uv_pos_mouse_pos.x);
         
-        let rotation_quat = Quat::from_rotation_z(angle);
-        transform.rotation = rotation_quat;
-        
         rotation.rotation_angle = angle;
-        rotation.rotation = rotation_quat;
     }
 }
 
@@ -73,7 +69,7 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
     })
     .insert(Name::new("Player"))
     .insert(PlayerController{})
-    .insert(EntityRotation{ rotation_angle: 0.0, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
+    .insert(EntityRotation{ rotation_angle: _UP, rotation: Quat::from_xyzw(0.0, 0.0, 0.0, 0.0) })
     .insert(Friction{ rate: 0.97 })
     .insert(SimpleBluster::new())
     .insert(Velocity{ velocity: Vec2::new(0.0, 0.0) });
