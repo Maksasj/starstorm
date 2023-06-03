@@ -1,12 +1,11 @@
 use bevy::{
     prelude::*, 
-    sprite::collide_aabb::collide, transform::commands, 
+    sprite::collide_aabb::collide, 
 };
 
 use crate::components::{
     collision::*,
     bullet::*,
-    enemy::*,
     health::*,
 };
 
@@ -46,6 +45,7 @@ pub fn enemy_and_bullet_collision_event_system(
             if !collision.is_none() {
                 enemy_health.take_damage(bullet.damage);
                 commands.entity(bullet_entity).despawn_recursive();
+                println!("{:?}/{:?}", enemy_health.value, enemy_health.max_value);
             }
         }
     }

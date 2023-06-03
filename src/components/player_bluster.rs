@@ -23,7 +23,7 @@ impl PlayerBluster {
         PlayerBluster {
             timer: 0.0,
             speed: 0.8,
-            damage: 25.0,
+            damage: 15.0,
         }
     }
 }

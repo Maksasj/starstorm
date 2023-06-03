@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    enemy::*,
     simple_bluster::*,
     friction::*,
     collision::*,
@@ -41,7 +40,7 @@ impl SimpleEnemyBundle {
     pub fn new() -> Self {
         SimpleEnemyBundle { 
             name: Name::new("SimpleEnemy"),
-            health: Health::new(50.0),
+            health: Health::new(80.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),

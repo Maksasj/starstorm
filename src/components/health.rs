@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 pub use crate::components::{
     entity_rotation::*,
+    enemy::*,
 };
 
 #[derive(Component)]
@@ -26,10 +27,10 @@ impl Health {
     }
 
     pub fn take_damage(&mut self, value: f32) {
-        self.value += value;
+        self.value -= value;
     }
 
-    pub fn _is_dead(&self) -> bool {
-        self.value < self.max_value
+    pub fn is_dead(&self) -> bool {
+        self.value < 0.0
     }
 }

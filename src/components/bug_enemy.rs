@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 
 use crate::components::{
-    enemy::*,
     friction::*,
     mortar_bluster::*,
     collision::*,
@@ -43,7 +42,7 @@ impl BugEnemyBundle {
     pub fn new() -> Self {
         BugEnemyBundle { 
             name: Name::new("BugEnemy"),
-            health: Health::new(75.0),
+            health: Health::new(150.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
             velocity: Velocity::new(),

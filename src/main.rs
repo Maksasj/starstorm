@@ -21,7 +21,7 @@ pub use crate::components::{
     friction::*,
     bullet::*,
     player::*,
-    
+
     collision::*,
     player_collider::*,
 
@@ -85,6 +85,7 @@ fn main() {
         .add_systems((
                 enemy_and_bullet_collision_event_system,
                 player_and_bullet_collision_event_system,
+                enemy_death_system,
             ).chain())
         .add_system(weapon_system)
         .add_system(friction_system)
