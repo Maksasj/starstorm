@@ -7,11 +7,10 @@ use bevy::{
 mod components;
 mod resources;
 
-use crate::components::onyx_bluster::OnyxBluster;
-use crate::components::spike_enemie::SpikeEnemie;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
+    background::*,
 };
 
 pub use crate::components::{
@@ -54,7 +53,9 @@ fn main() {
             }))
         .add_startup_systems((
                 load_spritesheet_system, 
+                load_background_system,
                 apply_system_buffers, 
+                spawn_background_system,
                 spawn_player_system, 
                 spawn_simple_enemie_system,
                 spawn_spike_enemie_system,
