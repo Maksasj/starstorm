@@ -14,7 +14,7 @@ pub fn death_scene_system(
     ) {
 
     if input.just_pressed(KeyCode::Space) {
-        if app_state.0 != AppState::InGame {
+        if app_state.0 != AppState::MainMenu {
             app_state_next_state.set(AppState::MainMenu);
         }
     }

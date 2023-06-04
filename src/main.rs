@@ -17,6 +17,7 @@ pub use crate::resources::{
     game_background::*,
     menu_background::*,
     press_space_text::*,
+    death_screen_background::*,
     sounds::*,
 };
 
@@ -54,6 +55,7 @@ pub use crate::components::{
     wave_system::*,
     wave_count_text::*,
     death_scene_system::*,
+    player_death_system::*,
 };
 
 mod states;
@@ -84,6 +86,7 @@ fn main() {
         .add_startup_systems((
                 load_spritesheet_system, 
                 load_game_background_system,
+                load_death_screen_background_system,
                 load_menu_background_system,
                 load_small_number_font_system,
                 load_big_number_font_system,
@@ -121,7 +124,7 @@ fn main() {
             spawn_wave_count_text_system,
         ).in_schedule(OnEnter(AppState::InGame)))
         .add_systems((
-            despawn_game_entities,
+
         ).in_schedule(OnExit(AppState::InGame)))
         .add_systems((
             player_controller_system,
@@ -149,12 +152,14 @@ fn main() {
             wave_clear_system,
             wave_spawn_system,
             wave_text_update_system,
+            player_death_system,
             game_scene_system,
             ).chain().in_set(OnUpdate(AppState::InGame)))
             
         .add_systems((
             spawn_menu_background_system,
             spawn_press_space_text_system,
+            despawn_game_entities,
             ).in_schedule(OnEnter(AppState::MainMenu)))
         .add_systems((
             despawn_menu_entities,
@@ -166,6 +171,7 @@ fn main() {
 
         .add_systems((
             spawn_death_screen_background_system,
+            spawn_press_space_text_system,
             ).in_schedule(OnEnter(AppState::DeathScreen)))
         .add_systems((
             despawn_death_scene_entities,
@@ -192,7 +198,7 @@ fn mouse_position_update_system(mut mouse: ResMut<MousePosition>, mut events: Ev
 fn spawn_camera(mut commands: Commands) {
     commands.spawn(Camera2dBundle {
         camera_2d: Camera2d {
-            clear_color: ClearColorConfig::Custom(Color::rgb(0.0, 0.0, 0.0)),
+            clear_color: ClearColorConfig::Custom(Color::rgba(0.0, 0.0, 0.0, 1.0)),
             ..Default::default()
         },
         ..Default::default()

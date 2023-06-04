@@ -25,7 +25,7 @@ pub fn spawn_weapon_charge_bar_system(mut commands: Commands, asset_server: Res<
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(209.5, 282.0, 900.0), 
+            translation: Vec3::new(209.5, 282.0, 100.0), 
             ..Default::default()
         },
         ..Default::default()

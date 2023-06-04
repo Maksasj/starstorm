@@ -37,7 +37,7 @@ pub fn spawn_player_health_bar_system(mut commands: Commands, asset_server: Res<
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(-209.5, 282.0, 900.0), 
+            translation: Vec3::new(-209.5, 282.0, 100.0), 
             ..Default::default()
         },
         ..Default::default()
@@ -67,7 +67,7 @@ pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res
             sprite: sprite,
             texture_atlas: asset_server.handle.clone(),
             transform: Transform { 
-                translation: Vec3::new(0.0 + (i as f32) * 15.0, 0.0, 900.0), 
+                translation: Vec3::new(0.0 + (i as f32) * 15.0, 0.0, 100.0), 
                 ..Default::default()
             },
             ..Default::default()

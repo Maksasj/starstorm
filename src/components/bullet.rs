@@ -45,7 +45,7 @@ impl BulletBundle {
                 sprite: sprite,
                 texture_atlas: asset_handle.clone(),
                 transform: Transform { 
-                    translation: Vec3::new(start_pos.x, start_pos.y, 900.0), 
+                    translation: Vec3::new(start_pos.x, start_pos.y, 100.0), 
                     ..Default::default()
                 },
                 ..Default::default()
@@ -73,7 +73,7 @@ impl BulletBundle {
                 sprite: sprite,
                 texture_atlas: asset_handle.clone(),
                 transform: Transform { 
-                    translation: Vec3::new(start_pos.x, start_pos.y, 900.0), 
+                    translation: Vec3::new(start_pos.x, start_pos.y, 100.0), 
                     ..Default::default()
                 },
                 ..Default::default()

@@ -25,6 +25,7 @@ pub fn spawn_death_screen_background_system(mut commands: Commands, image: Res<D
         sprite: sprite,
         texture: image.handle.clone(),
         transform: Transform{
+            translation: Vec3::new(0.0, 0.0, 200.0),
             ..default()
         },
         ..default()

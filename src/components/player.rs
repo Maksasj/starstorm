@@ -70,7 +70,7 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(0.0, 0.0, 900.0), 
+            translation: Vec3::new(0.0, 0.0, 100.0), 
             ..Default::default()
         },
         ..Default::default()

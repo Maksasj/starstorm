@@ -56,7 +56,7 @@ impl SpikeEnemyBundle {
                 sprite: sprite,
                 texture_atlas: asset_server.handle.clone(),
                 transform: Transform { 
-                    translation: Vec3::new(pos.x, pos.y, 200.0), 
+                    translation: Vec3::new(pos.x, pos.y, 100.0), 
                     ..Default::default()
                 },
                 ..Default::default()
