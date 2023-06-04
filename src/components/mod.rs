@@ -31,3 +31,6 @@ pub mod weapon_charget_bar;
 
 pub mod menu_scene_system;
 pub mod game_scene_system;
+pub mod wave_system;
+
+pub mod wave_count_text;

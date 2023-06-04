@@ -11,6 +11,7 @@ pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
     small_numbers_font::*,
+    big_numbers_font::*,
     game_background::*,
     menu_background::*,
     press_space_text::*,
@@ -48,6 +49,8 @@ pub use crate::components::{
 
     menu_scene_system::*,
     game_scene_system::*,
+    wave_system::*,
+    wave_count_text::*,
 };
 
 mod states;
@@ -80,6 +83,7 @@ fn main() {
                 load_game_background_system,
                 load_menu_background_system,
                 load_small_number_font_system,
+                load_big_number_font_system,
                 load_press_space_text_system,
                 load_sounds_system,
                 apply_system_buffers, 
@@ -99,9 +103,10 @@ fn main() {
         
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_event::<CameraShakeEvent>()
+        .add_event::<WaveSwitchEvent>()    
         .add_event::<PlayerShootEvent>()
         .add_event::<SoundEvent>()
-        .add_state::<AppState>()         
+        .add_state::<AppState>()     
         
         .add_systems((
             spawn_game_background_system, 
@@ -109,9 +114,8 @@ fn main() {
             spawn_player_health_bar_system,
             spawn_weapon_charge_bar_system,
             spawn_player_system, 
-            spawn_simple_enemy_system,
-            spawn_spike_enemy_system,
-            spawn_bug_enemy_system,
+            spawn_wave_spawner_system,
+            spawn_wave_count_text_system,
         ).in_schedule(OnEnter(AppState::InGame)))
         .add_systems((
             despawn_game_entities,
@@ -138,8 +142,12 @@ fn main() {
             weapon_system,
             friction_system,
             player_shoot_system,
+            wave_counting_system,
+            wave_clear_system,
+            wave_spawn_system,
+            wave_text_update_system,
             game_scene_system,
-            ).in_set(OnUpdate(AppState::InGame)))
+            ).chain().in_set(OnUpdate(AppState::InGame)))
             
         .add_systems((
             spawn_menu_background_system,
