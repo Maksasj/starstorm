@@ -21,7 +21,7 @@ pub struct SimpleEnemy {
 impl SimpleEnemy {
     pub fn new() -> Self {
         SimpleEnemy { 
-            moving_speed: 50.0 
+            moving_speed: 400.0 
         }
     }
 }
@@ -60,7 +60,7 @@ impl SimpleEnemyBundle {
             },
             health: Health::new(80.0),
             rotation: EntityRotation::new(_DOWN),
-            friction: Friction::new(0.97),
+            friction: Friction::new(0.999),
             velocity: Velocity::new(),
             enemy: SimpleEnemy::new(),
             weapon: SimpleBluster::new(),
@@ -76,7 +76,7 @@ impl SimpleEnemyBundle {
 }
 
 impl Enemy for SimpleEnemy {
-    fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
-        velocity.velocity.x = time.delta_seconds() * self.moving_speed;
+    fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, _time: &Res<Time>) {
+        velocity.velocity.x = self.moving_speed;
     }
 }

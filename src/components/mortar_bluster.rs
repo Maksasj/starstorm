@@ -41,7 +41,7 @@ impl Weapon for MortarBluster {
                     5, 
                     start_pos, 
                     angle + 0.2617 * i as f32, 
-                    Velocity::with(0.1, 0.0), 
+                    Velocity::with(50.0, 0.0), 
                     self.damage
                 );
             }

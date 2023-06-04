@@ -43,7 +43,7 @@ impl Weapon for PlayerBluster {
                 7, 
                 start_pos, 
                 angle, 
-                Velocity::with(0.7, 0.0),
+                Velocity::with(400.0, 0.0),
                 Collider::new(
                     NONE_COLLISION_LAYER, 
                     ENEMY_COLLISION_LAYER, 

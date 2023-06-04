@@ -33,7 +33,7 @@ impl PlayerBundle {
             health: Health::new(100.0),
             rotation: EntityRotation::new(_UP),
             controller: PlayerController{}, 
-            friction: Friction::new(0.97),
+            friction: Friction::new(1.0),
             velocity: Velocity::new(),
             weapon: PlayerBluster::new(),
             collider: Collider::new(

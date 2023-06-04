@@ -23,7 +23,7 @@ pub struct BugEnemy {
 impl BugEnemy {
     pub fn new() -> Self {
         BugEnemy { 
-            moving_speed: 25.0,
+            moving_speed: 250.0,
             amplitude: 0.0
         }
     }
@@ -63,7 +63,7 @@ impl BugEnemyBundle {
             },
             health: Health::new(90.0),
             rotation: EntityRotation::new(_DOWN),
-            friction: Friction::new(0.97),
+            friction: Friction::new(0.999),
             velocity: Velocity::new(),
             enemy: BugEnemy::new(),
             weapon: MortarBluster::new(),
@@ -82,7 +82,7 @@ impl Enemy for BugEnemy {
     fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
         self.amplitude += time.delta_seconds();
         
-        velocity.velocity.x = 0.2 * (self.amplitude * 1.5).cos() + time.delta_seconds() * self.moving_speed;
-        velocity.velocity.y = 0.2 * (self.amplitude * 1.5).sin();
+        velocity.velocity.x = self.amplitude.cos() * self.moving_speed + self.moving_speed;
+        velocity.velocity.y = self.amplitude.sin() * self.moving_speed;
     }
 }

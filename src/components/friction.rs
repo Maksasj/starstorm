@@ -17,9 +17,11 @@ impl Friction {
     }
 }
 
-pub fn friction_system(mut targets: Query<(&Friction, &mut Velocity)>) {
+pub fn friction_system(mut targets: Query<(&Friction, &mut Velocity)>, time: Res<Time>) {
     for (friction, mut velocity) in targets.iter_mut() {
-        velocity.velocity.x *= friction.rate;
-        velocity.velocity.y *= friction.rate;
+        let delta: f32 = time.delta_seconds();
+
+        velocity.velocity.x *= friction.rate * delta;
+        velocity.velocity.y *= friction.rate * delta;
     }
 }

@@ -39,12 +39,12 @@ pub fn load_sounds_system(mut commands: Commands, asset_server: Res<AssetServer>
 
 pub fn handle_sounds(audio: Res<Audio>, mut events: EventReader<SoundEvent>) {
     for event in events.iter() {
-        audio.play(event.handle.clone());
+        audio.play(event.handle.clone()).with_volume(0.05);
     }
 
     events.clear();
 }
 
 pub fn play_main_theme_looped_system(audio: Res<Audio>, sounds: Res<Sounds>) {
-    audio.play(sounds.main_theme_handle.clone()).looped().with_volume(0.7);
+    audio.play(sounds.main_theme_handle.clone()).looped().with_volume(0.07);
 }
