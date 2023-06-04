@@ -5,7 +5,6 @@ use crate::components::{
     friction::*,
     collision::*,
     health::*,
-    damage_shake::*,
 };
 
 use crate::resources::{

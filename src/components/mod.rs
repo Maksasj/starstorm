@@ -25,3 +25,6 @@ pub mod spike_enemy;
 pub mod bug_enemy;
 
 pub mod camera_shake;
+
+pub mod player_health_text;
+pub mod weapon_charget_bar;

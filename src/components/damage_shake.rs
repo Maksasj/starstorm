@@ -37,7 +37,7 @@ impl DamageShake {
 }
 
 pub fn damage_shake_system(mut targets: Query<(&mut DamageShake, &mut Transform, &dyn Enemy)>, time: Res<Time>) {
-    for (mut damage_shake,mut transform, enemy) in targets.iter_mut() {
+    for (mut damage_shake,mut transform, _enemy) in targets.iter_mut() {
         if damage_shake.enabled == true {
             damage_shake.timer += time.delta_seconds();
             
