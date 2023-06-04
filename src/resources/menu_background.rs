@@ -1,16 +1,16 @@
 use bevy::prelude::*;
 
 #[derive(Resource)]
-pub struct BackgroundImage {
+pub struct MenuBackgroundImage {
     pub handle: Handle<Image>
 }
 
-pub fn load_background_system(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let image: Handle<Image> = asset_server.load("background.png");
-    commands.insert_resource(BackgroundImage{handle: image});
+pub fn load_menu_background_system(mut commands: Commands, asset_server: Res<AssetServer>) {
+    let image: Handle<Image> = asset_server.load("menu_background.png");
+    commands.insert_resource(MenuBackgroundImage{handle: image});
 }
 
-pub fn spawn_background_system(mut commands: Commands, image: Res<BackgroundImage>) {
+pub fn spawn_menu_background_system(mut commands: Commands, image: Res<MenuBackgroundImage>) {
     let sprite = Sprite{
         color: Color::rgb(1.0, 1.0, 1.0),
         custom_size: Some(Vec2::new(800.0, 600.0)),

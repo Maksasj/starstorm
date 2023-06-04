@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 
-use crate::PlayerController;
 pub use crate::components::{
     entity_rotation::*,
+    player_controller::*,
 };
 
 #[derive(Component)]

@@ -4,18 +4,17 @@ use bevy::{
     window::PresentMode
 };
 
-mod components;
-mod resources;
 
-use crate::components::damage_shake::damage_shake_system;
-use crate::components::enemy_collider::enemy_and_bullet_collision_event_system;
+mod resources;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
-    background::*,
     small_numbers_font::*,
+    game_background::*,
+    menu_background::*,
 };
 
+mod components;
 pub use crate::components::{
     entity_rotation::*,
     velocity::*,
@@ -41,14 +40,16 @@ pub use crate::components::{
     camera_shake::*,
     player_health_text::*,
     weapon_charget_bar::*,
+    damage_shake::*,
+    enemy_collider::*,
+
+    main_menu_system::*,
 };
 
-#[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States)]
-enum AppState {
-    #[default]
-    MainMenu,
-    InGame,
-}
+mod states;
+pub use crate::states::{
+    app_state::*,
+};
 
 fn main() {
     use bevy_trait_query::RegisterExt;
@@ -71,7 +72,8 @@ fn main() {
             }))
         .add_startup_systems((
                 load_spritesheet_system, 
-                load_background_system,
+                load_game_background_system,
+                load_menu_background_system,
                 load_small_number_font_system,
                 apply_system_buffers, 
                 setup_camera_shake_system,
@@ -90,8 +92,9 @@ fn main() {
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_event::<CameraShakeEvent>()
         .add_state::<AppState>()         
+
         .add_systems((
-            spawn_background_system, 
+            spawn_game_background_system, 
             spawn_player_health_text_system,
             spawn_player_health_bar_system,
             spawn_weapon_charge_bar_system,
@@ -99,7 +102,7 @@ fn main() {
             spawn_simple_enemy_system,
             spawn_spike_enemy_system,
             spawn_bug_enemy_system,
-            ).in_schedule(OnEnter(AppState::MainMenu)))
+        ).in_schedule(OnEnter(AppState::InGame)))
         
         .add_systems((
             player_controller_system,
@@ -117,11 +120,19 @@ fn main() {
             player_helth_text_update_system,
             player_helth_bar_update_system,
             player_weapon_charge_bar_update_system,
-            ).in_set(OnUpdate(AppState::MainMenu)))
+        ).in_set(OnUpdate(AppState::InGame)))
             
         .add_systems((
             weapon_system,
             friction_system,
+            ).in_set(OnUpdate(AppState::InGame)))
+            
+        .add_systems((
+            spawn_menu_background_system,
+            ).in_schedule(OnEnter(AppState::MainMenu)))
+
+        .add_systems((
+            main_menu_system,
             ).in_set(OnUpdate(AppState::MainMenu)))
 
         .add_system(mouse_position_update_system) 
