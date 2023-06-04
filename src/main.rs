@@ -1,3 +1,5 @@
+#![windows_subsystem = "windows"]
+
 use bevy::{
     prelude::*,
     core_pipeline::clear_color::ClearColorConfig,
