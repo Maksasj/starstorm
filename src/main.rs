@@ -83,6 +83,7 @@ fn main() {
         .add_system(player_rotation_system)
         .add_system(entity_rotation_system)
         .add_system(velocity_movement_system)
+        .add_system(player_velocity_movement_system)
         .add_system(bullet_life_time_system)
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Weapon, OnyxBluster>()

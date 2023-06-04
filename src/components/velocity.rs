@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+use crate::PlayerController;
 pub use crate::components::{
     entity_rotation::*,
 };
@@ -23,12 +24,40 @@ impl Velocity {
     }
 }
 
-pub fn velocity_movement_system(mut targets: Query<(&mut Transform, &mut EntityRotation, &Velocity)>) {
+pub fn velocity_movement_system(mut targets: Query<(&mut Transform, &mut EntityRotation, &Velocity), Without<PlayerController>>) {
     for (mut transform, rotation, velocity) in targets.iter_mut() {
-        transform.translation.y += velocity.velocity.x * rotation.rotation_angle.sin();
-        transform.translation.x += velocity.velocity.x * rotation.rotation_angle.cos();
+        let mut new_translation = transform.translation;
 
-        transform.translation.y += velocity.velocity.y * rotation.rotation_angle.cos();
-        transform.translation.x -= velocity.velocity.y * rotation.rotation_angle.sin();
+        new_translation.y += velocity.velocity.x * rotation.rotation_angle.sin();
+        new_translation.x += velocity.velocity.x * rotation.rotation_angle.cos();
+
+        new_translation.y += velocity.velocity.y * rotation.rotation_angle.cos();
+        new_translation.x -= velocity.velocity.y * rotation.rotation_angle.sin();
+
+        if new_translation.x < 210.0 && new_translation.x > -210.0 {
+            transform.translation.x = new_translation.x; 
+        } 
+
+        transform.translation.y = new_translation.y; 
+    }
+}
+
+pub fn player_velocity_movement_system(mut targets: Query<(&mut Transform, &mut EntityRotation, &Velocity), With<PlayerController>>) {
+    for (mut transform, rotation, velocity) in targets.iter_mut() {
+        let mut new_translation = transform.translation;
+
+        new_translation.y += velocity.velocity.x * rotation.rotation_angle.sin();
+        new_translation.x += velocity.velocity.x * rotation.rotation_angle.cos();
+
+        new_translation.y += velocity.velocity.y * rotation.rotation_angle.cos();
+        new_translation.x -= velocity.velocity.y * rotation.rotation_angle.sin();
+
+        if new_translation.x < 210.0 && new_translation.x > -210.0 {
+            transform.translation.x = new_translation.x; 
+        } 
+
+        if new_translation.y < 285.0 && new_translation.y > -285.0 {
+            transform.translation.y = new_translation.y; 
+        } 
     }
 }
