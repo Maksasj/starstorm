@@ -11,6 +11,7 @@ pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
     small_numbers_font::*,
+    big_numbers_font::*,
     game_background::*,
     menu_background::*,
     press_space_text::*,
@@ -49,6 +50,7 @@ pub use crate::components::{
     menu_scene_system::*,
     game_scene_system::*,
     wave_system::*,
+    wave_count_text::*,
 };
 
 mod states;
@@ -81,6 +83,7 @@ fn main() {
                 load_game_background_system,
                 load_menu_background_system,
                 load_small_number_font_system,
+                load_big_number_font_system,
                 load_press_space_text_system,
                 load_sounds_system,
                 apply_system_buffers, 
@@ -112,6 +115,7 @@ fn main() {
             spawn_weapon_charge_bar_system,
             spawn_player_system, 
             spawn_wave_spawner_system,
+            spawn_wave_count_text_system,
         ).in_schedule(OnEnter(AppState::InGame)))
         .add_systems((
             despawn_game_entities,
@@ -141,6 +145,7 @@ fn main() {
             wave_counting_system,
             wave_clear_system,
             wave_spawn_system,
+            wave_text_update_system,
             game_scene_system,
             ).chain().in_set(OnUpdate(AppState::InGame)))
             

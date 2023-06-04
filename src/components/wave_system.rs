@@ -32,7 +32,7 @@ impl WaveSpawner {
 }
 
 pub struct WaveSwitchEvent {
-    to: usize,
+    pub to: usize,
 }
 
 impl WaveSwitchEvent {
@@ -52,7 +52,8 @@ pub fn spawn_wave_spawner_system(mut commands: Commands) {
             ..Default::default()
         })
         .insert(GlobalTransform::default())
-        .insert(WaveSpawner::new());
+        .insert(WaveSpawner::new())
+        .insert(GameEntity{});
 }
 
 pub fn wave_counting_system(
@@ -100,16 +101,16 @@ pub fn wave_spawn_system(
 
         let spike_center_offset = 60.0;
 
-        if to < 2 {
+        if to <= 2 {
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
-        } else if to < 5 {
+        } else if to <= 5 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-50.0, 330.0)));
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(50.0, 330.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
-        } else  if to < 10 {
+        } else  if to <= 10 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 360.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 360.0)));
@@ -117,7 +118,7 @@ pub fn wave_spawn_system(
 
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-200.0, 330.0)));
             commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(200.0, 330.0)));
-        } else if to < 15 {
+        } else if to <= 15 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 400.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 370.0)));
             commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 330.0)));
