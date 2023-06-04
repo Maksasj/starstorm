@@ -48,6 +48,7 @@ pub use crate::components::{
 
     menu_scene_system::*,
     game_scene_system::*,
+    wave_system::*,
 };
 
 mod states;
@@ -112,6 +113,7 @@ fn main() {
             spawn_simple_enemy_system,
             spawn_spike_enemy_system,
             spawn_bug_enemy_system,
+            spawn_wave_spawner_system,
         ).in_schedule(OnEnter(AppState::InGame)))
         .add_systems((
             despawn_game_entities,
@@ -138,6 +140,7 @@ fn main() {
             weapon_system,
             friction_system,
             player_shoot_system,
+            handle_wave_system,
             game_scene_system,
             ).in_set(OnUpdate(AppState::InGame)))
             
