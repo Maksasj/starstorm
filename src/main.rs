@@ -12,6 +12,7 @@ pub use crate::resources::{
     small_numbers_font::*,
     game_background::*,
     menu_background::*,
+    press_space_text::*,
 };
 
 mod components;
@@ -76,6 +77,7 @@ fn main() {
                 load_game_background_system,
                 load_menu_background_system,
                 load_small_number_font_system,
+                load_press_space_text_system,
                 apply_system_buffers, 
                 setup_camera_shake_system,
                 spawn_camera,
@@ -134,6 +136,7 @@ fn main() {
             
         .add_systems((
             spawn_menu_background_system,
+            spawn_press_space_text_system,
             ).in_schedule(OnEnter(AppState::MainMenu)))
         .add_systems((
             despawn_menu_entities,
@@ -143,7 +146,10 @@ fn main() {
             menu_scene_system,
             ).in_set(OnUpdate(AppState::MainMenu)))
 
-        .add_system(mouse_position_update_system) 
+        .add_systems((
+            mouse_position_update_system, 
+            wavy_update_system
+        )) 
         .run();
 }
 
