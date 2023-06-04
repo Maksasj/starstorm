@@ -1,9 +1,12 @@
 #![windows_subsystem = "windows"]
 
+use winit::window::Icon;
+
 use bevy::{
     prelude::*,
     core_pipeline::clear_color::ClearColorConfig,
-    window::PresentMode
+    window::*,
+    winit::*,
 };
 
 use bevy_kira_audio::prelude::*;
@@ -90,6 +93,7 @@ fn main() {
             }))
         .add_plugin(AudioPlugin)
         .add_startup_systems((
+                setup_window,
                 load_spritesheet_system, 
                 load_game_background_system,
                 load_death_screen_background_system,
@@ -209,4 +213,25 @@ fn spawn_camera(mut commands: Commands) {
         },
         ..Default::default()
     });
+}
+
+pub fn setup_window(
+    windows: NonSend<WinitWindows>,
+    primary_window_query: Query<Entity, With<PrimaryWindow>>,
+) {
+    let primary_window_entity = primary_window_query.single();
+    let primary_window = windows.get_window(primary_window_entity).unwrap();
+
+    let (icon_rgba, icon_width, icon_height) = {
+        let image = image::open("assets/starstorm_icon_clear.png")
+            .expect("Failed to open icon")
+            .into_rgba8();
+        let (width, height) = image.dimensions();
+        let rgba = image.into_raw();
+        (rgba, width, height)
+    };
+
+    let icon = Icon::from_rgba(icon_rgba, icon_width, icon_height).unwrap();
+
+    primary_window.set_window_icon(Some(icon));
 }
