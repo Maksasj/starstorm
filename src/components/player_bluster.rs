@@ -9,6 +9,7 @@ use crate::components::{
 
 use crate::resources::{
     sprite_sheet::*,
+    sounds::*,
 };
 
 #[derive(Component)]
@@ -27,6 +28,8 @@ impl PlayerBluster {
         }
     }
 }
+
+pub struct PlayerShootEvent;
 
 impl Weapon for PlayerBluster {
     fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
@@ -49,10 +52,25 @@ impl Weapon for PlayerBluster {
                 self.damage
             ));
             
+            commands.add(|w: &mut World| {
+                w.send_event(PlayerShootEvent);
+            });
+
             self.timer = 0.0;
         }
     }
     fn get_charge(&self) -> f32 {
         self.timer / self.speed
+    }
+}
+
+pub fn player_shoot_system(
+        mut player_shoot_event_reader: EventReader<PlayerShootEvent>,
+        mut sound_event_writer: EventWriter<SoundEvent>,
+        sounds: Res<Sounds>
+    ) {
+
+    for _event in player_shoot_event_reader.iter() {
+        sound_event_writer.send(SoundEvent{handle: sounds.shoot_handle.clone()});
     }
 }

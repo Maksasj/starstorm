@@ -10,6 +10,7 @@ use bevy_kira_audio::{
 pub struct Sounds {
     pub hurt_handle: Handle<AudioSource>,
     pub death_handle: Handle<AudioSource>,
+    pub shoot_handle: Handle<AudioSource>,
 }
 
 pub struct SoundEvent {
@@ -19,10 +20,12 @@ pub struct SoundEvent {
 pub fn load_sounds_system(mut commands: Commands, asset_server: Res<AssetServer>) {
     let hurt_sound: Handle<AudioSource> = asset_server.load("sounds/hurt_sound.wav");
     let death_sound: Handle<AudioSource> = asset_server.load("sounds/death.wav");
+    let shoot_sound: Handle<AudioSource> = asset_server.load("sounds/shoot.wav");
 
     let sounds = Sounds {
         hurt_handle: hurt_sound,
         death_handle: death_sound,
+        shoot_handle: shoot_sound,
     };
 
     commands.insert_resource(sounds);
