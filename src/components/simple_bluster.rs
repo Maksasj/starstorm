@@ -39,4 +39,7 @@ impl Weapon for SimpleBluster {
             self.timer = 0.0;
         }
     }
+    fn get_charge(&self) -> f32 {
+        self.timer / self.speed
+    }
 }

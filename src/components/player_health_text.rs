@@ -36,7 +36,7 @@ pub fn spawn_player_health_bar_system(mut commands: Commands, asset_server: Res<
         sprite: sprite,
         texture_atlas: asset_server.handle.clone(),
         transform: Transform { 
-            translation: Vec3::new(-209.5, 281.0, 900.0), 
+            translation: Vec3::new(-209.5, 282.0, 900.0), 
             ..Default::default()
         },
         ..Default::default()
@@ -81,7 +81,7 @@ pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res
         .spawn(VisibilityBundle::default())
         .insert(Name::new("PlayerHealthTextParent"))
         .insert(Transform { 
-            translation: Vec3::new(-210.0, 250.0, 0.0), 
+            translation: Vec3::new(-210.0, 255.0, 0.0), 
             ..Default::default()
         })
         .insert(GlobalTransform::default())
@@ -134,7 +134,7 @@ pub fn player_helth_bar_update_system(
 
         for (_health_bar, mut bar_sprite, mut transform) in health_bars.iter_mut() {
             bar_sprite.custom_size = Some(Vec2::new(125.0 * rate, 12.0));
-            transform.translation.x = -209.5 + (125.0 / 2.0) * rate;
+            transform.translation.x = -210.0 + (125.0 / 2.0) * rate;
         }
     }
 }

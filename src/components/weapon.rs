@@ -11,6 +11,7 @@ use crate::resources::{
 #[bevy_trait_query::queryable]
 pub trait Weapon {
     fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>);
+    fn get_charge(&self) -> f32;
 }
 
 pub fn weapon_system(

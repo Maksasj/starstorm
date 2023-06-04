@@ -40,6 +40,7 @@ pub use crate::components::{
 
     camera_shake::*,
     player_health_text::*,
+    weapon_charget_bar::*,
 };
 
 fn main() {
@@ -69,6 +70,7 @@ fn main() {
                 spawn_background_system,
                 spawn_player_health_text_system,
                 spawn_player_health_bar_system,
+                spawn_weapon_charge_bar_system,
                 spawn_player_system, 
                 spawn_simple_enemy_system,
                 spawn_spike_enemy_system,
@@ -102,6 +104,7 @@ fn main() {
             ).chain())
         .add_system(player_helth_text_update_system)
         .add_system(player_helth_bar_update_system)
+        .add_system(player_weapon_charge_bar_update_system)
         .add_system(weapon_system)
         .add_system(friction_system)
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
