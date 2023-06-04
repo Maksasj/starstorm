@@ -7,6 +7,8 @@ use bevy::{
 use bevy_kira_audio::prelude::*;
 
 mod resources;
+use crate::components::death_scene_system::{despawn_death_scene_entities, self};
+use crate::resources::death_screen_background::spawn_death_screen_background_system;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
@@ -51,6 +53,7 @@ pub use crate::components::{
     game_scene_system::*,
     wave_system::*,
     wave_count_text::*,
+    death_scene_system::*,
 };
 
 mod states;
@@ -160,6 +163,16 @@ fn main() {
         .add_systems((
             menu_scene_system,
             ).in_set(OnUpdate(AppState::MainMenu)))
+
+        .add_systems((
+            spawn_death_screen_background_system,
+            ).in_schedule(OnEnter(AppState::DeathScreen)))
+        .add_systems((
+            despawn_death_scene_entities,
+            ).in_schedule(OnExit(AppState::DeathScreen)))
+        .add_systems((
+            death_scene_system,
+            ).in_set(OnUpdate(AppState::DeathScreen)))
 
         .add_systems((
             mouse_position_update_system, 
