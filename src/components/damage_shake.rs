@@ -4,7 +4,9 @@ use bevy::{
 
 use rand::Rng;
 
-use crate::Enemy;
+use crate::components::{
+    enemy::*
+};
 
 #[derive(Component)]
 pub struct DamageShake {

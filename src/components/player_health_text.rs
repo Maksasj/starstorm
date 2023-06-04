@@ -4,6 +4,7 @@ pub use crate::components::{
     entity_rotation::*,
     player_controller::*,
     health::*,
+    game_scene_system::*,
 };
 
 pub use crate::resources::{
@@ -43,7 +44,8 @@ pub fn spawn_player_health_bar_system(mut commands: Commands, asset_server: Res<
     })
     .insert(Name::new("PlayerHealthBar"))
     .insert(Visibility::Visible)
-    .insert(PlayerHealthBar{});
+    .insert(PlayerHealthBar{})
+    .insert(GameEntity);
 }
 
 pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res<SmallNumberFontSpriteSheet>) {
@@ -72,7 +74,8 @@ pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res
         })
         .insert(Name::new("PlayerHealthText"))
         .insert(Visibility::Visible)
-        .insert(PlayerHealthText::new(i)).id();
+        .insert(PlayerHealthText::new(i))
+        .insert(GameEntity).id();
 
         childrens.push(character);
     }

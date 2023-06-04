@@ -28,3 +28,6 @@ pub mod camera_shake;
 
 pub mod player_health_text;
 pub mod weapon_charget_bar;
+
+pub mod menu_scene_system;
+pub mod game_scene_system;
