@@ -1,4 +1,4 @@
-name: Rust build realease
+name: Rust build release
 
 on:
   push:
@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cargo build --verbose --realease
+      run: cargo build --verbose --release
     - name: Run tests
-      run: cargo test --verbose --realease
+      run: cargo test --verbose
