@@ -4,6 +4,7 @@ use bevy::{
     window::PresentMode
 };
 
+use bevy_kira_audio::prelude::*;
 
 mod resources;
 pub use crate::resources::{
@@ -13,6 +14,7 @@ pub use crate::resources::{
     game_background::*,
     menu_background::*,
     press_space_text::*,
+    sounds::*,
 };
 
 mod components;
@@ -72,12 +74,14 @@ fn main() {
                 }),
                 ..default()
             }))
+        .add_plugin(AudioPlugin)
         .add_startup_systems((
                 load_spritesheet_system, 
                 load_game_background_system,
                 load_menu_background_system,
                 load_small_number_font_system,
                 load_press_space_text_system,
+                load_sounds_system,
                 apply_system_buffers, 
                 setup_camera_shake_system,
                 spawn_camera,
@@ -94,6 +98,7 @@ fn main() {
         
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_event::<CameraShakeEvent>()
+        .add_event::<SoundEvent>()
         .add_state::<AppState>()         
 
         .add_systems((
@@ -109,7 +114,6 @@ fn main() {
         .add_systems((
             despawn_game_entities,
         ).in_schedule(OnExit(AppState::InGame)))
-        
         .add_systems((
             player_controller_system,
             damage_shake_system,
@@ -148,7 +152,8 @@ fn main() {
 
         .add_systems((
             mouse_position_update_system, 
-            wavy_update_system
+            wavy_update_system,
+            handle_sounds,
         )) 
         .run();
 }

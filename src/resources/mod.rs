@@ -5,3 +5,4 @@ pub mod small_numbers_font;
 pub mod game_background;
 pub mod menu_background;
 pub mod press_space_text;
+pub mod sounds;

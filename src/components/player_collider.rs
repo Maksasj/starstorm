@@ -11,11 +11,17 @@ use crate::components::{
     camera_shake::*,
 };
 
+use crate::resources::{
+    sounds::*,
+};
+
 pub fn player_and_bullet_collision_event_system(
         mut commands: Commands,
         mut players: Query<(Entity, &mut Health, &Collider, &Transform), With<PlayerController>>, 
         bullets: Query<(Entity, &Bullet, &Collider, &Transform)>,
-        mut event_writer: EventWriter<CameraShakeEvent>
+        mut event_writer: EventWriter<CameraShakeEvent>,
+        mut sound_event_writer: EventWriter<SoundEvent>,
+        sounds: Res<Sounds>
     ) {
     
     for (_player_entity, mut player_health, player_collider, player_transform) in players.iter_mut() {
@@ -49,6 +55,7 @@ pub fn player_and_bullet_collision_event_system(
                 player_health.take_damage(bullet.damage);
                 commands.entity(bullet_entity).despawn_recursive();
                 event_writer.send(CameraShakeEvent::new(bullet.damage / 7.0 , 0.1));
+                sound_event_writer.send(SoundEvent{handle: sounds.hurt_handle.clone()});
             }
         }
     }
