@@ -43,6 +43,13 @@ pub use crate::components::{
     weapon_charget_bar::*,
 };
 
+#[derive(Debug, Clone, Copy, Default, Eq, PartialEq, Hash, States)]
+enum AppState {
+    #[default]
+    MainMenu,
+    InGame,
+}
+
 fn main() {
     use bevy_trait_query::RegisterExt;
 
@@ -67,48 +74,56 @@ fn main() {
                 load_background_system,
                 load_small_number_font_system,
                 apply_system_buffers, 
-                spawn_background_system,
-                spawn_player_health_text_system,
-                spawn_player_health_bar_system,
-                spawn_weapon_charge_bar_system,
-                spawn_player_system, 
-                spawn_simple_enemy_system,
-                spawn_spike_enemy_system,
-                spawn_bug_enemy_system,
                 setup_camera_shake_system,
+                spawn_camera,
             ).chain())
-        .add_startup_system(spawn_camera)
-        .add_system(player_controller_system)
-        .add_system(damage_shake_system)
-        .add_system(player_rotation_system)
-        .add_system(entity_rotation_system)
-        .add_system(velocity_movement_system)
-        .add_system(player_velocity_movement_system)
-        .add_system(bullet_life_time_system)
+            
         .register_component_as::<dyn Weapon, SimpleBluster>()
         .register_component_as::<dyn Weapon, OnyxBluster>()
         .register_component_as::<dyn Weapon, MortarBluster>()
         .register_component_as::<dyn Weapon, PlayerBluster>()
-        
+            
         .register_component_as::<dyn Enemy, SimpleEnemy>()
         .register_component_as::<dyn Enemy, SpikeEnemy>()
         .register_component_as::<dyn Enemy, BugEnemy>()
-        .add_system(enemy_moving_system)
         
-        .add_event::<CameraShakeEvent>()
-
-        .add_systems((
-                enemy_and_bullet_collision_event_system,
-                player_and_bullet_collision_event_system,
-                enemy_death_system,
-                camera_shake_system
-            ).chain())
-        .add_system(player_helth_text_update_system)
-        .add_system(player_helth_bar_update_system)
-        .add_system(player_weapon_charge_bar_update_system)
-        .add_system(weapon_system)
-        .add_system(friction_system)
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
+        .add_event::<CameraShakeEvent>()
+        .add_state::<AppState>()         
+        .add_systems((
+            spawn_background_system, 
+            spawn_player_health_text_system,
+            spawn_player_health_bar_system,
+            spawn_weapon_charge_bar_system,
+            spawn_player_system, 
+            spawn_simple_enemy_system,
+            spawn_spike_enemy_system,
+            spawn_bug_enemy_system,
+            ).in_schedule(OnEnter(AppState::MainMenu)))
+        
+        .add_systems((
+            player_controller_system,
+            damage_shake_system,
+            player_rotation_system,
+            entity_rotation_system,
+            velocity_movement_system,
+            player_velocity_movement_system,
+            bullet_life_time_system,
+            enemy_moving_system,
+            enemy_and_bullet_collision_event_system,
+            player_and_bullet_collision_event_system,
+            enemy_death_system,
+            camera_shake_system,
+            player_helth_text_update_system,
+            player_helth_bar_update_system,
+            player_weapon_charge_bar_update_system,
+            ).in_set(OnUpdate(AppState::MainMenu)))
+            
+        .add_systems((
+            weapon_system,
+            friction_system,
+            ).in_set(OnUpdate(AppState::MainMenu)))
+
         .add_system(mouse_position_update_system) 
         .run();
 }
