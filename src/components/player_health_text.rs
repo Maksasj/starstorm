@@ -90,7 +90,7 @@ pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res
 
 pub fn player_helth_text_update_system(
         players: Query<&Health, With<PlayerController>>, 
-        mut health_texts: Query<(&PlayerHealthText, &mut TextureAtlasSprite, &mut Visibility)>
+        mut health_texts: Query<(&PlayerHealthText, &mut TextureAtlasSprite)>
     ) {
 
     for player_health in players.iter() {
@@ -109,7 +109,7 @@ pub fn player_helth_text_update_system(
         health_max_dig[1] = ((health_max / 10) % 10) as usize;
         health_max_dig[2] = (health_max % 10) as usize;
 
-        for (health_text, mut text_sprite, visibility) in health_texts.iter_mut() {
+        for (health_text, mut text_sprite) in health_texts.iter_mut() {
             if health_text.id < 3 {
                 text_sprite.index = health_dig[health_text.id];
             } else if health_text.id > 3 {
@@ -121,7 +121,7 @@ pub fn player_helth_text_update_system(
 
 pub fn player_helth_bar_update_system(
         players: Query<&Health, With<PlayerController>>, 
-        mut health_bars: Query<(&PlayerHealthBar, &mut TextureAtlasSprite, &mut Transform, &mut Visibility)>
+        mut health_bars: Query<(&PlayerHealthBar, &mut TextureAtlasSprite, &mut Transform)>
     ) {
 
     for player_health in players.iter() {
@@ -132,7 +132,7 @@ pub fn player_helth_bar_update_system(
 
         let rate = health / health_max;
 
-        for (_health_bar, mut bar_sprite, mut transform,_visibility) in health_bars.iter_mut() {
+        for (_health_bar, mut bar_sprite, mut transform) in health_bars.iter_mut() {
             bar_sprite.custom_size = Some(Vec2::new(125.0 * rate, 12.0));
             transform.translation.x = -209.5 + (125.0 / 2.0) * rate;
         }
