@@ -93,7 +93,7 @@ fn main() {
             }))
         .add_plugin(AudioPlugin)
         .add_startup_systems((
-                setup_window,
+                setup_window_icon,
                 load_spritesheet_system, 
                 load_game_background_system,
                 load_death_screen_background_system,
@@ -215,7 +215,7 @@ fn spawn_camera(mut commands: Commands) {
     });
 }
 
-pub fn setup_window(
+pub fn setup_window_icon(
     windows: NonSend<WinitWindows>,
     primary_window_query: Query<Entity, With<PrimaryWindow>>,
 ) {
