@@ -10,10 +10,16 @@ use crate::components::{
     damage_shake::*,
 };
 
+use crate::resources::{
+    sounds::*,
+};
+
 pub fn enemy_and_bullet_collision_event_system(
         mut commands: Commands,
         mut enemies: Query<(Entity, &mut DamageShake, &mut Health, &Collider, &Transform, &dyn Enemy)>, 
-        bullets: Query<(Entity, &Bullet, &Collider, &Transform, )>
+        bullets: Query<(Entity, &Bullet, &Collider, &Transform, )>,
+        mut sound_event_writer: EventWriter<SoundEvent>,
+        sounds: Res<Sounds>
     ) {
     
     for (_enemy_entity, mut damage_shake, mut enemy_health, enemy_collider, enemy_transform, _enemy) in enemies.iter_mut() {
@@ -46,7 +52,8 @@ pub fn enemy_and_bullet_collision_event_system(
             if !collision.is_none() {
                 enemy_health.take_damage(bullet.damage);
                 commands.entity(bullet_entity).despawn_recursive();
-                damage_shake.start(0.2, bullet.damage / 20.0)
+                damage_shake.start(0.2, bullet.damage / 20.0);
+                sound_event_writer.send(SoundEvent{handle: sounds.hit_handle.clone()});
             }
         }
     }
