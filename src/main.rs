@@ -85,6 +85,7 @@ fn main() {
                 apply_system_buffers, 
                 setup_camera_shake_system,
                 spawn_camera,
+                play_main_theme_looped_system,
             ).chain())
             
         .register_component_as::<dyn Weapon, SimpleBluster>()
