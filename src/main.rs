@@ -100,9 +100,10 @@ fn main() {
         
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_event::<CameraShakeEvent>()
+        .add_event::<WaveSwitchEvent>()    
         .add_event::<PlayerShootEvent>()
         .add_event::<SoundEvent>()
-        .add_state::<AppState>()         
+        .add_state::<AppState>()     
         
         .add_systems((
             spawn_game_background_system, 
@@ -140,7 +141,9 @@ fn main() {
             weapon_system,
             friction_system,
             player_shoot_system,
-            handle_wave_system,
+            wave_counting_system,
+            wave_spawn_system,
+            wave_clear_system,
             game_scene_system,
             ).in_set(OnUpdate(AppState::InGame)))
             

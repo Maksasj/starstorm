@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+use crate::Enemy;
 pub use crate::components::{
     entity_rotation::*,
     player_controller::*,
@@ -7,18 +8,33 @@ pub use crate::components::{
 
 #[derive(Component)]
 pub struct WaveSpawner {
-    pub current: usize
+    pub current: usize,
+
+    timer: f32
 }
 
 impl WaveSpawner {
     pub fn new() -> Self {
         WaveSpawner{
-            current: 0
+            current: 0,
+            timer: 0.0,
         }
     } 
 }
 
-pub fn spawn_wave_spawner_system(mut commands: Commands) {
+pub struct WaveSwitchEvent {
+    to: usize,
+}
+
+impl WaveSwitchEvent {
+    pub fn new(to: usize) -> Self {
+        WaveSwitchEvent{
+            to: to,
+        }
+    } 
+}
+
+pub fn spawn_wave_spawner_system(mut events: EventWriter<WaveSwitchEvent>, mut commands: Commands) {
     commands
         .spawn(VisibilityBundle::default())
         .insert(Name::new("WaveSpawner"))
@@ -28,13 +44,59 @@ pub fn spawn_wave_spawner_system(mut commands: Commands) {
         })
         .insert(GlobalTransform::default())
         .insert(WaveSpawner::new());
+
+    events.send(WaveSwitchEvent::new(0));
 }
 
-pub fn handle_wave_system(mut wave_spawners: Query<&mut WaveSpawner>) {
+pub fn wave_counting_system(
+        mut events: EventWriter<WaveSwitchEvent>, 
+        mut wave_spawners: Query<&mut WaveSpawner>, 
+        time: Res<Time>
+    ) {
+    
     for mut spawner in wave_spawners.iter_mut() {
-        spawner.current += 1;
-        println!("{:?}", spawner.current);
+        spawner.timer += time.delta_seconds(); 
+        
+        if spawner.timer > 50.0 {
+            spawner.current += 1;
+            spawner.timer = 0.0;
+
+            events.send(WaveSwitchEvent::new(spawner.current));
+        }
     }
+}
+
+pub fn wave_clear_system(
+        mut events: EventWriter<WaveSwitchEvent>, 
+        targets: Query<(Entity, &dyn Enemy)>,
+        mut wave_spawners: Query<&mut WaveSpawner>, 
+        time: Res<Time>
+    ) {
+    
+    if targets.is_empty() {
+        for mut spawner in wave_spawners.iter_mut() {
+            spawner.timer += time.delta_seconds(); 
+            
+            if spawner.timer > 50.0 {
+                spawner.current += 1;
+                spawner.timer = 0.0;
+    
+                events.send(WaveSwitchEvent::new(spawner.current));
+            }
+        }
+    }
+}
+
+pub fn wave_spawn_system(
+        _commands: Commands,
+        mut events: EventReader<WaveSwitchEvent>, 
+    ) {
+
+    for event in events.iter() {
+        println!("Switched wavy to {:?}", event.to);
+    }
+
+    events.clear();
 }
 
 /*
