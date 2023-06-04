@@ -43,7 +43,7 @@ impl WaveSwitchEvent {
     } 
 }
 
-pub fn spawn_wave_spawner_system(mut events: EventWriter<WaveSwitchEvent>, mut commands: Commands) {
+pub fn spawn_wave_spawner_system(mut commands: Commands) {
     commands
         .spawn(VisibilityBundle::default())
         .insert(Name::new("WaveSpawner"))
@@ -96,57 +96,46 @@ pub fn wave_spawn_system(
     ) {
 
     for event in events.iter() {
-        let _to = event.to;
+        let to = event.to;
 
-        commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
-        commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
-        commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
+        let spike_center_offset = 60.0;
+
+        if to < 2 {
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
+        } else if to < 5 {
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-50.0, 330.0)));
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(50.0, 330.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
+        } else  if to < 10 {
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 360.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 360.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
+
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-200.0, 330.0)));
+            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(200.0, 330.0)));
+        } else if to < 15 {
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 400.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 370.0)));
+            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 330.0)));
+            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 370.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 370.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(75.0 - spike_center_offset, 400.0)));
+        } else {
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 440.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 400.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 370.0)));
+            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 330.0)));
+            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 370.0)));
+            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 400.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 370.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(75.0 - spike_center_offset, 400.0)));
+            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(75.0 - spike_center_offset, 440.0)));
+        }
     }
 
     events.clear();
 }
-
-/*
-pub fn spawn_player_health_text_system(mut commands: Commands, asset_server: Res<SmallNumberFontSpriteSheet>) {
-    let mut childrens = Vec::new();
-
-    for i in 0..7 {
-        let mut sprite;
-        
-        if i == 3 {
-            sprite = TextureAtlasSprite::new(10);
-        } else {
-            sprite = TextureAtlasSprite::new(0);
-        }
-
-        sprite.color = Color::rgb(1.0, 1.0, 1.0);
-        sprite.custom_size = Some(Vec2::splat(24.0));
-        
-        let character = commands.spawn(SpriteSheetBundle {
-            sprite: sprite,
-            texture_atlas: asset_server.handle.clone(),
-            transform: Transform { 
-                translation: Vec3::new(0.0 + (i as f32) * 15.0, 0.0, 900.0), 
-                ..Default::default()
-            },
-            ..Default::default()
-        })
-        .insert(Name::new("PlayerHealthText"))
-        .insert(Visibility::Visible)
-        .insert(PlayerHealthText::new(i))
-        .insert(GameEntity).id();
-
-        childrens.push(character);
-    }
-
-    commands
-        .spawn(VisibilityBundle::default())
-        .insert(Name::new("PlayerHealthTextParent"))
-        .insert(Transform { 
-            translation: Vec3::new(-210.0, 255.0, 0.0), 
-            ..Default::default()
-        })
-        .insert(GlobalTransform::default())
-        .push_children(&childrens);
-}
- */

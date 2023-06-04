@@ -83,6 +83,6 @@ impl Enemy for SpikeEnemy {
         self.amplitude += time.delta_seconds();
         
         velocity.velocity.x = time.delta_seconds() * self.moving_speed;
-        velocity.velocity.y = 0.2 * (self.amplitude * 1.5).sin();
+        velocity.velocity.y = 0.1 * (self.amplitude * 1.5).sin();
     }
 }
