@@ -28,15 +28,19 @@ pub fn enemy_moving_system(
 
 pub fn enemy_death_system(
         mut commands: Commands, 
-        enemies: Query<(Entity, &Health, &dyn Enemy)>,
+        enemies: Query<(Entity, &Health, &dyn Enemy, &Transform)>,
         mut sound_event_writer: EventWriter<SoundEvent>,
         sounds: Res<Sounds>
     ) {
 
-    for (entity, health, _enemy) in enemies.iter() {
+    for (entity, health, _enemy, transform) in enemies.iter() {
         if health.is_dead() {
             commands.entity(entity).despawn_recursive();
             sound_event_writer.send(SoundEvent{handle: sounds.death_handle.clone()});
+        } else {
+            if transform.translation.y < -330.0 {
+                commands.entity(entity).despawn_recursive();
+            }
         }
     }
 }

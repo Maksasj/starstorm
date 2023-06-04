@@ -32,6 +32,7 @@ impl SpikeEnemy {
 #[derive(Bundle)]
 pub struct SpikeEnemyBundle {
     name: Name,
+    sprite_bundle: SpriteSheetBundle,
     health: Health,
     rotation: EntityRotation,
     friction: Friction,
@@ -40,12 +41,26 @@ pub struct SpikeEnemyBundle {
     weapon: OnyxBluster,
     collider: Collider,
     damage_skake: DamageShake,
+    game_entity: GameEntity,
 }
 
 impl SpikeEnemyBundle {
-    pub fn new() -> Self {
+    pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
+        let mut sprite = TextureAtlasSprite::new(2);
+        sprite.color = Color::rgb(1.0, 1.0, 1.0);
+        sprite.custom_size = Some(Vec2::splat(32.0));
+
         SpikeEnemyBundle { 
             name: Name::new("SpikeEnemy"),
+            sprite_bundle: SpriteSheetBundle {
+                sprite: sprite,
+                texture_atlas: asset_server.handle.clone(),
+                transform: Transform { 
+                    translation: Vec3::new(pos.x, pos.y, 200.0), 
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
             health: Health::new(50.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(0.97),
@@ -58,6 +73,7 @@ impl SpikeEnemyBundle {
                 Vec2::new(25.0, 25.0)
             ),
             damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
+            game_entity: GameEntity{},
         }
     }
 }
@@ -69,22 +85,4 @@ impl Enemy for SpikeEnemy {
         velocity.velocity.x = time.delta_seconds() * self.moving_speed;
         velocity.velocity.y = 0.2 * (self.amplitude * 1.5).sin();
     }
-}
-
-pub fn spawn_spike_enemy_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
-    let mut sprite = TextureAtlasSprite::new(2);
-    sprite.color = Color::rgb(1.0, 1.0, 1.0);
-    sprite.custom_size = Some(Vec2::splat(32.0));
-    
-    commands.spawn(SpriteSheetBundle {
-        sprite: sprite,
-        texture_atlas: asset_server.handle.clone(),
-        transform: Transform { 
-            translation: Vec3::new(-100.0, 500.0, 900.0), 
-            ..Default::default()
-        },
-        ..Default::default()
-    })
-    .insert(SpikeEnemyBundle::new())
-    .insert(GameEntity{});
 }

@@ -111,9 +111,6 @@ fn main() {
             spawn_player_health_bar_system,
             spawn_weapon_charge_bar_system,
             spawn_player_system, 
-            spawn_simple_enemy_system,
-            spawn_spike_enemy_system,
-            spawn_bug_enemy_system,
             spawn_wave_spawner_system,
         ).in_schedule(OnEnter(AppState::InGame)))
         .add_systems((
@@ -142,10 +139,10 @@ fn main() {
             friction_system,
             player_shoot_system,
             wave_counting_system,
-            wave_spawn_system,
             wave_clear_system,
+            wave_spawn_system,
             game_scene_system,
-            ).in_set(OnUpdate(AppState::InGame)))
+            ).chain().in_set(OnUpdate(AppState::InGame)))
             
         .add_systems((
             spawn_menu_background_system,

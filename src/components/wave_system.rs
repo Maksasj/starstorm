@@ -1,9 +1,18 @@
 use bevy::prelude::*;
 
-use crate::Enemy;
 pub use crate::components::{
     entity_rotation::*,
     player_controller::*,
+
+    bug_enemy::*,
+    spike_enemy::*,
+    simple_enemy::*,
+    enemy::*,
+    game_scene_system::*,
+};
+
+pub use crate::resources::{
+    sprite_sheet::*,
 };
 
 #[derive(Component)]
@@ -44,8 +53,6 @@ pub fn spawn_wave_spawner_system(mut events: EventWriter<WaveSwitchEvent>, mut c
         })
         .insert(GlobalTransform::default())
         .insert(WaveSpawner::new());
-
-    events.send(WaveSwitchEvent::new(0));
 }
 
 pub fn wave_counting_system(
@@ -70,30 +77,30 @@ pub fn wave_clear_system(
         mut events: EventWriter<WaveSwitchEvent>, 
         targets: Query<(Entity, &dyn Enemy)>,
         mut wave_spawners: Query<&mut WaveSpawner>, 
-        time: Res<Time>
     ) {
     
     if targets.is_empty() {
         for mut spawner in wave_spawners.iter_mut() {
-            spawner.timer += time.delta_seconds(); 
-            
-            if spawner.timer > 50.0 {
-                spawner.current += 1;
-                spawner.timer = 0.0;
-    
-                events.send(WaveSwitchEvent::new(spawner.current));
-            }
+            spawner.current += 1;
+            spawner.timer = 0.0;
+
+            events.send(WaveSwitchEvent::new(spawner.current));
         }
     }
 }
 
 pub fn wave_spawn_system(
-        _commands: Commands,
+        mut commands: Commands,
         mut events: EventReader<WaveSwitchEvent>, 
+        asset_server: Res<SpriteSheet>
     ) {
 
     for event in events.iter() {
-        println!("Switched wavy to {:?}", event.to);
+        let _to = event.to;
+
+        commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
+        commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
+        commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
     }
 
     events.clear();
