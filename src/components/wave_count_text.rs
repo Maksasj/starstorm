@@ -38,7 +38,7 @@ pub fn spawn_wave_count_text_system(mut commands: Commands, asset_server: Res<Bi
             sprite: sprite,
             texture_atlas: asset_server.handle.clone(),
             transform: Transform { 
-                translation: Vec3::new(0.0 + (i as f32) * 22.0, 0.0, 900.0), 
+                translation: Vec3::new(0.0 + (i as f32) * 22.0, 0.0, 100.0), 
                 ..Default::default()
             },
             ..Default::default()

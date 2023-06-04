@@ -15,6 +15,7 @@ pub use crate::resources::{
     game_background::*,
     menu_background::*,
     press_space_text::*,
+    death_screen_background::*,
     sounds::*,
 };
 
@@ -51,6 +52,8 @@ pub use crate::components::{
     game_scene_system::*,
     wave_system::*,
     wave_count_text::*,
+    death_scene_system::*,
+    player_death_system::*,
 };
 
 mod states;
@@ -68,11 +71,17 @@ fn main() {
             ).set(WindowPlugin {
                 primary_window: Some(Window {
                     title: "Starstorm".into(),
-                    resolution: (800., 600.).into(),
+                    resolution: (800.0, 600.0).into(),
                     present_mode: PresentMode::AutoVsync,
                     fit_canvas_to_parent: true,
                     resizable: false,
                     prevent_default_event_handling: false,
+                    resize_constraints: WindowResizeConstraints{
+                        min_width: 800.0,
+                        min_height: 600.0,
+                        max_width: 800.0,
+                        max_height: 600.0,
+                    },
                     ..default()
                 }),
                 ..default()
@@ -81,6 +90,7 @@ fn main() {
         .add_startup_systems((
                 load_spritesheet_system, 
                 load_game_background_system,
+                load_death_screen_background_system,
                 load_menu_background_system,
                 load_small_number_font_system,
                 load_big_number_font_system,
@@ -118,7 +128,7 @@ fn main() {
             spawn_wave_count_text_system,
         ).in_schedule(OnEnter(AppState::InGame)))
         .add_systems((
-            despawn_game_entities,
+
         ).in_schedule(OnExit(AppState::InGame)))
         .add_systems((
             player_controller_system,
@@ -146,12 +156,14 @@ fn main() {
             wave_clear_system,
             wave_spawn_system,
             wave_text_update_system,
+            player_death_system,
             game_scene_system,
             ).chain().in_set(OnUpdate(AppState::InGame)))
             
         .add_systems((
             spawn_menu_background_system,
             spawn_press_space_text_system,
+            despawn_game_entities,
             ).in_schedule(OnEnter(AppState::MainMenu)))
         .add_systems((
             despawn_menu_entities,
@@ -160,6 +172,17 @@ fn main() {
         .add_systems((
             menu_scene_system,
             ).in_set(OnUpdate(AppState::MainMenu)))
+
+        .add_systems((
+            spawn_death_screen_background_system,
+            spawn_press_space_text_system,
+            ).in_schedule(OnEnter(AppState::DeathScreen)))
+        .add_systems((
+            despawn_death_scene_entities,
+            ).in_schedule(OnExit(AppState::DeathScreen)))
+        .add_systems((
+            death_scene_system,
+            ).in_set(OnUpdate(AppState::DeathScreen)))
 
         .add_systems((
             mouse_position_update_system, 
@@ -179,7 +202,7 @@ fn mouse_position_update_system(mut mouse: ResMut<MousePosition>, mut events: Ev
 fn spawn_camera(mut commands: Commands) {
     commands.spawn(Camera2dBundle {
         camera_2d: Camera2d {
-            clear_color: ClearColorConfig::Custom(Color::rgb(0.0, 0.0, 0.0)),
+            clear_color: ClearColorConfig::Custom(Color::rgba(0.0, 0.0, 0.0, 1.0)),
             ..Default::default()
         },
         ..Default::default()

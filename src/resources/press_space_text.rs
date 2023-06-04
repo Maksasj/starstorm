@@ -42,7 +42,7 @@ pub fn spawn_press_space_text_system(mut commands: Commands, image: Res<PressSpa
         sprite: sprite,
         texture: image.handle.clone(),
         transform: Transform{
-            translation: Vec3::new(0.0, -240.0, 0.0),
+            translation: Vec3::new(0.0, -240.0, 200.0),
             ..default()
         },
         ..default()
