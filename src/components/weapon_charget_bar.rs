@@ -5,6 +5,7 @@ pub use crate::components::{
     player_controller::*,
     health::*,
     weapon::*,
+    game_scene_system::*,
 };
 
 pub use crate::resources::{
@@ -31,7 +32,8 @@ pub fn spawn_weapon_charge_bar_system(mut commands: Commands, asset_server: Res<
     })
     .insert(Name::new("PlayerWeaponChargeBar"))
     .insert(Visibility::Visible)
-    .insert(PlayerChargetBar{});
+    .insert(PlayerChargetBar{})
+    .insert(GameEntity{});
 }
 
 pub fn player_weapon_charge_bar_update_system(

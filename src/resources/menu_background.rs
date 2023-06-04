@@ -1,5 +1,9 @@
 use bevy::prelude::*;
 
+use crate::components::{
+    menu_scene_system::*,
+};
+
 #[derive(Resource)]
 pub struct MenuBackgroundImage {
     pub handle: Handle<Image>
@@ -24,5 +28,5 @@ pub fn spawn_menu_background_system(mut commands: Commands, image: Res<MenuBackg
             ..default()
         },
         ..default()
-    });
+    }).insert(MenuEntity{});
 }

@@ -1,5 +1,9 @@
 use bevy::prelude::*;
 
+use crate::components::{
+    game_scene_system::*,
+};
+
 #[derive(Resource)]
 pub struct GameBackgroundImage {
     pub handle: Handle<Image>
@@ -24,5 +28,5 @@ pub fn spawn_game_background_system(mut commands: Commands, image: Res<GameBackg
             ..default()
         },
         ..default()
-    });
+    }).insert(GameEntity);
 }

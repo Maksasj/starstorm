@@ -3,6 +3,7 @@ use bevy::prelude::*;
 use crate::components::{
     friction::*,
     collision::*,
+    game_scene_system::*,
 };
 
 #[derive(Component)]
@@ -30,6 +31,7 @@ pub struct BulletBundle {
     pub bullet: Bullet,
     pub velocity: Velocity, 
     pub collider: Collider,
+    pub game_entity: GameEntity,
 }
 
 impl BulletBundle {
@@ -57,6 +59,7 @@ impl BulletBundle {
                 PLAYER_COLLISION_LAYER, 
                 Vec2::new(10.0, 10.0)
             ),
+            game_entity: GameEntity{},
         }
     }
 
@@ -80,6 +83,7 @@ impl BulletBundle {
             bullet: Bullet::new(10.0, damage),
             velocity: velocity,
             collider: collider,
+            game_entity: GameEntity{},
         }
     }
 }

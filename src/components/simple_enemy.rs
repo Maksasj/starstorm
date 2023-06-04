@@ -6,6 +6,7 @@ use crate::components::{
     collision::*,
     health::*,
     damage_shake::*,
+    game_scene_system::*,
 };
 
 use crate::resources::{
@@ -78,5 +79,6 @@ pub fn spawn_simple_enemy_system(mut commands: Commands, asset_server: Res<Sprit
         },
         ..Default::default()
     })
-    .insert(SimpleEnemyBundle::new());
+    .insert(SimpleEnemyBundle::new())
+    .insert(GameEntity{});
 }

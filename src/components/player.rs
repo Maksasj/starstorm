@@ -6,6 +6,7 @@ use crate::components::{
     player_controller::*,
     collision::*,
     health::*,
+    game_scene_system::*,
 };
 
 use crate::resources::{
@@ -74,5 +75,6 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
         },
         ..Default::default()
     })
-    .insert(PlayerBundle::new());
+    .insert(PlayerBundle::new())
+    .insert(GameEntity{});
 }

@@ -5,6 +5,7 @@ use crate::components::{
     friction::*,
     collision::*,
     health::*,
+    game_scene_system::*,
 };
 
 use crate::resources::{
@@ -84,5 +85,6 @@ pub fn spawn_spike_enemy_system(mut commands: Commands, asset_server: Res<Sprite
         },
         ..Default::default()
     })
-    .insert(SpikeEnemyBundle::new());
+    .insert(SpikeEnemyBundle::new())
+    .insert(GameEntity{});
 }

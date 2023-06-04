@@ -40,11 +40,11 @@ impl Weapon for PlayerBluster {
                 7, 
                 start_pos, 
                 angle, 
-                Velocity::with(0.4, 0.0),
+                Velocity::with(0.7, 0.0),
                 Collider::new(
                     NONE_COLLISION_LAYER, 
                     ENEMY_COLLISION_LAYER, 
-                    Vec2::new(10.0, 10.0)
+                    Vec2::new(15.0, 15.0)
                 ),
                 self.damage
             ));

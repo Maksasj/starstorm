@@ -4,7 +4,11 @@ use crate::states::{
     app_state::*,
 };
 
-pub fn main_menu_system(
+#[derive(Component)]
+pub struct MenuEntity;
+
+
+pub fn menu_scene_system(
         input: Res<Input<KeyCode>>,
         app_state: Res<State<AppState>>,
         mut app_state_next_state: ResMut<NextState<AppState>>,
@@ -14,5 +18,11 @@ pub fn main_menu_system(
         if app_state.0 != AppState::InGame {
             app_state_next_state.set(AppState::InGame);
         }
+    }
+}
+
+pub fn despawn_menu_entities(mut commands: Commands, targets: Query<Entity, With<MenuEntity>>) {
+    for entity in targets.iter() {
+        commands.entity(entity).despawn_recursive();
     }
 }

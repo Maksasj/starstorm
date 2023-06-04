@@ -43,7 +43,8 @@ pub use crate::components::{
     damage_shake::*,
     enemy_collider::*,
 
-    main_menu_system::*,
+    menu_scene_system::*,
+    game_scene_system::*,
 };
 
 mod states;
@@ -103,6 +104,9 @@ fn main() {
             spawn_spike_enemy_system,
             spawn_bug_enemy_system,
         ).in_schedule(OnEnter(AppState::InGame)))
+        .add_systems((
+            despawn_game_entities,
+        ).in_schedule(OnExit(AppState::InGame)))
         
         .add_systems((
             player_controller_system,
@@ -125,14 +129,18 @@ fn main() {
         .add_systems((
             weapon_system,
             friction_system,
+            game_scene_system,
             ).in_set(OnUpdate(AppState::InGame)))
             
         .add_systems((
             spawn_menu_background_system,
             ).in_schedule(OnEnter(AppState::MainMenu)))
+        .add_systems((
+            despawn_menu_entities,
+            ).in_schedule(OnExit(AppState::MainMenu)))
 
         .add_systems((
-            main_menu_system,
+            menu_scene_system,
             ).in_set(OnUpdate(AppState::MainMenu)))
 
         .add_system(mouse_position_update_system) 

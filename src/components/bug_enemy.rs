@@ -5,6 +5,7 @@ use crate::components::{
     mortar_bluster::*,
     collision::*,
     health::*,
+    game_scene_system::*,
 };
 
 use crate::resources::{
@@ -84,5 +85,6 @@ pub fn spawn_bug_enemy_system(mut commands: Commands, asset_server: Res<SpriteSh
         },
         ..Default::default()
     })
-    .insert(BugEnemyBundle::new());
+    .insert(BugEnemyBundle::new())
+    .insert(GameEntity{});
 }
