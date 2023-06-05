@@ -3111,6 +3111,7 @@ dependencies = [
  "bevy_kira_audio",
  "image",
  "rand",
+ "wasm-bindgen",
  "winit",
  "winres",
 ]
