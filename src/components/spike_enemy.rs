@@ -23,7 +23,7 @@ pub struct SpikeEnemy {
 impl SpikeEnemy {
     pub fn new() -> Self {
         SpikeEnemy { 
-            moving_speed: 300.0,
+            moving_speed: 120.0,
             amplitude: 0.0
         }
     }
@@ -63,7 +63,7 @@ impl SpikeEnemyBundle {
             },
             health: Health::new(50.0),
             rotation: EntityRotation::new(_DOWN),
-            friction: Friction::new(0.999),
+            friction: Friction::new(20.0),
             velocity: Velocity::new(),
             enemy: SpikeEnemy::new(),
             weapon: OnyxBluster::new(),
@@ -83,6 +83,6 @@ impl Enemy for SpikeEnemy {
         self.amplitude += time.delta_seconds();
         
         velocity.velocity.x = self.moving_speed;
-        velocity.velocity.y = self.amplitude.sin() * self.moving_speed;
+        velocity.velocity.y = 0.1 * self.amplitude.sin() * self.moving_speed;
     }
 }

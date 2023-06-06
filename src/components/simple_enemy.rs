@@ -21,7 +21,7 @@ pub struct SimpleEnemy {
 impl SimpleEnemy {
     pub fn new() -> Self {
         SimpleEnemy { 
-            moving_speed: 400.0 
+            moving_speed: 100.0 
         }
     }
 }
@@ -60,7 +60,7 @@ impl SimpleEnemyBundle {
             },
             health: Health::new(80.0),
             rotation: EntityRotation::new(_DOWN),
-            friction: Friction::new(0.999),
+            friction: Friction::new(20.0),
             velocity: Velocity::new(),
             enemy: SimpleEnemy::new(),
             weapon: SimpleBluster::new(),

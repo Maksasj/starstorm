@@ -21,7 +21,7 @@ pub fn friction_system(mut targets: Query<(&Friction, &mut Velocity)>, time: Res
     for (friction, mut velocity) in targets.iter_mut() {
         let delta: f32 = time.delta_seconds();
 
-        velocity.velocity.x *= friction.rate * delta;
-        velocity.velocity.y *= friction.rate * delta;
+        velocity.velocity.x *= 1.0 / (1.0 + friction.rate * delta);
+        velocity.velocity.y *= 1.0 / (1.0 + friction.rate * delta);
     }
 }
