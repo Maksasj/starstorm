@@ -1,12 +1,15 @@
 #![windows_subsystem = "windows"]
 
-use winit::window::Icon;
+// #[cfg(not(target = "wasm32-unknown-unknown"))]
+// use winit::window::Icon;
+
+// #[cfg(not(target = "wasm32-unknown-unknown"))]
+// use bevy::winit::*;
 
 use bevy::{
     prelude::*,
     core_pipeline::clear_color::ClearColorConfig,
     window::*,
-    winit::*,
 };
 
 use bevy_kira_audio::prelude::*;
@@ -78,7 +81,8 @@ fn main() {
                     title: "Starstorm".into(),
                     resolution: (800.0, 600.0).into(),
                     present_mode: PresentMode::AutoVsync,
-                    fit_canvas_to_parent: true,
+                    fit_canvas_to_parent: false,
+                    canvas: Some("#game".to_string()),
                     resizable: false,
                     prevent_default_event_handling: false,
                     resize_constraints: WindowResizeConstraints{
@@ -93,7 +97,8 @@ fn main() {
             }))
         .add_plugin(AudioPlugin)
         .add_startup_systems((
-                setup_window_icon,
+                // #[cfg(not(target = "wasm32-unknown-unknown"))]
+                // setup_window_icon,
                 load_spritesheet_system, 
                 load_game_background_system,
                 load_death_screen_background_system,
@@ -215,6 +220,8 @@ fn spawn_camera(mut commands: Commands) {
     });
 }
 
+// #[cfg(not(target = "wasm32-unknown-unknown"))]
+/*
 pub fn setup_window_icon(
     windows: NonSend<WinitWindows>,
     primary_window_query: Query<Entity, With<PrimaryWindow>>,
@@ -235,3 +242,4 @@ pub fn setup_window_icon(
 
     primary_window.set_window_icon(Some(icon));
 }
+ */
