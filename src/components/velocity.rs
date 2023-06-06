@@ -45,10 +45,8 @@ pub fn player_velocity_movement_system(mut targets: Query<(&mut Transform, &mut 
     for (mut transform, rotation, velocity) in targets.iter_mut() {
         let mut new_translation = transform.translation;
 
-        new_translation.y += velocity.velocity.x * rotation.rotation_angle.sin() * time.delta_seconds();
-        new_translation.x += velocity.velocity.x * rotation.rotation_angle.cos() * time.delta_seconds();
-        new_translation.y += velocity.velocity.y * rotation.rotation_angle.cos() * time.delta_seconds();
-        new_translation.x -= velocity.velocity.y * rotation.rotation_angle.sin() * time.delta_seconds();
+        new_translation.x += velocity.velocity.x * time.delta_seconds(); // *  rotation.rotation_angle.sin()
+        new_translation.y += velocity.velocity.y * time.delta_seconds(); // *  rotation.rotation_angle.cos()
 
         if new_translation.x < 210.0 && new_translation.x > -210.0 {
             transform.translation.x = new_translation.x; 
