@@ -3,7 +3,6 @@ pub mod player;
 pub mod entity_rotation;
 pub mod velocity;
 pub mod friction;
-pub mod bullet;
 pub mod collision;
 
 

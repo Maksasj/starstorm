@@ -1,11 +1,14 @@
 use bevy::prelude::*;
 
+pub use crate::weapon::{
+    bullet::*,
+};
+
 pub use crate::components::{
     entity_rotation::*,
     velocity::*,
     player_controller::*,
     friction::*,
-    bullet::*,
     player::*,
     collision::*,
     player_collider::*,

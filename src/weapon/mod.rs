@@ -1,4 +1,5 @@
 pub mod weapon;
+pub mod bullet;
 
 pub mod simple_bluster;
 pub mod onyx_bluster;

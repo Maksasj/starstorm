@@ -3,13 +3,16 @@ use bevy::{
     sprite::collide_aabb::collide, 
 };
 
+use crate::weapon::{
+    bullet::*,
+};
+
 use crate::enemy::{
     enemy::*,
 };
 
 use crate::components::{
     collision::*,
-    bullet::*,
     health::*,
     damage_shake::*,
 };

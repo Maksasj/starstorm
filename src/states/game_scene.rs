@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 pub use crate::weapon::{
     player_bluster::*,
+    bullet::*,
 };
 
 pub use crate::enemy::{
@@ -14,7 +15,6 @@ pub use crate::components::{
     velocity::*,
     player_controller::*,
     friction::*,
-    bullet::*,
     player::*,
     collision::*,
     player_collider::*,

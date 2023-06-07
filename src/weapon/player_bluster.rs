@@ -2,10 +2,10 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     weapon::*,
+    bullet::*,
 };
 
 use crate::components::{
-    bullet::*,
     velocity::*,
     collision::*,
 };
