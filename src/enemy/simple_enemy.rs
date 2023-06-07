@@ -1,11 +1,14 @@
 use bevy::prelude::*;
 
+use crate::weapon::{
+    simple_bluster::*,
+};
+
 use crate::enemy::{
     enemy::*,
 };
 
 use crate::components::{
-    simple_bluster::*,
     friction::*,
     collision::*,
     health::*,

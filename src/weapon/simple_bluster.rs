@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 
-use crate::components::{
+use crate::weapon::{
     weapon::*,
+};
+
+use crate::components::{
     bullet::*,
     velocity::*,
 };
@@ -11,40 +14,30 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct MortarBluster {
+pub struct SimpleBluster {
     pub timer: f32,
     pub speed: f32,
     pub damage: f32,
 }
 
-impl MortarBluster {
+impl SimpleBluster {
     pub fn new() -> Self {
-        MortarBluster {
+        SimpleBluster {
             timer: 0.0,
-            speed: 3.5,
-            damage: 70.0,
+            speed: 0.3,
+            damage: 10.0,
         }
     }
 }
 
-impl Weapon for MortarBluster {
+impl Weapon for SimpleBluster {
     fn shoot(&mut self, mut commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
         self.timer += time.delta_seconds();
 
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
             
-            for i in -2..2 {
-                spawn_bullet(
-                    &mut commands, 
-                    &handle, 
-                    35, 
-                    start_pos, 
-                    angle + 0.2617 * i as f32, 
-                    Velocity::with(50.0, 0.0), 
-                    self.damage
-                );
-            }
+            spawn_bullet(&mut commands, &handle, 3, start_pos, angle, Velocity::with(200.0, 0.0), self.damage);
             
             self.timer = 0.0;
         }

@@ -12,12 +12,6 @@ pub mod damage_shake;
 
 pub mod player_collider;
 
-pub mod weapon;
-pub mod simple_bluster;
-pub mod onyx_bluster;
-pub mod mortar_bluster;
-pub mod player_bluster;
-
 pub mod camera_shake;
 
 pub mod player_health_text;
@@ -30,5 +24,3 @@ pub mod wave_system;
 pub mod wave_count_text;
 pub mod death_scene_system;
 pub mod player_death_system;
-
-pub mod weapon_plugin;

@@ -1,10 +1,11 @@
 use bevy::prelude::*;
 
+pub use crate::weapon::weapon::*;
+
 pub use crate::components::{
     entity_rotation::*,
     player_controller::*,
     health::*,
-    weapon::*,
     game_scene_system::*,
 };
 

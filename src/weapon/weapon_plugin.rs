@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use bevy_trait_query::RegisterExt;
 
-use crate::components::{
+use crate::weapon::{
     weapon::*,
 
     simple_bluster::*,
@@ -14,6 +14,8 @@ pub struct WeaponPlugin;
 
 impl Plugin for WeaponPlugin {
     fn build(&self, app: &mut App) {
+        app.add_event::<PlayerShootEvent>();
+
         app.register_component_as::<dyn Weapon, SimpleBluster>();
         app.register_component_as::<dyn Weapon, OnyxBluster>();
         app.register_component_as::<dyn Weapon, MortarBluster>();

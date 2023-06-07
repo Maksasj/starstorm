@@ -1,5 +1,9 @@
 use bevy::prelude::*;
 
+pub use crate::weapon::{
+    player_bluster::*,
+};
+
 pub use crate::enemy::{
     enemy::*,
     enemy_collider::*,
@@ -14,11 +18,6 @@ pub use crate::components::{
     player::*,
     collision::*,
     player_collider::*,
-    weapon::*,
-    simple_bluster::*,
-    onyx_bluster::*,
-    mortar_bluster::*,
-    player_bluster::*,
     player_health_text::*,
     weapon_charget_bar::*,
     damage_shake::*,

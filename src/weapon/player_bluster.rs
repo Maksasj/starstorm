@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 
-use crate::components::{
+use crate::weapon::{
     weapon::*,
+};
+
+use crate::components::{
     bullet::*,
     velocity::*,
     collision::*,
@@ -51,7 +54,7 @@ impl Weapon for PlayerBluster {
                 ),
                 self.damage
             ));
-            
+
             commands.add(|w: &mut World| {
                 w.send_event(PlayerShootEvent);
             });

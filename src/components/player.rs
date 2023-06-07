@@ -2,7 +2,6 @@ use bevy::prelude::*;
 
 use crate::components::{
     friction::*,
-    player_bluster::*,
     player_controller::*,
     collision::*,
     health::*,
@@ -22,7 +21,6 @@ pub struct PlayerBundle {
     controller: PlayerController, 
     friction: Friction,
     velocity: Velocity, 
-    weapon: PlayerBluster,
     collider: Collider,
 }
 
@@ -35,7 +33,6 @@ impl PlayerBundle {
             controller: PlayerController{}, 
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
-            weapon: PlayerBluster::new(),
             collider: Collider::new(
                 PLAYER_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 

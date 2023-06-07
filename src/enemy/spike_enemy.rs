@@ -1,11 +1,14 @@
 use bevy::prelude::*;
 
+use crate::weapon::{
+    onyx_bluster::*,
+};
+
 use crate::enemy::{
     enemy::*,
 };
 
 use crate::components::{
-    onyx_bluster::*,
     friction::*,
     collision::*,
     health::*,

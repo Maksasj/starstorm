@@ -16,7 +16,6 @@ use bevy::{
 use bevy_kira_audio::prelude::*;
 
 mod resources;
-use crate::components::weapon_plugin::WeaponPlugin;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
@@ -31,15 +30,13 @@ pub use crate::resources::{
     mouse_position::*,
 };
 
+mod weapon;
+pub use crate::weapon::weapon_plugin::*;
+
 mod enemy;
-pub use crate::enemy::{
-    enemy_plugin::*,
-};
+pub use crate::enemy::enemy_plugin::*;
 
 mod components;
-pub use crate::components::{
-    weapon_plugin::*,
-};
 
 mod states;
 pub use crate::states::{
@@ -100,7 +97,6 @@ fn main() {
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_event::<CameraShakeEvent>()
         .add_event::<WaveSwitchEvent>()    
-        .add_event::<PlayerShootEvent>()
         .add_event::<SoundEvent>()
         .add_state::<AppState>()     
 

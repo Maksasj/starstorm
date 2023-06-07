@@ -4,9 +4,10 @@ use crate::enemy::{
     enemy::*,
 };
 
+use crate::weapon::mortar_bluster::*;
+
 use crate::components::{
     friction::*,
-    mortar_bluster::*,
     collision::*,
     health::*,
     game_scene_system::*,
