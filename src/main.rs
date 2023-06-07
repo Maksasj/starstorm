@@ -12,6 +12,7 @@ use bevy::{
     window::*,
 };
 
+
 use bevy_kira_audio::prelude::*;
 
 mod resources;
@@ -25,6 +26,7 @@ pub use crate::resources::{
     press_space_text::*,
     death_screen_background::*,
     sounds::*,
+    resources_plugin::*,
 };
 
 mod components;
@@ -67,6 +69,10 @@ pub use crate::components::{
 mod states;
 pub use crate::states::{
     app_state::*,
+
+    menu_sceen::*,
+    game_sceen::*,
+    death_sceen::*,
 };
 
 fn main() {
@@ -96,6 +102,7 @@ fn main() {
                 ..default()
             }))
         .add_plugin(AudioPlugin)
+        //.add_plugin(ResourcesPlugin)
         .add_startup_systems((
                 // #[cfg(not(target = "wasm32-unknown-unknown"))]
                 // setup_window_icon,
@@ -107,6 +114,7 @@ fn main() {
                 load_big_number_font_system,
                 load_press_space_text_system,
                 load_sounds_system,
+
                 apply_system_buffers, 
                 setup_camera_shake_system,
                 spawn_camera,
@@ -170,19 +178,8 @@ fn main() {
             player_death_system,
             game_scene_system,
             ).chain().in_set(OnUpdate(AppState::InGame)))
-            
-        .add_systems((
-            spawn_menu_background_system,
-            spawn_press_space_text_system,
-            despawn_game_entities,
-            ).in_schedule(OnEnter(AppState::MainMenu)))
-        .add_systems((
-            despawn_menu_entities,
-            ).in_schedule(OnExit(AppState::MainMenu)))
-
-        .add_systems((
-            menu_scene_system,
-            ).in_set(OnUpdate(AppState::MainMenu)))
+        
+        .add_plugin(MenuScenePlugin)
 
         .add_systems((
             spawn_death_screen_background_system,
