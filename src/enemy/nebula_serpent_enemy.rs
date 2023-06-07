@@ -22,20 +22,20 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct StellarPhoenixEnemy {
+pub struct NebulaSerpentEnemy {
     pub moving_speed: f32
 }
 
-impl StellarPhoenixEnemy {
+impl NebulaSerpentEnemy {
     pub fn new() -> Self {
-        StellarPhoenixEnemy { 
+        NebulaSerpentEnemy { 
             moving_speed: 100.0 
         }
     }
 }
 
 #[derive(Bundle)]
-pub struct StellarPhoenixEnemyBundle {
+pub struct NebulaSerpentEnemyBundle {
     name: Name,
     sprite_bundle: SpriteSheetBundle,
     health: Health,
@@ -43,7 +43,7 @@ pub struct StellarPhoenixEnemyBundle {
     friction: Friction,
     velocity: Velocity, 
     
-    enemy: StellarPhoenixEnemy,
+    enemy: NebulaSerpentEnemy,
     // weapon: MeteoricBluster,
     shooter: Shooter,
 
@@ -52,14 +52,14 @@ pub struct StellarPhoenixEnemyBundle {
     game_entity: GameEntity,
 }
 
-impl StellarPhoenixEnemyBundle {
+impl NebulaSerpentEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
         let mut sprite = TextureAtlasSprite::new(65);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
-        StellarPhoenixEnemyBundle { 
-            name: Name::new("StellarPhoenixEnemy"),
+        NebulaSerpentEnemyBundle { 
+            name: Name::new("NebulaSerpentEnemy"),
             sprite_bundle: SpriteSheetBundle {
                 sprite: sprite,
                 texture_atlas: asset_server.handle.clone(),
@@ -74,7 +74,7 @@ impl StellarPhoenixEnemyBundle {
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
-            enemy: StellarPhoenixEnemy::new(),
+            enemy: NebulaSerpentEnemy::new(),
             // weapon: MeteoricBluster::new(),
             shooter: Shooter::enemy(),
 
@@ -89,7 +89,7 @@ impl StellarPhoenixEnemyBundle {
     }
 }
 
-impl Enemy for StellarPhoenixEnemy {
+impl Enemy for NebulaSerpentEnemy {
     fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, _time: &Res<Time>) {
         velocity.velocity.x = self.moving_speed;
     }
