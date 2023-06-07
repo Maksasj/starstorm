@@ -1,6 +1,5 @@
 use bevy::prelude::*;
 
-use crate::IonBluster;
 use crate::components::{
     friction::*,
     player_controller::*,
@@ -13,6 +12,10 @@ use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
 };
+use crate::weapon::{
+    ion_bluster::*,
+    shooter::*,
+};
 
 #[derive(Bundle)]
 pub struct PlayerBundle {
@@ -23,6 +26,7 @@ pub struct PlayerBundle {
     friction: Friction,
     velocity: Velocity, 
     collider: Collider,
+    shooter: Shooter,
 }
 
 impl PlayerBundle {
@@ -34,6 +38,9 @@ impl PlayerBundle {
             controller: PlayerController{}, 
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
+
+            shooter: Shooter::player(),
+
             collider: Collider::new(
                 PLAYER_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 
@@ -75,5 +82,7 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
     })
     .insert(PlayerBundle::new())
     .insert(GameEntity{})
+
+    // IonBluster default for player
     .insert(IonBluster::default());
 }

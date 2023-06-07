@@ -4,7 +4,9 @@ use crate::enemy::{
     enemy::*,
 };
 
-use crate::weapon::mortar_bluster::*;
+use crate::weapon::{
+    mortar_bluster::*,
+};
 
 use crate::components::{
     friction::*,
@@ -17,6 +19,7 @@ use crate::components::{
 use crate::resources::{
     sprite_sheet::*,
 };
+use crate::weapon::shooter::Shooter;
 
 #[derive(Component)]
 pub struct BugEnemy {
@@ -41,10 +44,13 @@ pub struct BugEnemyBundle {
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
+    
     enemy: BugEnemy,
     weapon: MortarBluster,
+    shooter: Shooter,
+
     collider: Collider,
-    damage_skake: DamageShake,
+    damage_shake: DamageShake,
     game_entity: GameEntity,
 }
 
@@ -69,14 +75,17 @@ impl BugEnemyBundle {
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
+
             enemy: BugEnemy::new(),
             weapon: MortarBluster::default(),
+            shooter: Shooter::enemy(),
+
             collider: Collider::new(
                 ENEMY_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
-            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
+            damage_shake: DamageShake::new(0.0, 0.0, 0.0, false),
             game_entity: GameEntity{},
         }
     }

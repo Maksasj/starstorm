@@ -1,5 +1,9 @@
 use bevy::prelude::*;
 
+use crate::weapon:: {
+    shooter::*,
+};
+
 use crate::components::{
     friction::*,
 };
@@ -17,11 +21,11 @@ pub trait Weapon {
 pub fn weapon_system(
         mut commands: Commands, 
         asset_server: Res<SpriteSheet>, 
-        mut targets: Query<(&mut dyn Weapon, &EntityRotation, &Transform)>,
+        mut targets: Query<(&mut dyn Weapon, &EntityRotation, &Transform, &Shooter)>,
         time: Res<Time>
     ) {
 
-    for (weapons, rotation, transform) in targets.iter_mut() {
+    for (weapons, rotation, transform, shooter) in targets.iter_mut() {
         for mut weapon in weapons {
             weapon.shoot(&mut commands, &asset_server, rotation.rotation_angle, Vec2::new(transform.translation.x, transform.translation.y), &time);
         }

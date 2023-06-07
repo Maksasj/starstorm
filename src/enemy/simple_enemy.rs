@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 use crate::weapon::{
+    shooter::*,
     simple_bluster::*,
 };
 
@@ -41,10 +42,13 @@ pub struct SimpleEnemyBundle {
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
+    
     enemy: SimpleEnemy,
     weapon: SimpleBluster,
+    shooter: Shooter,
+
     collider: Collider,
-    damage_skake: DamageShake,
+    damage_shake: DamageShake,
     game_entity: GameEntity,
 }
 
@@ -69,14 +73,17 @@ impl SimpleEnemyBundle {
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
+            
             enemy: SimpleEnemy::new(),
             weapon: SimpleBluster::new(),
+            shooter: Shooter::enemy(),
+
             collider: Collider::new(
                 ENEMY_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 
                 Vec2::new(25.0, 25.0)
             ),
-            damage_skake: DamageShake::new(0.0, 0.0, 0.0, false),
+            damage_shake: DamageShake::new(0.0, 0.0, 0.0, false),
             game_entity: GameEntity{},
         }
     }
