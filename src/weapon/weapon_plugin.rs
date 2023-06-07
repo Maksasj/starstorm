@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use bevy_trait_query::RegisterExt;
 
+use crate::components::player_shoot::*;
+
 use crate::weapon::{
     weapon::*,
 

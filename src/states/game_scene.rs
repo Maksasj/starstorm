@@ -28,6 +28,7 @@ pub use crate::components::{
     death_scene_system::*,
     player_death_system::*,
     camera_shake::*,
+    player_shoot::*,
 };
 
 use crate::resources::{

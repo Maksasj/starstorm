@@ -8,6 +8,7 @@ use crate::components::{
     friction::*,
     collision::*,
     game_scene_system::*,
+    player_shoot::*,
 };
 
 #[derive(Component)]
@@ -73,6 +74,10 @@ pub fn spawn_bullet(
                 ENEMY_COLLISION_LAYER, 
                 Vec2::new(10.0, 10.0)
             ));
+
+            commands.add(|w: &mut World| {
+                w.send_event(PlayerShootEvent);
+            });
         },
         ShooterType::Enemy => {
             commands.entity(entity).insert(Collider::new(
