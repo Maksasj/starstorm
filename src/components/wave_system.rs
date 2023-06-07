@@ -4,7 +4,7 @@ pub use crate::enemy::{
     enemy::*,
     bug_enemy::*,
     spike_enemy::*,
-    simple_enemy::*,
+    seraphic_skyrider_enemy::*,
 };
 
 pub use crate::components::{
@@ -105,13 +105,13 @@ pub fn wave_spawn_system(
         let spike_center_offset = 60.0;
 
         if to <= 2 {
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
         } else if to <= 5 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-50.0, 330.0)));
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(50.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-50.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(50.0, 330.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
         } else  if to <= 10 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 360.0)));
@@ -119,8 +119,8 @@ pub fn wave_spawn_system(
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 360.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
 
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(-200.0, 330.0)));
-            commands.spawn(SimpleEnemyBundle::new(&asset_server, Vec2::new(200.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-200.0, 330.0)));
+            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(200.0, 330.0)));
         } else if to <= 15 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 400.0)));
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 370.0)));

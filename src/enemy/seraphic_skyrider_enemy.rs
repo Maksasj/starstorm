@@ -22,20 +22,20 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct SimpleEnemy {
+pub struct SeraphicSkyriderEnemy {
     pub moving_speed: f32
 }
 
-impl SimpleEnemy {
+impl SeraphicSkyriderEnemy {
     pub fn new() -> Self {
-        SimpleEnemy { 
+        SeraphicSkyriderEnemy { 
             moving_speed: 100.0 
         }
     }
 }
 
 #[derive(Bundle)]
-pub struct SimpleEnemyBundle {
+pub struct SeraphicSkyriderEnemyBundle {
     name: Name,
     sprite_bundle: SpriteSheetBundle,
     health: Health,
@@ -43,7 +43,7 @@ pub struct SimpleEnemyBundle {
     friction: Friction,
     velocity: Velocity, 
     
-    enemy: SimpleEnemy,
+    enemy: SeraphicSkyriderEnemy,
     weapon: MeteoricBluster,
     shooter: Shooter,
 
@@ -52,14 +52,14 @@ pub struct SimpleEnemyBundle {
     game_entity: GameEntity,
 }
 
-impl SimpleEnemyBundle {
+impl SeraphicSkyriderEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
         let mut sprite = TextureAtlasSprite::new(1);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
-        SimpleEnemyBundle { 
-            name: Name::new("SimpleEnemy"),
+        SeraphicSkyriderEnemyBundle { 
+            name: Name::new("SeraphicSkyriderEnemy"),
             sprite_bundle: SpriteSheetBundle {
                 sprite: sprite,
                 texture_atlas: asset_server.handle.clone(),
@@ -74,7 +74,7 @@ impl SimpleEnemyBundle {
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
-            enemy: SimpleEnemy::new(),
+            enemy: SeraphicSkyriderEnemy::new(),
             weapon: MeteoricBluster::new(),
             shooter: Shooter::enemy(),
 
@@ -89,7 +89,7 @@ impl SimpleEnemyBundle {
     }
 }
 
-impl Enemy for SimpleEnemy {
+impl Enemy for SeraphicSkyriderEnemy {
     fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, _time: &Res<Time>) {
         velocity.velocity.x = self.moving_speed;
     }
