@@ -4,7 +4,7 @@ use bevy_trait_query::RegisterExt;
 use crate::weapon::{
     weapon::*,
 
-    simple_bluster::*,
+    meteoric_bluster::*,
     onyx_bluster::*,
     mortar_bluster::*,
     ion_bluster::*,
@@ -16,7 +16,7 @@ impl Plugin for WeaponPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<PlayerShootEvent>();
 
-        app.register_component_as::<dyn Weapon, SimpleBluster>();
+        app.register_component_as::<dyn Weapon, MeteoricBluster>();
         app.register_component_as::<dyn Weapon, OnyxBluster>();
         app.register_component_as::<dyn Weapon, MortarBluster>();
         app.register_component_as::<dyn Weapon, IonBluster>();

@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    simple_bluster::*,
+    meteoric_bluster::*,
 };
 
 use crate::enemy::{
@@ -44,7 +44,7 @@ pub struct SimpleEnemyBundle {
     velocity: Velocity, 
     
     enemy: SimpleEnemy,
-    weapon: SimpleBluster,
+    weapon: MeteoricBluster,
     shooter: Shooter,
 
     collider: Collider,
@@ -75,7 +75,7 @@ impl SimpleEnemyBundle {
             velocity: Velocity::new(),
             
             enemy: SimpleEnemy::new(),
-            weapon: SimpleBluster::new(),
+            weapon: MeteoricBluster::new(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

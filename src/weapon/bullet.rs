@@ -1,5 +1,9 @@
 use bevy::prelude::*;
 
+use crate::weapon::{
+    shooter::*,
+};
+
 use crate::components::{
     friction::*,
     collision::*,
@@ -11,14 +15,17 @@ pub struct Bullet {
     pub life_time: f32,
     pub damage: f32,
     
+    pub sprite_index: usize,
+
     timer: f32,
 }
 
 impl Bullet {
-    pub fn new(life_time: f32, damage: f32) -> Self {
+    pub const fn new(life_time: f32, damage: f32, sprite_index: usize) -> Self {
         Bullet {
             life_time: life_time,
             damage: damage,
+            sprite_index: sprite_index,
 
             timer: 0.0,
         }
@@ -27,84 +34,54 @@ impl Bullet {
 
 #[derive(Bundle)]
 pub struct BulletBundle {
-    pub sprite: SpriteSheetBundle,
-    pub name: Name,
-    pub rotation: EntityRotation,
     pub bullet: Bullet,
     pub velocity: Velocity, 
-    pub collider: Collider,
-    pub game_entity: GameEntity,
-}
-
-impl BulletBundle {
-    pub fn new(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity, damage: f32) -> Self {
-        let mut sprite: TextureAtlasSprite = TextureAtlasSprite::new(sprite_index);
-        sprite.color = Color::rgb(1.0, 1.0, 1.0);
-        sprite.custom_size = Some(Vec2::splat(32.0));
-
-        BulletBundle { 
-            sprite: SpriteSheetBundle {
-                sprite: sprite,
-                texture_atlas: asset_handle.clone(),
-                transform: Transform { 
-                    translation: Vec3::new(start_pos.x, start_pos.y, 100.0), 
-                    ..Default::default()
-                },
-                ..Default::default()
-            },
-            name: Name::new("Bullet"),
-            rotation: EntityRotation::new(angle),
-            bullet: Bullet::new(10.0, damage),
-            velocity: velocity,
-            collider: Collider::new(
-                BULLET_COLLISION_LAYER, 
-                PLAYER_COLLISION_LAYER, 
-                Vec2::new(10.0, 10.0)
-            ),
-            game_entity: GameEntity{},
-        }
-    }
-
-    pub fn custom(asset_handle: &Handle<TextureAtlas>, sprite_index: usize, start_pos: Vec2, angle: f32, velocity: Velocity, collider: Collider, damage: f32) -> Self {
-        let mut sprite: TextureAtlasSprite = TextureAtlasSprite::new(sprite_index);
-        sprite.color = Color::rgb(1.0, 1.0, 1.0);
-        sprite.custom_size = Some(Vec2::splat(32.0));
-
-        BulletBundle { 
-            sprite: SpriteSheetBundle {
-                sprite: sprite,
-                texture_atlas: asset_handle.clone(),
-                transform: Transform { 
-                    translation: Vec3::new(start_pos.x, start_pos.y, 100.0), 
-                    ..Default::default()
-                },
-                ..Default::default()
-            },
-            name: Name::new("Bullet"),
-            rotation: EntityRotation::new(angle),
-            bullet: Bullet::new(10.0, damage),
-            velocity: velocity,
-            collider: collider,
-            game_entity: GameEntity{},
-        }
-    }
+    pub collision_box: CollisionBox,
 }
 
 pub fn spawn_bullet(
         commands: &mut Commands, 
         asset_handle: &Handle<TextureAtlas>, 
-        sprite_index: usize,
+        bullet: BulletBundle,
         start_pos: Vec2,
         angle: f32, 
-        velocity: Velocity,
-        damage: f32
+        shooter: &Shooter
     ) {
 
-    commands.spawn(BulletBundle::new(asset_handle, sprite_index, start_pos, angle, velocity, damage));
-}
+    let mut sprite: TextureAtlasSprite = TextureAtlasSprite::new(bullet.bullet.sprite_index);
+    sprite.color = Color::rgb(1.0, 1.0, 1.0);
+    sprite.custom_size = Some(Vec2::splat(32.0));
 
-pub fn spawn_bullet_from_bundle(commands: &mut Commands, bullet: BulletBundle) {
-    commands.spawn(bullet);
+    let entity = commands
+        .spawn(bullet)
+        .insert(SpriteSheetBundle {
+                sprite: sprite,
+                texture_atlas: asset_handle.clone(),
+                transform: Transform { 
+                    translation: Vec3::new(start_pos.x, start_pos.y, 100.0), 
+                    ..Default::default()
+                },
+                ..Default::default()
+            })
+        .insert(EntityRotation::new(angle))
+        .insert(GameEntity{}).id();
+
+    match shooter.0 {
+        ShooterType::Player => {
+            commands.entity(entity).insert(Collider::new(
+                BULLET_COLLISION_LAYER, 
+                ENEMY_COLLISION_LAYER, 
+                Vec2::new(10.0, 10.0)
+            ));
+        },
+        ShooterType::Enemy => {
+            commands.entity(entity).insert(Collider::new(
+                BULLET_COLLISION_LAYER, 
+                PLAYER_COLLISION_LAYER, 
+                Vec2::new(10.0, 10.0)
+            ));
+        },
+    }
 }
 
 pub fn bullet_life_time_system(mut commands: Commands, mut targets: Query<(Entity, &mut Bullet, &Transform)>, time: Res<Time>) {

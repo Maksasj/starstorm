@@ -3,11 +3,7 @@ use bevy::prelude::*;
 use crate::weapon::{
     weapon::*,
     bullet::*,
-};
-
-use crate::components::{
-    velocity::*,
-    collision::*,
+    bullets::*,
 };
 
 use crate::resources::{
@@ -15,11 +11,12 @@ use crate::resources::{
     sounds::*,
 };
 
+use super::shooter::Shooter;
+
 #[derive(Component)]
 pub struct IonBluster {
     pub timer: f32,
     pub speed: f32,
-    pub damage: f32,
 }
 
 impl IonBluster {
@@ -27,7 +24,6 @@ impl IonBluster {
         IonBluster {
             timer: 0.0,
             speed: 0.8,
-            damage: 15.0,
         }
     }
 }
@@ -35,25 +31,13 @@ impl IonBluster {
 pub struct PlayerShootEvent;
 
 impl Weapon for IonBluster {
-    fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
+    fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>, shooter: &Shooter) {
         self.timer += time.delta_seconds();
 
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
             
-            spawn_bullet_from_bundle(commands, BulletBundle::custom(                
-                &handle, 
-                51, 
-                start_pos, 
-                angle, 
-                Velocity::with(400.0, 0.0),
-                Collider::new(
-                    NONE_COLLISION_LAYER, 
-                    ENEMY_COLLISION_LAYER, 
-                    Vec2::new(15.0, 15.0)
-                ),
-                self.damage
-            ));
+            spawn_bullet(commands, &handle, ION_BULLET, start_pos, angle, shooter);
 
             commands.add(|w: &mut World| {
                 w.send_event(PlayerShootEvent);

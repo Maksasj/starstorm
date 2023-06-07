@@ -6,7 +6,7 @@ pub enum ShooterType {
 }
 
 #[derive(Component)]
-pub struct Shooter(ShooterType);
+pub struct Shooter(pub ShooterType);
 
 impl Shooter {
     pub fn player() -> Self {

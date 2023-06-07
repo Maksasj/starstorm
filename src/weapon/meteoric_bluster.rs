@@ -5,39 +5,36 @@ use crate::weapon::{
     bullet::*,
 };
 
-use crate::components::{
-    velocity::*,
-};
-
 use crate::resources::{
     sprite_sheet::*,
 };
 
+use super::bullets::METEORIC_BULLET;
+use super::shooter::Shooter;
+
 #[derive(Component)]
-pub struct SimpleBluster {
+pub struct MeteoricBluster {
     pub timer: f32,
     pub speed: f32,
-    pub damage: f32,
 }
 
-impl SimpleBluster {
+impl MeteoricBluster {
     pub fn new() -> Self {
-        SimpleBluster {
+        MeteoricBluster {
             timer: 0.0,
             speed: 0.3,
-            damage: 10.0,
         }
     }
 }
 
-impl Weapon for SimpleBluster {
-    fn shoot(&mut self, mut commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
+impl Weapon for MeteoricBluster {
+    fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>, shooter: &Shooter) {
         self.timer += time.delta_seconds();
 
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
             
-            spawn_bullet(&mut commands, &handle, 3, start_pos, angle, Velocity::with(200.0, 0.0), self.damage);
+            spawn_bullet(commands, &handle, METEORIC_BULLET, start_pos, angle, shooter);
             
             self.timer = 0.0;
         }

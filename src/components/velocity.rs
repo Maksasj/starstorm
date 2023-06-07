@@ -11,13 +11,13 @@ pub struct Velocity {
 }
 
 impl Velocity {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Velocity { 
             velocity: Vec2::splat(0.0)
         }
     }
 
-    pub fn with(velocity_x: f32, velocity_y: f32) -> Self {
+    pub const fn with(velocity_x: f32, velocity_y: f32) -> Self {
         Velocity { 
             velocity: Vec2::new(velocity_x, velocity_y)
         }
