@@ -7,27 +7,17 @@ pub use crate::components::{
     friction::*,
     bullet::*,
     player::*,
-
     collision::*,
     player_collider::*,
-
     weapon::*,
     simple_bluster::*,
     onyx_bluster::*,
     mortar_bluster::*,
     player_bluster::*,
-
-    enemy::*,
-    simple_enemy::*,
-    spike_enemy::*,
-    bug_enemy::*,
-
     camera_shake::*,
     player_health_text::*,
     weapon_charget_bar::*,
     damage_shake::*,
-    enemy_collider::*,
-
     menu_scene_system::*,
     game_scene_system::*,
     wave_system::*,

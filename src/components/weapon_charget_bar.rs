@@ -17,7 +17,7 @@ pub use crate::resources::{
 pub struct PlayerChargetBar;
 
 pub fn spawn_weapon_charge_bar_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
-    let mut sprite = TextureAtlasSprite::new(9);
+    let mut sprite = TextureAtlasSprite::new(255);
     sprite.color = Color::rgb(1.0, 1.0, 1.0);
     sprite.custom_size = Some(Vec2::new(125.0, 12.0));
 

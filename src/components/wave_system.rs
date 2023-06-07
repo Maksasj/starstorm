@@ -1,13 +1,16 @@
 use bevy::prelude::*;
 
+pub use crate::enemy::{
+    enemy::*,
+    bug_enemy::*,
+    spike_enemy::*,
+    simple_enemy::*,
+};
+
 pub use crate::components::{
     entity_rotation::*,
     player_controller::*,
 
-    bug_enemy::*,
-    spike_enemy::*,
-    simple_enemy::*,
-    enemy::*,
     game_scene_system::*,
 };
 

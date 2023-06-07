@@ -29,7 +29,7 @@ impl PlayerHealthText {
 pub struct PlayerHealthBar;
 
 pub fn spawn_player_health_bar_system(mut commands: Commands, asset_server: Res<SpriteSheet>) {
-    let mut sprite = TextureAtlasSprite::new(8);
+    let mut sprite = TextureAtlasSprite::new(254);
     sprite.color = Color::rgb(1.0, 1.0, 1.0);
     sprite.custom_size = Some(Vec2::new(125.0, 12.0));
 

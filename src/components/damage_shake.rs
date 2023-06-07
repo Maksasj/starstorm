@@ -4,8 +4,8 @@ use bevy::{
 
 use rand::Rng;
 
-use crate::components::{
-    enemy::*
+use crate::enemy::{
+    enemy::*,
 };
 
 #[derive(Component)]

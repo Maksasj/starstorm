@@ -1,18 +1,21 @@
 use bevy::prelude::*;
 
+use crate::enemy::{
+    enemy::*,
+};
+
 use crate::components::{
     friction::*,
     mortar_bluster::*,
     collision::*,
     health::*,
     game_scene_system::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
-
-use super::damage_shake::DamageShake;
 
 #[derive(Component)]
 pub struct BugEnemy {

@@ -31,9 +31,13 @@ pub use crate::resources::{
     mouse_position::*,
 };
 
+mod enemy;
+pub use crate::enemy::{
+    enemy_plugin::*,
+};
+
 mod components;
 pub use crate::components::{
-    enemy_plugin::*,
     weapon_plugin::*,
 };
 

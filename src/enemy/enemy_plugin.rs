@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use bevy_trait_query::RegisterExt;
 
-use crate::components::{
+use crate::enemy::{
     enemy::*,
 
     simple_enemy::*,

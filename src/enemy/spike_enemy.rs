@@ -1,12 +1,16 @@
 use bevy::prelude::*;
 
+use crate::enemy::{
+    enemy::*,
+};
+
 use crate::components::{
-    simple_bluster::*,
+    onyx_bluster::*,
     friction::*,
     collision::*,
     health::*,
-    damage_shake::*,
     game_scene_system::*,
+    damage_shake::*,
 };
 
 use crate::resources::{
@@ -14,41 +18,43 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct SimpleEnemy {
-    pub moving_speed: f32
+pub struct SpikeEnemy {
+    pub moving_speed: f32,
+    pub amplitude: f32,
 }
 
-impl SimpleEnemy {
+impl SpikeEnemy {
     pub fn new() -> Self {
-        SimpleEnemy { 
-            moving_speed: 100.0 
+        SpikeEnemy { 
+            moving_speed: 120.0,
+            amplitude: 0.0
         }
     }
 }
 
 #[derive(Bundle)]
-pub struct SimpleEnemyBundle {
+pub struct SpikeEnemyBundle {
     name: Name,
     sprite_bundle: SpriteSheetBundle,
     health: Health,
     rotation: EntityRotation,
     friction: Friction,
     velocity: Velocity, 
-    enemy: SimpleEnemy,
-    weapon: SimpleBluster,
+    enemy: SpikeEnemy,
+    weapon: OnyxBluster,
     collider: Collider,
     damage_skake: DamageShake,
     game_entity: GameEntity,
 }
 
-impl SimpleEnemyBundle {
+impl SpikeEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
-        let mut sprite = TextureAtlasSprite::new(1);
+        let mut sprite = TextureAtlasSprite::new(17);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
-        SimpleEnemyBundle { 
-            name: Name::new("SimpleEnemy"),
+        SpikeEnemyBundle { 
+            name: Name::new("SpikeEnemy"),
             sprite_bundle: SpriteSheetBundle {
                 sprite: sprite,
                 texture_atlas: asset_server.handle.clone(),
@@ -58,12 +64,12 @@ impl SimpleEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(50.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
-            enemy: SimpleEnemy::new(),
-            weapon: SimpleBluster::new(),
+            enemy: SpikeEnemy::new(),
+            weapon: OnyxBluster::new(),
             collider: Collider::new(
                 ENEMY_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 
@@ -75,8 +81,11 @@ impl SimpleEnemyBundle {
     }
 }
 
-impl Enemy for SimpleEnemy {
-    fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, _time: &Res<Time>) {
+impl Enemy for SpikeEnemy {
+    fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, time: &Res<Time>) {
+        self.amplitude += time.delta_seconds();
+        
         velocity.velocity.x = self.moving_speed;
+        velocity.velocity.y = 0.1 * self.amplitude.sin() * self.moving_speed;
     }
 }

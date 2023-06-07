@@ -3,6 +3,10 @@ use bevy::{
     sprite::collide_aabb::collide, 
 };
 
+use crate::enemy::{
+    enemy::*,
+};
+
 use crate::components::{
     collision::*,
     bullet::*,
