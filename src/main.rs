@@ -70,9 +70,9 @@ mod states;
 pub use crate::states::{
     app_state::*,
 
-    menu_sceen::*,
-    game_sceen::*,
-    death_sceen::*,
+    menu_scene::*,
+    game_scene::*,
+    death_scene::*,
 };
 
 fn main() {
@@ -137,19 +137,9 @@ fn main() {
         .add_event::<SoundEvent>()
         .add_state::<AppState>()     
 
-        .add_plugin(GameScenePlugin)
         .add_plugin(MenuScenePlugin)
-
-        .add_systems((
-            spawn_death_screen_background_system,
-            spawn_press_space_text_system,
-            ).in_schedule(OnEnter(AppState::DeathScreen)))
-        .add_systems((
-            despawn_death_scene_entities,
-            ).in_schedule(OnExit(AppState::DeathScreen)))
-        .add_systems((
-            death_scene_system,
-            ).in_set(OnUpdate(AppState::DeathScreen)))
+        .add_plugin(GameScenePlugin)
+        .add_plugin(DeathScenePlugin)
 
         .add_systems((
             mouse_position_update_system, 
