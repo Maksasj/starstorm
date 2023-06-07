@@ -27,43 +27,12 @@ pub use crate::resources::{
     death_screen_background::*,
     sounds::*,
     resources_plugin::*,
+    mouse_position::*,
 };
 
 mod components;
 pub use crate::components::{
-    entity_rotation::*,
-    velocity::*,
-    player_controller::*,
-    friction::*,
-    bullet::*,
-    player::*,
-
-    collision::*,
-    player_collider::*,
-
-    weapon::*,
-    simple_bluster::*,
-    onyx_bluster::*,
-    mortar_bluster::*,
-    player_bluster::*,
-
-    enemy::*,
-    simple_enemy::*,
-    spike_enemy::*,
-    bug_enemy::*,
-
-    camera_shake::*,
-    player_health_text::*,
-    weapon_charget_bar::*,
-    damage_shake::*,
-    enemy_collider::*,
-
-    menu_scene_system::*,
-    game_scene_system::*,
-    wave_system::*,
-    wave_count_text::*,
-    death_scene_system::*,
-    player_death_system::*,
+    enemy_plugin::*,
 };
 
 mod states;
@@ -125,10 +94,8 @@ fn main() {
         .register_component_as::<dyn Weapon, OnyxBluster>()
         .register_component_as::<dyn Weapon, MortarBluster>()
         .register_component_as::<dyn Weapon, PlayerBluster>()
-            
-        .register_component_as::<dyn Enemy, SimpleEnemy>()
-        .register_component_as::<dyn Enemy, SpikeEnemy>()
-        .register_component_as::<dyn Enemy, BugEnemy>()
+        
+        .add_plugin(EnemyPlugin)
         
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
         .add_event::<CameraShakeEvent>()
@@ -147,13 +114,6 @@ fn main() {
             handle_sounds,
         )) 
         .run();
-}
-
-fn mouse_position_update_system(mut mouse: ResMut<MousePosition>, mut events: EventReader<CursorMoved>) {
-    for e in events.iter() {
-        mouse.pos = e.position;
-        mouse.window_size = Vec2::new(800.0, 600.0);
-    }
 }
 
 fn spawn_camera(mut commands: Commands) {

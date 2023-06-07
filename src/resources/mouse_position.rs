@@ -14,3 +14,10 @@ impl MousePosition {
         }
     }
 }
+
+pub fn mouse_position_update_system(mut mouse: ResMut<MousePosition>, mut events: EventReader<CursorMoved>) {
+    for e in events.iter() {
+        mouse.pos = e.position;
+        mouse.window_size = Vec2::new(800.0, 600.0);
+    }
+}
