@@ -38,7 +38,7 @@ impl Weapon for MortarBluster {
                 spawn_bullet(
                     &mut commands, 
                     &handle, 
-                    5, 
+                    35, 
                     start_pos, 
                     angle + 0.2617 * i as f32, 
                     Velocity::with(50.0, 0.0), 

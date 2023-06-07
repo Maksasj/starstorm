@@ -40,7 +40,7 @@ impl Weapon for PlayerBluster {
             
             spawn_bullet_from_bundle(commands, BulletBundle::custom(                
                 &handle, 
-                7, 
+                51, 
                 start_pos, 
                 angle, 
                 Velocity::with(400.0, 0.0),

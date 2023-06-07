@@ -46,7 +46,7 @@ pub struct BugEnemyBundle {
 
 impl BugEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
-        let mut sprite = TextureAtlasSprite::new(3);
+        let mut sprite = TextureAtlasSprite::new(33);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
