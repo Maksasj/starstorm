@@ -39,3 +39,4 @@ pub mod player_death_system;
 
 
 pub mod enemy_plugin;
+pub mod weapon_plugin;

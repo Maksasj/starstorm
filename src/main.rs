@@ -16,6 +16,7 @@ use bevy::{
 use bevy_kira_audio::prelude::*;
 
 mod resources;
+use crate::components::weapon_plugin::WeaponPlugin;
 pub use crate::resources::{
     sprite_sheet::*,
     mouse_position::*,
@@ -33,6 +34,7 @@ pub use crate::resources::{
 mod components;
 pub use crate::components::{
     enemy_plugin::*,
+    weapon_plugin::*,
 };
 
 mod states;
@@ -45,8 +47,6 @@ pub use crate::states::{
 };
 
 fn main() {
-    use bevy_trait_query::RegisterExt;
-
     App::new()
         .add_plugins(DefaultPlugins
             .set(
@@ -90,11 +90,7 @@ fn main() {
                 play_main_theme_looped_system,
             ).chain())
             
-        .register_component_as::<dyn Weapon, SimpleBluster>()
-        .register_component_as::<dyn Weapon, OnyxBluster>()
-        .register_component_as::<dyn Weapon, MortarBluster>()
-        .register_component_as::<dyn Weapon, PlayerBluster>()
-        
+        .add_plugin(WeaponPlugin)
         .add_plugin(EnemyPlugin)
         
         .insert_resource(MousePosition::new(Vec2::new(800.0, 600.0)))
@@ -148,4 +144,4 @@ pub fn setup_window_icon(
 
     primary_window.set_window_icon(Some(icon));
 }
- */
+*/
