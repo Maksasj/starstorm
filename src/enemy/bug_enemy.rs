@@ -70,7 +70,7 @@ impl BugEnemyBundle {
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             enemy: BugEnemy::new(),
-            weapon: MortarBluster::new(),
+            weapon: MortarBluster::default(),
             collider: Collider::new(
                 ENEMY_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 

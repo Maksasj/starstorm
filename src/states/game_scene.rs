@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 pub use crate::weapon::{
-    player_bluster::*,
+    ion_bluster::*,
     bullet::*,
 };
 

@@ -16,15 +16,15 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct PlayerBluster {
+pub struct IonBluster {
     pub timer: f32,
     pub speed: f32,
     pub damage: f32,
 }
 
-impl PlayerBluster {
-    pub fn new() -> Self {
-        PlayerBluster {
+impl IonBluster {
+    pub fn default() -> Self {
+        IonBluster {
             timer: 0.0,
             speed: 0.8,
             damage: 15.0,
@@ -34,7 +34,7 @@ impl PlayerBluster {
 
 pub struct PlayerShootEvent;
 
-impl Weapon for PlayerBluster {
+impl Weapon for IonBluster {
     fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>) {
         self.timer += time.delta_seconds();
 

@@ -21,7 +21,7 @@ pub struct OnyxBluster {
 }
 
 impl OnyxBluster {
-    pub fn new() -> Self {
+    pub fn default() -> Self {
         OnyxBluster {
             timer: 0.0,
             speed: 0.8,

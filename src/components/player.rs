@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+use crate::IonBluster;
 use crate::components::{
     friction::*,
     player_controller::*,
@@ -73,5 +74,6 @@ pub fn spawn_player_system(mut commands: Commands, asset_server: Res<SpriteSheet
         ..Default::default()
     })
     .insert(PlayerBundle::new())
-    .insert(GameEntity{});
+    .insert(GameEntity{})
+    .insert(IonBluster::default());
 }

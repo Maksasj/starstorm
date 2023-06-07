@@ -21,7 +21,7 @@ pub struct MortarBluster {
 }
 
 impl MortarBluster {
-    pub fn new() -> Self {
+    pub fn default() -> Self {
         MortarBluster {
             timer: 0.0,
             speed: 3.5,

@@ -72,7 +72,7 @@ impl SpikeEnemyBundle {
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             enemy: SpikeEnemy::new(),
-            weapon: OnyxBluster::new(),
+            weapon: OnyxBluster::default(),
             collider: Collider::new(
                 ENEMY_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 

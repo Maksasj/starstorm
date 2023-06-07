@@ -9,16 +9,18 @@ use crate::components::{
 #[derive(Component)]
 pub struct Bullet {
     pub life_time: f32,
-    timer: f32,
     pub damage: f32,
+    
+    timer: f32,
 }
 
 impl Bullet {
     pub fn new(life_time: f32, damage: f32) -> Self {
         Bullet {
             life_time: life_time,
-            timer: 0.0,
             damage: damage,
+
+            timer: 0.0,
         }
     }
 }
