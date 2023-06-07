@@ -22,20 +22,20 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct NebulaSerpentEnemy {
+pub struct GalacticHorizonEnemy {
     pub moving_speed: f32
 }
 
-impl NebulaSerpentEnemy {
+impl GalacticHorizonEnemy {
     pub fn new() -> Self {
-        NebulaSerpentEnemy { 
+        GalacticHorizonEnemy { 
             moving_speed: 100.0 
         }
     }
 }
 
 #[derive(Bundle)]
-pub struct NebulaSerpentEnemyBundle {
+pub struct GalacticHorizonEnemyBundle {
     name: Name,
     sprite_bundle: SpriteSheetBundle,
     health: Health,
@@ -43,7 +43,7 @@ pub struct NebulaSerpentEnemyBundle {
     friction: Friction,
     velocity: Velocity, 
     
-    enemy: NebulaSerpentEnemy,
+    enemy: GalacticHorizonEnemy,
     // weapon: MeteoricBluster,
     shooter: Shooter,
 
@@ -52,14 +52,14 @@ pub struct NebulaSerpentEnemyBundle {
     game_entity: GameEntity,
 }
 
-impl NebulaSerpentEnemyBundle {
+impl GalacticHorizonEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
-        let mut sprite = TextureAtlasSprite::new(81);
+        let mut sprite = TextureAtlasSprite::new(97);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
-        NebulaSerpentEnemyBundle { 
-            name: Name::new("NebulaSerpentEnemy"),
+        GalacticHorizonEnemyBundle { 
+            name: Name::new("GalacticHorizonEnemy"),
             sprite_bundle: SpriteSheetBundle {
                 sprite: sprite,
                 texture_atlas: asset_server.handle.clone(),
@@ -74,7 +74,7 @@ impl NebulaSerpentEnemyBundle {
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
-            enemy: NebulaSerpentEnemy::new(),
+            enemy: GalacticHorizonEnemy::new(),
             // weapon: MeteoricBluster::new(),
             shooter: Shooter::enemy(),
 
@@ -89,7 +89,7 @@ impl NebulaSerpentEnemyBundle {
     }
 }
 
-impl Enemy for NebulaSerpentEnemy {
+impl Enemy for GalacticHorizonEnemy {
     fn move_enemy(&mut self, _rotation: &mut EntityRotation, velocity: &mut Velocity, _time: &Res<Time>) {
         velocity.velocity.x = self.moving_speed;
     }
