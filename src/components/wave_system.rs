@@ -3,6 +3,8 @@ use bevy::prelude::*;
 pub use crate::enemy::{
     enemy::*,
     
+    enemy_groups::*,
+
     seraphic_skyrider_enemy::*,
     bug_enemy::*,
     spike_enemy::*,
@@ -119,9 +121,7 @@ pub fn wave_spawn_system(
         let spike_center_offset = 60.0;
 
         if to <= 2 {
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-100.0, 330.0)));
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(0.0, 330.0)));
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(100.0, 330.0)));
+            THREE_SERAPHICS_SKYDRIDERS.summon(&mut commands, &asset_server);
         } else if to <= 5 {
             commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
             commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-50.0, 330.0)));

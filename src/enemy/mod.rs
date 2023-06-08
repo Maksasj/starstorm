@@ -18,4 +18,6 @@ pub mod nebula_wanderer_enemy;
 pub mod nova_starstrider_enemy;
 pub mod phoenix_nebulon_enemy;
 
+pub mod enemy_groups;
+
 pub mod enemy_plugin;
