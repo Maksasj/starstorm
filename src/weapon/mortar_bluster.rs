@@ -3,14 +3,13 @@ use bevy::prelude::*;
 use crate::weapon::{
     weapon::*,
     bullet::*,
+    bullets::*,
     shooter::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
-
-use super::bullets::MORTAR_BULLET;
 
 #[derive(Component)]
 pub struct MortarBluster {

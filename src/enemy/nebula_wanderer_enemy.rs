@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    quantum_blaze::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct NebulaWandererEnemy {
 impl NebulaWandererEnemy {
     pub fn new() -> Self {
         NebulaWandererEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 60.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct NebulaWandererEnemyBundle {
     velocity: Velocity, 
     
     enemy: NebulaWandererEnemy,
-    // weapon: MeteoricBluster,
+    weapon: QuantumBlaze,
     shooter: Shooter,
 
     collider: Collider,
@@ -54,7 +54,7 @@ pub struct NebulaWandererEnemyBundle {
 
 impl NebulaWandererEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
-        let mut sprite = TextureAtlasSprite::new(209);
+        let mut sprite = TextureAtlasSprite::new(225);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
@@ -69,13 +69,13 @@ impl NebulaWandererEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(70.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: NebulaWandererEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: QuantumBlaze::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

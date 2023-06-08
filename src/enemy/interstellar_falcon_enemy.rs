@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    void_energy_slicer::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct InterstellarFalconEnemy {
 impl InterstellarFalconEnemy {
     pub fn new() -> Self {
         InterstellarFalconEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 80.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct InterstellarFalconEnemyBundle {
     velocity: Velocity, 
     
     enemy: InterstellarFalconEnemy,
-    // weapon: MeteoricBluster,
+    weapon: VoidEnergySlicer,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl InterstellarFalconEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(70.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: InterstellarFalconEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: VoidEnergySlicer::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

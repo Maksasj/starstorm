@@ -30,7 +30,7 @@ pub struct BugEnemy {
 impl BugEnemy {
     pub fn new() -> Self {
         BugEnemy { 
-            moving_speed: 100.0,
+            moving_speed: 75.0,
             amplitude: 0.0
         }
     }

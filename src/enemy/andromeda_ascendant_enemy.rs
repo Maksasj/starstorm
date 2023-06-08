@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    quantum_repulsor_cannon::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct AndromedaAscendantEnemy {
 impl AndromedaAscendantEnemy {
     pub fn new() -> Self {
         AndromedaAscendantEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 150.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct AndromedaAscendantEnemyBundle {
     velocity: Velocity, 
     
     enemy: AndromedaAscendantEnemy,
-    // weapon: MeteoricBluster,
+    weapon: QuantumRepulsorCannon,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl AndromedaAscendantEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(25.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: AndromedaAscendantEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: QuantumRepulsorCannon::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

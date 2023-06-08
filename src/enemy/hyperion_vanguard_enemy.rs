@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    hyperion_particle_beam::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct HyperionVanguardEnemy {
 impl HyperionVanguardEnemy {
     pub fn new() -> Self {
         HyperionVanguardEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 60.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct HyperionVanguardEnemyBundle {
     velocity: Velocity, 
     
     enemy: HyperionVanguardEnemy,
-    // weapon: MeteoricBluster,
+    weapon: HyperionParticleBeam,
     shooter: Shooter,
 
     collider: Collider,
@@ -75,7 +75,7 @@ impl HyperionVanguardEnemyBundle {
             velocity: Velocity::new(),
             
             enemy: HyperionVanguardEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: HyperionParticleBeam::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

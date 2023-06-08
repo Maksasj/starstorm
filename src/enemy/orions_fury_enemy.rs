@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    dual_starfire_bluster::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct OrionsFuryEnemy {
 impl OrionsFuryEnemy {
     pub fn new() -> Self {
         OrionsFuryEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 80.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct OrionsFuryEnemyBundle {
     velocity: Velocity, 
     
     enemy: OrionsFuryEnemy,
-    // weapon: MeteoricBluster,
+    weapon: DualStarfireBluster,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl OrionsFuryEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(65.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: OrionsFuryEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: DualStarfireBluster::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

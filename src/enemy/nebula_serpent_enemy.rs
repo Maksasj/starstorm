@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    galactic_plasma_disruptor::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct NebulaSerpentEnemy {
 impl NebulaSerpentEnemy {
     pub fn new() -> Self {
         NebulaSerpentEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 80.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct NebulaSerpentEnemyBundle {
     velocity: Velocity, 
     
     enemy: NebulaSerpentEnemy,
-    // weapon: MeteoricBluster,
+    weapon: GalacticPlasmaDisruptor,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl NebulaSerpentEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(120.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: NebulaSerpentEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: GalacticPlasmaDisruptor::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

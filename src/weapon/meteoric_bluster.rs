@@ -3,14 +3,13 @@ use bevy::prelude::*;
 use crate::weapon::{
     weapon::*,
     bullet::*,
+    bullets::*,
+    shooter::*,
 };
 
 use crate::resources::{
     sprite_sheet::*,
 };
-
-use super::bullets::METEORIC_BULLET;
-use super::shooter::Shooter;
 
 #[derive(Component)]
 pub struct MeteoricBluster {

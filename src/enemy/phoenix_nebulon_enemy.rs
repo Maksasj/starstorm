@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    ionized_pulse_blaster::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct PhoenixNebulonEnemy {
 impl PhoenixNebulonEnemy {
     pub fn new() -> Self {
         PhoenixNebulonEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 75.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct PhoenixNebulonEnemyBundle {
     velocity: Velocity, 
     
     enemy: PhoenixNebulonEnemy,
-    // weapon: MeteoricBluster,
+    weapon: IonizedPulseBlaster,
     shooter: Shooter,
 
     collider: Collider,
@@ -54,7 +54,7 @@ pub struct PhoenixNebulonEnemyBundle {
 
 impl PhoenixNebulonEnemyBundle {
     pub fn new(asset_server: &Res<SpriteSheet>, pos: Vec2) -> Self {
-        let mut sprite = TextureAtlasSprite::new(225);
+        let mut sprite = TextureAtlasSprite::new(241);
         sprite.color = Color::rgb(1.0, 1.0, 1.0);
         sprite.custom_size = Some(Vec2::splat(32.0));
 
@@ -69,13 +69,13 @@ impl PhoenixNebulonEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(60.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: PhoenixNebulonEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: IonizedPulseBlaster::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

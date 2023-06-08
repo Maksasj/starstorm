@@ -15,11 +15,11 @@ pub fn player_death_system(
         mut app_state_next_state: ResMut<NextState<AppState>>
     ) {
 
-    // for health in players.iter() {
-    //     if health.is_dead() {
-    //         if app_state.0 != AppState::DeathScreen {
-    //             app_state_next_state.set(AppState::DeathScreen);
-    //         }
-    //     }
-    // } 
+    for health in players.iter() {
+        if health.is_dead() {
+            if app_state.0 != AppState::DeathScreen {
+                app_state_next_state.set(AppState::DeathScreen);
+            }
+        }
+    } 
 }

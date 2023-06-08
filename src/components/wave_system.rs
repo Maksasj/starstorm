@@ -2,9 +2,23 @@ use bevy::prelude::*;
 
 pub use crate::enemy::{
     enemy::*,
+    
+    seraphic_skyrider_enemy::*,
     bug_enemy::*,
     spike_enemy::*,
-    seraphic_skyrider_enemy::*,
+    celestial_voyager_enemy::*,
+    stellar_phoenix_enemy::*,
+    nebula_serpent_enemy::*,
+    galactic_horizon_enemy::*,
+    astral_eclipse_enemy::*,
+    orions_fury_enemy::*,
+    solaris_nova_enemy::*,
+    interstellar_falcon_enemy::*,
+    hyperion_vanguard_enemy::*,
+    andromeda_ascendant_enemy::*,
+    nebula_wanderer_enemy::*,
+    nova_starstrider_enemy::*,
+    phoenix_nebulon_enemy::*
 };
 
 pub use crate::components::{

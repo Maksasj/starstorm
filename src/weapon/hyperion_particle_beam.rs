@@ -12,31 +12,28 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct OnyxBluster {
+pub struct HyperionParticleBeam {
     pub timer: f32,
     pub speed: f32,
 }
 
-impl OnyxBluster {
+impl HyperionParticleBeam {
     pub fn default() -> Self {
-        OnyxBluster {
+        HyperionParticleBeam {
             timer: 0.0,
-            speed: 0.8,
+            speed: 0.5,
         }
     }
 }
 
-impl Weapon for OnyxBluster {
+impl Weapon for HyperionParticleBeam {
     fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>, shooter: &Shooter) {
         self.timer += time.delta_seconds();
 
-        
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
-
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle + 0.5235, shooter);
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle, shooter);
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle - 0.5235, shooter);
+            
+            spawn_bullet(commands, &handle, HYPERION_PARTICLE_BEAM_BULLET, start_pos, angle, shooter);
             
             self.timer = 0.0;
         }

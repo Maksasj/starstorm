@@ -4,7 +4,6 @@ pub mod enemy_collider;
 pub mod seraphic_skyrider_enemy;
 pub mod spike_enemy;
 pub mod bug_enemy;
-
 pub mod celestial_voyager_enemy;
 pub mod stellar_phoenix_enemy;
 pub mod nebula_serpent_enemy;

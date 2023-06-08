@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    nova_surge_launcher::*,
 };
 
 use crate::enemy::{
@@ -44,7 +44,7 @@ pub struct NovaStarstriderEnemyBundle {
     velocity: Velocity, 
     
     enemy: NovaStarstriderEnemy,
-    // weapon: MeteoricBluster,
+    weapon: NovaSurgeLauncher,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl NovaStarstriderEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(60.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: NovaStarstriderEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: NovaSurgeLauncher::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

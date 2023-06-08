@@ -44,7 +44,7 @@ impl PlayerBundle {
             collider: Collider::new(
                 PLAYER_COLLISION_LAYER, 
                 NONE_COLLISION_LAYER, 
-                Vec2::new(5.0, 5.0)
+                Vec2::new(15.0, 15.0)
             ),
         }
     }

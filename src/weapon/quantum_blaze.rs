@@ -12,31 +12,30 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct OnyxBluster {
+pub struct QuantumBlaze {
     pub timer: f32,
     pub speed: f32,
 }
 
-impl OnyxBluster {
+impl QuantumBlaze {
     pub fn default() -> Self {
-        OnyxBluster {
+        QuantumBlaze {
             timer: 0.0,
-            speed: 0.8,
+            speed: 2.5,
         }
     }
 }
 
-impl Weapon for OnyxBluster {
+impl Weapon for QuantumBlaze {
     fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>, shooter: &Shooter) {
         self.timer += time.delta_seconds();
 
-        
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
 
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle + 0.5235, shooter);
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle, shooter);
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle - 0.5235, shooter);
+            for i in 0..25 {
+                spawn_bullet(commands, &handle, QUANTUM_BLAZE_BULLET, start_pos, angle + (i as f32 / 25.0) * 6.28318, shooter);
+            }
             
             self.timer = 0.0;
         }

@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    dual_space_blast_cannon::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct CelestialVoyagerEnemy {
 impl CelestialVoyagerEnemy {
     pub fn new() -> Self {
         CelestialVoyagerEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 80.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct CelestialVoyagerEnemyBundle {
     velocity: Velocity, 
     
     enemy: CelestialVoyagerEnemy,
-    // weapon: MeteoricBluster,
+    weapon: DualSpaceBlastCannon,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl CelestialVoyagerEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(30.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: CelestialVoyagerEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: DualSpaceBlastCannon::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

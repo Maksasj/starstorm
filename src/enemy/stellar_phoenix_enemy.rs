@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    nova_burst_cannon::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct StellarPhoenixEnemy {
 impl StellarPhoenixEnemy {
     pub fn new() -> Self {
         StellarPhoenixEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 60.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct StellarPhoenixEnemyBundle {
     velocity: Velocity, 
     
     enemy: StellarPhoenixEnemy,
-    // weapon: MeteoricBluster,
+    weapon: NovaBurstCannon,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl StellarPhoenixEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(75.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: StellarPhoenixEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: NovaBurstCannon::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

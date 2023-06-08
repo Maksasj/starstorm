@@ -12,31 +12,30 @@ use crate::resources::{
 };
 
 #[derive(Component)]
-pub struct OnyxBluster {
+pub struct PlasmaFusionMortar {
     pub timer: f32,
     pub speed: f32,
 }
 
-impl OnyxBluster {
+impl PlasmaFusionMortar {
     pub fn default() -> Self {
-        OnyxBluster {
+        PlasmaFusionMortar {
             timer: 0.0,
-            speed: 0.8,
+            speed: 1.6,
         }
     }
 }
 
-impl Weapon for OnyxBluster {
+impl Weapon for PlasmaFusionMortar {
     fn shoot(&mut self, commands: &mut Commands, asset_server: &Res<SpriteSheet>, angle: f32, start_pos: Vec2, time: &Res<Time>, shooter: &Shooter) {
         self.timer += time.delta_seconds();
 
-        
         if self.timer > self.speed {
             let handle = asset_server.handle.clone();
-
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle + 0.5235, shooter);
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle, shooter);
-            spawn_bullet(commands, &handle, ONYX_BULLET, start_pos, angle - 0.5235, shooter);
+            
+            for i in -3..4 {
+                spawn_bullet(commands, &handle, PLASMA_FUSION_BURST_BULLET, start_pos, angle + 0.314159 * i as f32, shooter);
+            }
             
             self.timer = 0.0;
         }

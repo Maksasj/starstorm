@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    quantum_fusion_cannon::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct AstralEclipseEnemy {
 impl AstralEclipseEnemy {
     pub fn new() -> Self {
         AstralEclipseEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 75.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct AstralEclipseEnemyBundle {
     velocity: Velocity, 
     
     enemy: AstralEclipseEnemy,
-    // weapon: MeteoricBluster,
+    weapon: QuantumFusionCannon,
     shooter: Shooter,
 
     collider: Collider,
@@ -75,7 +75,7 @@ impl AstralEclipseEnemyBundle {
             velocity: Velocity::new(),
             
             enemy: AstralEclipseEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: QuantumFusionCannon::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

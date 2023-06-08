@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    dual_rapid_space_blast_cannon::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct GalacticHorizonEnemy {
 impl GalacticHorizonEnemy {
     pub fn new() -> Self {
         GalacticHorizonEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 140.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct GalacticHorizonEnemyBundle {
     velocity: Velocity, 
     
     enemy: GalacticHorizonEnemy,
-    // weapon: MeteoricBluster,
+    weapon: DualRapidSpaceBlastCannon,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl GalacticHorizonEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(45.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: GalacticHorizonEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: DualRapidSpaceBlastCannon::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(

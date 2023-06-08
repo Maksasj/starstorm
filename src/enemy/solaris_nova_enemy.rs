@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::weapon::{
     shooter::*,
-    meteoric_bluster::*,
+    plasma_fusion_mortar::*,
 };
 
 use crate::enemy::{
@@ -29,7 +29,7 @@ pub struct SolarisNovaEnemy {
 impl SolarisNovaEnemy {
     pub fn new() -> Self {
         SolarisNovaEnemy { 
-            moving_speed: 100.0 
+            moving_speed: 80.0 
         }
     }
 }
@@ -44,7 +44,7 @@ pub struct SolarisNovaEnemyBundle {
     velocity: Velocity, 
     
     enemy: SolarisNovaEnemy,
-    // weapon: MeteoricBluster,
+    weapon: PlasmaFusionMortar,
     shooter: Shooter,
 
     collider: Collider,
@@ -69,13 +69,13 @@ impl SolarisNovaEnemyBundle {
                 },
                 ..Default::default()
             },
-            health: Health::new(80.0),
+            health: Health::new(45.0),
             rotation: EntityRotation::new(_DOWN),
             friction: Friction::new(20.0),
             velocity: Velocity::new(),
             
             enemy: SolarisNovaEnemy::new(),
-            // weapon: MeteoricBluster::new(),
+            weapon: PlasmaFusionMortar::default(),
             shooter: Shooter::enemy(),
 
             collider: Collider::new(
