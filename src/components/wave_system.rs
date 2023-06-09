@@ -1,26 +1,9 @@
 use bevy::prelude::*;
+use rand::Rng;
 
 pub use crate::enemy::{
     enemy::*,
-    
     enemy_groups::*,
-
-    seraphic_skyrider_enemy::*,
-    bug_enemy::*,
-    spike_enemy::*,
-    celestial_voyager_enemy::*,
-    stellar_phoenix_enemy::*,
-    nebula_serpent_enemy::*,
-    galactic_horizon_enemy::*,
-    astral_eclipse_enemy::*,
-    orions_fury_enemy::*,
-    solaris_nova_enemy::*,
-    interstellar_falcon_enemy::*,
-    hyperion_vanguard_enemy::*,
-    andromeda_ascendant_enemy::*,
-    nebula_wanderer_enemy::*,
-    nova_starstrider_enemy::*,
-    phoenix_nebulon_enemy::*
 };
 
 pub use crate::components::{
@@ -118,40 +101,53 @@ pub fn wave_spawn_system(
     for event in events.iter() {
         let to = event.to;
 
-        let spike_center_offset = 60.0;
+        let mut rng = rand::thread_rng();
+        let value: u8 = rng.gen();
 
         if to <= 2 {
-            THREE_SERAPHICS_SKYDRIDERS.summon(&mut commands, &asset_server);
+            match value % 2 {
+                0 => { THREE_SERAPHICS_SKYRIDERS.summon(&mut commands, &asset_server); },
+                _ => { SOLARIS_NAVY.summon(&mut commands, &asset_server); }
+            }
         } else if to <= 5 {
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-50.0, 330.0)));
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(50.0, 330.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
+            match value % 4 {
+                1 => { STELLAR_NAVY.summon(&mut commands, &asset_server); },
+                2 => { HYPERION_NAVY.summon(&mut commands, &asset_server); },
+                3 => { FALCON_FLOTILLA.summon(&mut commands, &asset_server); },
+                _ => { CELESTIAL_ARMADA.summon(&mut commands, &asset_server); }
+            }
         } else  if to <= 10 {
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 360.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 330.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 360.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 330.0)));
-
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(-200.0, 330.0)));
-            commands.spawn(SeraphicSkyriderEnemyBundle::new(&asset_server, Vec2::new(200.0, 330.0)));
+            match value % 3 {
+                0 => { NEBULON_ARMADA.summon(&mut commands, &asset_server); },
+                1 => { NEBULON_ARMADA_BIG.summon(&mut commands, &asset_server); },
+                _ => { INFINITY_ARMADA.summon(&mut commands, &asset_server); }
+            }
         } else if to <= 15 {
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 400.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 370.0)));
-            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 330.0)));
-            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 370.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 370.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(75.0 - spike_center_offset, 400.0)));
+            match value % 4 {
+                0 => { NEBULON_ARMADA.summon(&mut commands, &asset_server); },
+                1 => { NEBULON_ARMADA_BIG.summon(&mut commands, &asset_server); },
+                2 => { NEBULOUS_LEGION.summon(&mut commands, &asset_server); },
+                _ => { INFINITY_ARMADA.summon(&mut commands, &asset_server); }
+            }
         } else {
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 440.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-75.0 - spike_center_offset, 400.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(-150.0 - spike_center_offset, 370.0)));
-            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 330.0)));
-            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 370.0)));
-            commands.spawn(BugEnemyBundle::new(&asset_server, Vec2::new(-130.0, 400.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(150.0 - spike_center_offset, 370.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(75.0 - spike_center_offset, 400.0)));
-            commands.spawn(SpikeEnemyBundle::new(&asset_server, Vec2::new(75.0 - spike_center_offset, 440.0)));
+            match value % 4 {
+                0 => { 
+                    HYPERION_NAVY.summon(&mut commands, &asset_server);
+                    NEBULON_ARMADA.summon(&mut commands, &asset_server); 
+                },
+                1 => { 
+                    STELLAR_NAVY.summon(&mut commands, &asset_server);
+                    NEBULON_ARMADA_BIG.summon(&mut commands, &asset_server);
+                },
+                2 => { 
+                    NEBULON_ARMADA.summon(&mut commands, &asset_server);
+                    NEBULOUS_LEGION.summon(&mut commands, &asset_server);
+                },
+                _ => { 
+                    FALCON_FLOTILLA.summon(&mut commands, &asset_server);
+                    INFINITY_ARMADA.summon(&mut commands, &asset_server);
+                }
+            }
         }
     }
 

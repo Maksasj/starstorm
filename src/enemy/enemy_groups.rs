@@ -24,13 +24,12 @@ pub use crate::enemy::{
     phoenix_nebulon_enemy::*,
 };
 
-#[warn(dead_code)]
 pub enum AnyEnemyType {
-    SeraphicSkyriderEnemyBundle,
-    SpikeEnemyBundle,
-    BugEnemyBundle,
-    CelestialVoyagerEnemyBundle,
-    StellarPhoenixEnemyBundle,
+    SeraphicSkyriderEnemyBundle,   
+    SpikeEnemyBundle,              
+    BugEnemyBundle,                
+    CelestialVoyagerEnemyBundle,   
+    StellarPhoenixEnemyBundle,     
     NebulaSerpentEnemyBundle,
     GalacticHorizonEnemyBundle,
     AstralEclipseEnemyBundle,
@@ -44,10 +43,8 @@ pub enum AnyEnemyType {
     PhoenixNebulonEnemyBundle,
 }
 
-#[warn(dead_code)]
 pub struct EnemyGroup<const N: usize>(pub [(AnyEnemyType, Vec2); N]);
 
-#[warn(dead_code)]
 impl<const N: usize> EnemyGroup<N> {
     pub fn summon(&self, commands: &mut Commands, asset_server: &Res<SpriteSheet>) {
         for (enemy, pos) in self.0.iter() {
@@ -105,8 +102,86 @@ impl<const N: usize> EnemyGroup<N> {
     }
 }
 
-pub const THREE_SERAPHICS_SKYDRIDERS: EnemyGroup<3> = EnemyGroup{ 0: [
+pub const THREE_SERAPHICS_SKYRIDERS: EnemyGroup<3> = EnemyGroup{ 0: [
     (AnyEnemyType::SeraphicSkyriderEnemyBundle, Vec2::new(-100.0, 330.0)),
     (AnyEnemyType::SeraphicSkyriderEnemyBundle, Vec2::new(0.0, 330.0)),
     (AnyEnemyType::SeraphicSkyriderEnemyBundle, Vec2::new(100.0, 330.0))
+]};
+
+pub const STELLAR_NAVY: EnemyGroup<5> = EnemyGroup{ 0: [
+    (AnyEnemyType::StellarPhoenixEnemyBundle, Vec2::new(0.0, 330.0)),
+    (AnyEnemyType::PhoenixNebulonEnemyBundle, Vec2::new(110.0, 330.0)),
+    (AnyEnemyType::PhoenixNebulonEnemyBundle, Vec2::new(-110.0, 330.0)),
+    (AnyEnemyType::GalacticHorizonEnemyBundle, Vec2::new(60.0, 370.0)),
+    (AnyEnemyType::GalacticHorizonEnemyBundle, Vec2::new(-60.0, 370.0)),
+]};
+
+pub const SOLARIS_NAVY: EnemyGroup<5> = EnemyGroup{ 0: [
+    (AnyEnemyType::SolarisNovaEnemyBundle, Vec2::new(50.0, 330.0)),
+    (AnyEnemyType::SolarisNovaEnemyBundle, Vec2::new(-50.0, 330.0)),
+    (AnyEnemyType::GalacticHorizonEnemyBundle, Vec2::new(150.0, 330.0)),
+    (AnyEnemyType::GalacticHorizonEnemyBundle, Vec2::new(-150.0, 330.0)),
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(0.0, 300.0)),
+]};
+
+pub const HYPERION_NAVY: EnemyGroup<5> = EnemyGroup{ 0: [
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(0.0, 360.0)),
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(-50.0, 330.0)),
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(50.0, 330.0)),
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(100.0, 300.0)),
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(-100.0, 300.0)),
+]};
+
+pub const FALCON_FLOTILLA: EnemyGroup<7> = EnemyGroup{ 0: [
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(0.0, 330.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(70.0, 370.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(-70.0, 370.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(140.0, 420.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(-140.0, 420.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(190.0, 470.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(-190.0, 470.0)),
+]};
+
+pub const CELESTIAL_ARMADA: EnemyGroup<5> = EnemyGroup{ 0: [
+    (AnyEnemyType::InterstellarFalconEnemyBundle, Vec2::new(-180.0, 330.0)),
+    (AnyEnemyType::InterstellarFalconEnemyBundle, Vec2::new(180.0, 330.0)),
+    (AnyEnemyType::CelestialVoyagerEnemyBundle, Vec2::new(50.0, 370.0)),
+    (AnyEnemyType::CelestialVoyagerEnemyBundle, Vec2::new(-50.0, 370.0)),
+    (AnyEnemyType::HyperionVanguardEnemyBundle, Vec2::new(0.0, 390.0)),
+]};
+
+pub const NEBULON_ARMADA: EnemyGroup<5> = EnemyGroup{ 0: [
+    (AnyEnemyType::NebulaWandererEnemyBundle, Vec2::new(0.0, 390.0)),
+    (AnyEnemyType::SpikeEnemyBundle, Vec2::new(50.0, 330.0)),
+    (AnyEnemyType::SpikeEnemyBundle, Vec2::new(-50.0, 330.0)),
+    (AnyEnemyType::SpikeEnemyBundle, Vec2::new(120.0, 360.0)),
+    (AnyEnemyType::SpikeEnemyBundle, Vec2::new(-120.0, 360.0)),
+]};
+
+pub const NEBULON_ARMADA_BIG: EnemyGroup<5> = EnemyGroup{ 0: [
+    (AnyEnemyType::NebulaWandererEnemyBundle, Vec2::new(100.0, 390.0)),
+    (AnyEnemyType::NebulaWandererEnemyBundle, Vec2::new(-100.0, 390.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(0.0, 330.0)),
+    (AnyEnemyType::BugEnemyBundle, Vec2::new(50.0, 330.0)),
+    (AnyEnemyType::BugEnemyBundle, Vec2::new(-50.0, 330.0)),
+]};
+
+pub const INFINITY_ARMADA: EnemyGroup<6> = EnemyGroup{ 0: [
+    (AnyEnemyType::OrionsFuryEnemyBundle, Vec2::new(50.0, 330.0)),
+    (AnyEnemyType::OrionsFuryEnemyBundle, Vec2::new(-50.0, 330.0)),
+    (AnyEnemyType::StellarPhoenixEnemyBundle, Vec2::new(100.0, 390.0)),
+    (AnyEnemyType::StellarPhoenixEnemyBundle, Vec2::new(-100.0, 390.0)),
+    (AnyEnemyType::NovaStarstriderEnemyBundle, Vec2::new(150.0, 330.0)),
+    (AnyEnemyType::NovaStarstriderEnemyBundle, Vec2::new(-150.0, 330.0)),
+]};
+
+pub const NEBULOUS_LEGION: EnemyGroup<8> = EnemyGroup{ 0: [
+    (AnyEnemyType::NebulaSerpentEnemyBundle, Vec2::new(50.0, 330.0)),
+    (AnyEnemyType::NebulaSerpentEnemyBundle, Vec2::new(-50.0, 330.0)),
+    (AnyEnemyType::AstralEclipseEnemyBundle, Vec2::new(100.0, 390.0)),
+    (AnyEnemyType::AstralEclipseEnemyBundle, Vec2::new(-100.0, 390.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(160.0, 450.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(-160.0, 450.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(190.0, 470.0)),
+    (AnyEnemyType::AndromedaAscendantEnemyBundle, Vec2::new(-190.0, 470.0)),
 ]};
