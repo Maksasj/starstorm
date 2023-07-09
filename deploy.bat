@@ -19,7 +19,7 @@ echo !ESC![91mDeleting previous web build!ESC![0m
     rmdir /s/q dist\web
     rmdir /s/q web
 
-echo !ESC![93mBuilding exe build!ESC![0m
+echo !ESC![93mBuilding web build!ESC![0m
     cargo build --release --target wasm32-unknown-unknown
     wasm-bindgen --out-dir ./dist/web --target web ./target/wasm32-unknown-unknown/release/starstorm.wasm
 
