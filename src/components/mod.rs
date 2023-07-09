@@ -23,3 +23,4 @@ pub mod wave_system;
 pub mod wave_count_text;
 pub mod death_scene_system;
 pub mod player_death_system;
+pub mod player_shoot;

@@ -42,5 +42,5 @@ cargo build --release --target wasm32-unknown-unknown
 this command will compile game into a wasm file. Then you can follow this guide [link](https://bevy-cheatbook.github.io/platforms/wasm.html). For development simplicity there is also `web-build` script, that compiles game into a wasm file, and runs `wasm-bindgen` automatically.
 
 ## License
-Starstorm is fre, open source game. All code in this repository is licensed under
+Starstorm is free, open source game. All code in this repository is licensed under
 - MIT License ([LICENSE.md](https://github.com/Maksasj/starstorm/blob/master/LICENSE.md) or https://opensource.org/license/mit/)
